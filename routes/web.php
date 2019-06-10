@@ -12,5 +12,21 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
+});
+
+Route::get('/games', function () {
+	return view('games');
+});
+
+Route::get('/games/{n}', function () {
+	return view('games');
+});
+
+Route::get('/friends', function () {
+	return view('friends');
+});
+
+Route::get('/account', function () {
+	return view('account');
 });

@@ -30,3 +30,7 @@ Route::get('/friends', function () {
 Route::get('/account', function () {
 	return view('account');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

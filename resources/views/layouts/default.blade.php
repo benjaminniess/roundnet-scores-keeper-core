@@ -64,19 +64,6 @@
 </head>
 <body>
 <div class="flex-center position-ref full-height">
-    @if (Route::has('login'))
-    <div class="top-right links">
-        @auth
-        <a href="{{ url('/home') }}">Home</a>
-        @else
-        <a href="{{ route('login') }}">Login</a>
-
-        @if (Route::has('register'))
-        <a href="{{ route('register') }}">Register</a>
-        @endif
-        @endauth
-    </div>
-    @endif
 
     <div class="content">
         <div class="title m-b-md">
@@ -84,11 +71,17 @@
         </div>
 
         <div class="links">
+            <a href="/">Home</a>
             <a href="/games">Games</a>
-            <a href="/friends">Friends</a>
-            <a href="/account">Account</a>
-            <a href="/login">Login</a>
-            <a href="/register">Register</a>
+            @guest
+                <a href="{{ route('login') }}">{{ __('Login') }}</a>
+                @if (Route::has('register'))
+                    <a href="{{ route('register') }}">{{ __('Register') }}</a>
+                @endif
+            @else
+                <a href="/friends">Friends</a>
+                <a href="/account">Account</a>
+            @endguest
         </div>
 
         @yield('content')

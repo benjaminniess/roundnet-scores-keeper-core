@@ -1,7 +1,8 @@
-@extends('layouts.default');
+@extends('layouts.app');
+
 
 @section('content')
 
-    <h2>My account</h2>
+    <h2>Account</h2>
 
 @endsection

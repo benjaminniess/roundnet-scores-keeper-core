@@ -44,7 +44,7 @@ Route::get('/games/{n}', function () {
 	return view('games');
 });
 
-Route::get('/friends', 'FriendsController@home');
+Route::get('/friends', 'FriendsController@show');
 
 Route::get('/account', function () {
 	return view('account');

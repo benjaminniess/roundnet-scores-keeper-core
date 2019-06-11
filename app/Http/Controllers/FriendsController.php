@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class FriendsController extends Controller
 {
-    public function home() {
+    public function show() {
         return view('friends');
     }
 }

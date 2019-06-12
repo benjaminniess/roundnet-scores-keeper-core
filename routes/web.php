@@ -17,7 +17,7 @@ Route::get('/', function () {
 
 Route::get('/games', 'GamesController@index');
 
-Route::get('/games/{game}', 'GamesController@show');
+Route::get('/games/{id}', 'GamesController@show');
 
 Route::get('/friends', 'FriendsController@show');
 

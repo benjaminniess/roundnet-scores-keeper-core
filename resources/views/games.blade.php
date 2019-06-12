@@ -6,7 +6,7 @@
 
     <ul>
         @foreach($games as $game)
-            <li>{{ $game['score'] }}</li>
+            <li><a href="http://127.0.0.1:8000/games/{{ $game['id'] }}">{{ $game['score'] }}</a></li>
         @endforeach
     </ul>
 

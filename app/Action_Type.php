@@ -4,8 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Game extends Model
+class Action_Type extends Model
 {
-    protected $table = 'games';
+
+    protected $table = 'actions_types';
     //
 }

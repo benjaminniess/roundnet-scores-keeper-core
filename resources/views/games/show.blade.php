@@ -9,5 +9,4 @@
       <li>Player 3 : {{ $game->player3 }}</li>
       <li>Player 4 : {{ $game->player4 }}</li>
     </ul>
-
 @endsection

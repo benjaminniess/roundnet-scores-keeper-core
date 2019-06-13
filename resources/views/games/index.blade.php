@@ -4,7 +4,7 @@
     <h2>Games list</h2>
     <ul>
         @foreach($games as $game)
-            <li><a href="http://127.0.0.1:8000/games/{{ $game->id }}">{{ $game->title }}</a></li>
+            <li><a href="{{ url('/games') }}/{{ $game->id }}">{{ $game->score_team_1 }} - {{ $game->score_team_2 }}</a></li>
         @endforeach
     </ul>
 @endsection

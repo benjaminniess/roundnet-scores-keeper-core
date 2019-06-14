@@ -42,5 +42,27 @@ class GamesController extends Controller
         }
 
         return view('games.live');
+    }
+
+  // CREATE A NEW PROJECT
+  function create()
+  {
+
+    return view('games.create');
   }
+
+  function store()
+  {
+
+    $game = new Game();
+
+    $game->player1 = request('player1');
+    $game->player2 = request('player2');
+    $game->player3 = request('player3');
+    $game->player4 = request('player4');
+
+    $game->save();
+
+    return redirect('/games');
+    }
 }

@@ -19,7 +19,11 @@ Route::get('/games', 'GamesController@index');
 
 Route::get('/games/live', 'GamesController@live');
 
-Route::get('/games/{id}', 'GamesController@show');
+Route::post('/games', 'GamesController@store');
+
+Route::get('/games/{id}', 'GamesController@show')->where('id', '[0-9+]');
+
+Route::get('/games/create', 'GamesController@create');
 
 Route::get('/friends', 'FriendsController@show');
 

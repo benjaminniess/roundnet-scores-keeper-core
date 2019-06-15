@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import ReactDOM from 'react-dom'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import GamesPlay from "./views/GamesPlay";
 
 class App extends Component {
     render () {
         return (
             <div>
-                Hello World
+                <GamesPlay/>
             </div>
         )
     }

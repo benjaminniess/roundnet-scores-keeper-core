@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use \App\Game;
+use \App\User;
 use Illuminate\Support\Facades\Auth;
 
 class GamesController extends Controller
@@ -47,8 +48,8 @@ class GamesController extends Controller
   // CREATE A NEW PROJECT
   function create()
   {
-
-    return view('games.create');
+      $players = User::all();
+      return view('games.create',compact('players'));
   }
 
   function store()

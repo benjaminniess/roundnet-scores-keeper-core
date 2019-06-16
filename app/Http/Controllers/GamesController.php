@@ -2,82 +2,137 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use \App\Game;
+use App\Game;
 use \App\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class GamesController extends Controller
 {
-  // GET ALL GAMES AND RETURN INFO TO THE VIEW
-  function index()
-  {
-    $games = Game::all();
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $games = Game::all();
 
-    return view('games.index')->withGames($games);
-  }
-
-  // GET ONE GAME BY ID AND RETURN INFO TO THE VIEW
-  function show($id)
-  {
-    $game = Game::where('id',$id)->first();
-
-    $player1 = User::where('id',$game->player1)->first();
-    $player2 = User::where('id',$game->player2)->first();
-    $player3 = User::where('id',$game->player3)->first();
-    $player4 = User::where('id',$game->player4)->first();
-
-    $players = [
-        'Player 1' => $player1,
-        'Player 2' => $player2,
-        'Player 3' => $player3,
-        'Player 4' => $player4
-    ];
-
-    return view('games.show',compact('game','players'));
-  }
-
-  function live()
-  {
-        // Get the currently authenticated user's ID...
-        $id = Auth::id();
-
-        if ( (int) $id <= 0 ) {
-            return redirect(url('/') );
-
-        }
-
-        $game_live = Game::where( [
-            [ 'status', 'live' ],
-        ])->first();
-
-        if ( empty( $game_live ) ) {
-            return redirect(url('/') );
-        }
-
-        return view('games.live');
+        return view('games.index')->withGames($games);
     }
 
-  // CREATE A NEW PROJECT
-  function create()
-  {
-      $players = User::all();
-      return view('games.create',compact('players'));
-  }
-
-  function store()
-  {
-
-    $game = new Game();
-
-    $game->player1 = request('player1');
-    $game->player2 = request('player2');
-    $game->player3 = request('player3');
-    $game->player4 = request('player4');
-
-    $game->save();
-
-    return redirect('/games');
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $players = User::all();
+        return view('games.create',compact('players'));
     }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $game = new Game();
+
+        $game->player1 = request('player1');
+        $game->player2 = request('player2');
+        $game->player3 = request('player3');
+        $game->player4 = request('player4');
+
+        $game->save();
+
+        return redirect('/games');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  \App\Game  $game
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Game $game)
+    {
+        $player1 = User::where('id',$game->player1)->first();
+        $player2 = User::where('id',$game->player2)->first();
+        $player3 = User::where('id',$game->player3)->first();
+        $player4 = User::where('id',$game->player4)->first();
+
+        $players = [
+            'Player 1' => $player1,
+            'Player 2' => $player2,
+            'Player 3' => $player3,
+            'Player 4' => $player4
+        ];
+
+        return view('games.show',compact('game','players'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Game  $game
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Game $game)
+    {
+        //
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Game  $game
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, Game $game)
+    {
+        //
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  \App\Game  $game
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Game $game)
+    {
+        //
+    }
+
+    /**
+     * Return live game of currently authenticated user.
+     *
+     * @param  \App\Game  $game
+     * @return \Illuminate\Http\Response
+     */
+    function live()
+    {
+          // Get the currently authenticated user's ID...
+          $id = Auth::id();
+
+          if ( (int) $id <= 0 ) {
+              return redirect(url('/') );
+
+          }
+
+          $game_live = Game::where( [
+              [ 'status', 'live' ],
+          ])->first();
+
+          if ( empty( $game_live ) ) {
+              return redirect(url('/') );
+          }
+
+          return view('games.live');
+      }
 }

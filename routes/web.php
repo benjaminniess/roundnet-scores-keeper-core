@@ -13,15 +13,21 @@
 
 Route::get('/', 'HomeController@index');
 
-Route::get('/games', 'GamesController@index');
+/*
+|--------------------------------------------------------------------------
+| Start Games routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/games/live', 'GamesController@live');
 
-Route::post('/games', 'GamesController@store');
+Route::resource('games','GamesController');
 
-Route::get('/games/{id}', 'GamesController@show')->where('id', '[0-9+]');
-
-Route::get('/games/create', 'GamesController@create');
+/*
+|--------------------------------------------------------------------------
+| End Games routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/friends', 'FriendsController@show');
 

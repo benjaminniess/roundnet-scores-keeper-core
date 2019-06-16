@@ -5,7 +5,7 @@
 <form class="form" action="/games" method="POST">
 
 
-    {{ csrf_field() }}
+    @csrf
     <h3>Team 1</h3>
         <label for="player1">Player 1</label>
         <select class="select" name="player1">
@@ -44,6 +44,6 @@
             @endforeach
         </select>
 
-        <button type="submit"> envoyer</button>
+        <button type="submit"> Add project</button>
 </form>
 @endsection

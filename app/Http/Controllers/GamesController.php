@@ -83,7 +83,9 @@ class GamesController extends Controller
      */
     public function edit(Game $game)
     {
-        //
+        $players = User::all();
+
+        return view('games.edit', compact('game','players'));
     }
 
     /**
@@ -95,7 +97,14 @@ class GamesController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        //
+        $game->player1 = (int) $request->player1;
+        $game->player2 = (int) $request->player2;
+        $game->player3 = (int) $request->player3;
+        $game->player4 = (int) $request->player4;
+
+        $game->save();
+
+        return redirect()->route('games.show',$game);
     }
 
     /**

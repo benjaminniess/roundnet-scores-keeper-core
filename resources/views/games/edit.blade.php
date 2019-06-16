@@ -62,4 +62,12 @@
 
         <button type="submit"> Edit</button>
 </form>
+
+<form class="form" action="/games/{{ $game->id }}" method="POST">
+
+    @csrf
+    @method('DELETE')
+
+        <button type="submit"> Delete</button>
+</form>
 @endsection

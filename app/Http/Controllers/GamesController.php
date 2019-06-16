@@ -14,6 +14,7 @@ class GamesController extends Controller
   function index()
   {
     $games = Game::all();
+
     return view('games.index')->withGames($games);
   }
 
@@ -21,7 +22,20 @@ class GamesController extends Controller
   function show($id)
   {
     $game = Game::where('id',$id)->first();
-    return view('games.show')->withGame($game);
+
+    $player1 = User::where('id',$game->player1)->first();
+    $player2 = User::where('id',$game->player2)->first();
+    $player3 = User::where('id',$game->player3)->first();
+    $player4 = User::where('id',$game->player4)->first();
+
+    $players = [
+        'Player 1' => $player1,
+        'Player 2' => $player2,
+        'Player 3' => $player3,
+        'Player 4' => $player4
+    ];
+
+    return view('games.show',compact('game','players'));
   }
 
   function live()

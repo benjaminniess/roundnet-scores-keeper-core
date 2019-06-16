@@ -4,12 +4,16 @@
     <h2>Games list</h2>
     @if (!$games->isEmpty())
         <table align=center border=1>
+            <th>Game id</th>
             <th>Player 1</th>
             <th>Player 2</th>
             <th>Player 3</th>
             <th>Player 4</th>
             @foreach($games as $game)
             <tr>
+                <td>
+                    {{ $game->id }}
+                </td>
                 <td>
                     {{ $game->player1 }}
                 </td>

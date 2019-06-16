@@ -128,22 +128,29 @@ class GamesController extends Controller
      */
     function live()
     {
-          // Get the currently authenticated user's ID...
-          $id = Auth::id();
+        // Get the currently authenticated user's ID...
+        $id = Auth::id();
 
-          if ( (int) $id <= 0 ) {
-              return redirect(url('/') );
+        if ( (int) $id <= 0 ) {
+          return redirect(url('/') );
 
-          }
+        }
 
-          $game_live = Game::where( [
-              [ 'status', 'live' ],
-          ])->first();
+        $game_live = Game::where( [
+          [ 'status', 'live' ],
+        ])->first();
 
-          if ( empty( $game_live ) ) {
-              return redirect(url('/') );
-          }
+        if ( empty( $game_live ) ) {
+          return redirect(url('/') );
+        }
 
-          return view('games.live');
+
+        $existing_token = Auth::user()->tokens()->first();
+        if ( empty( $existing_token ) ) {
+            Auth::user()->createToken('ReactToken')->accessToken;
+            $existing_token = Auth::user()->tokens()->first();
+        }
+
+        return view('games.live')->withToken($existing_token);
       }
 }

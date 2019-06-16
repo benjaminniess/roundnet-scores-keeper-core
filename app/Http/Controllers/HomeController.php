@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use \App\Game;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,19 @@ class HomeController extends Controller
      */
     public function index()
     {
+        // Get the currently authenticated user's ID...
+        $id = Auth::id();
+
+        if ( (int) $id > 0 ) {
+            $game_live = Game::where( [
+                [ 'status', 'live' ],
+            ])->first();
+
+            if ( ! empty( $game_live ) ) {
+                return redirect(url('/games/live') );
+            }
+        }
+
         return view('home');
     }
 }

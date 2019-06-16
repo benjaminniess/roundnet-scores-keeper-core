@@ -1,5 +1,4 @@
 <?php
-
 return [
 
     /*
@@ -227,5 +226,9 @@ return [
         'View' => Illuminate\Support\Facades\View::class,
 
     ],
+
+    'rest_api' => [
+        'client_id' => env('API_CLIENT_ID', false )
+    ]
 
 ];

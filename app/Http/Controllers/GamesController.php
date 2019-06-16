@@ -41,7 +41,13 @@ class GamesController extends Controller
             return redirect(url('/') );
         }
 
-        return view('games.live');
+        $existing_token = Auth::user()->tokens()->first();
+        if ( empty( $existing_token ) ) {
+            Auth::user()->createToken('ReactToken')->accessToken;
+            $existing_token = Auth::user()->tokens()->first();
+        }
+
+        return view('games.live')->withToken($existing_token);
     }
 
   // CREATE A NEW PROJECT

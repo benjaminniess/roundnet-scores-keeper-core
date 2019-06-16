@@ -2,13 +2,36 @@
 
 @section('content')
     <h2>Games list</h2>
-    <ul>
+    <table align=center border=1>
+        <th>Player 1</th>
+        <th>Player 2</th>
+        <th>Player 3</th>
+        <th>Player 4</th>
         @foreach($games as $game)
-        <li>
-            <a href="{{ url('/games') }}/{{ $game->id }}">
-                {{ $game->player1 }} - {{ $game->player2 }} - {{ $game->player3 }} - {{ $game->player4 }}
-            </a>
-        </li>
+        <tr>
+            <td>
+                {{ $game->player1 }}
+            </td>
+            <td>
+                {{ $game->player2 }}
+            </td>
+            <td>
+                {{ $game->player3 }}
+            </td>
+            <td>
+                {{ $game->player4 }}
+            </td>
+            <td>
+                <a href="{{ url('/games') }}/{{ $game->id }}">
+                    View
+                </a>
+            </td>
+            <td>
+                <a href="{{ url('/games') }}/{{ $game->id }}/edit">
+                    Edit
+                </a>
+            </td>
+        </tr>
         @endforeach
-    </ul>
+    </table>
 @endsection

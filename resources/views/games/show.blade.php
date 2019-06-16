@@ -8,4 +8,7 @@
             <li>{{ $player_key . ' : ' . $player->name }}</li>
         @endforeach
     </ul>
+    <a href="{{ url('/games') }}/{{ $game->id }}/edit">
+        Edit
+    </a>
 @endsection

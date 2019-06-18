@@ -6,6 +6,7 @@ use App\Game;
 use \App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GamesController extends Controller
 {
@@ -144,13 +145,14 @@ class GamesController extends Controller
           return redirect(url('/') );
         }
 
-
-        $existing_token = Auth::user()->tokens()->first();
-        if ( empty( $existing_token ) ) {
-            Auth::user()->createToken('ReactToken')->accessToken;
-            $existing_token = Auth::user()->tokens()->first();
+        $user = DB::table('users')->select('access_token')->where('id', '=', $id)->first();
+        if ( empty( $user->access_token ) ) {
+            $access_token = Auth::user()->createToken('ReactToken')->accessToken;
+            DB::table('users')->where('id', $id)->update(['access_token' => $access_token]);
+        } else {
+            $access_token = $user->access_token;
         }
 
-        return view('games.live')->withToken($existing_token);
+        return view('games.live')->withToken($access_token);
       }
 }

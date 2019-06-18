@@ -145,12 +145,14 @@ class GamesController extends Controller
           return redirect(url('/') );
         }
 
-        $user = DB::table('users')->select('access_token')->where('id', '=', $id)->first();
-        if ( empty( $user->access_token ) ) {
+        $access_token = isset( $_COOKIE['user_access_token'] ) ? $_COOKIE['user_access_token'] : false;
+        if ( empty( $access_token ) ) {
+            DB::table('oauth_access_tokens')->where([
+                [ 'user_id', '=', $id ],
+                [ 'name', '=', 'ReactToken' ],
+            ], '=', $id)->delete();
             $access_token = Auth::user()->createToken('ReactToken')->accessToken;
-            DB::table('users')->where('id', $id)->update(['access_token' => $access_token]);
-        } else {
-            $access_token = $user->access_token;
+            setcookie('user_access_token', $access_token, time() + 30 * 3600 * 24, '/' );
         }
 
         return view('games.live')->withToken($access_token);

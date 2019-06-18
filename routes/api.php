@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Game;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,3 +17,11 @@ use Illuminate\Http\Request;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::get('/games/live', function () {
+    $game_live = Game::where( [
+        [ 'status', 'live' ],
+    ])->first();
+
+    return $game_live;
+})->middleware('auth:api');

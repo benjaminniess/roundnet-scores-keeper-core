@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use \App\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -127,15 +128,17 @@ class GamesController extends Controller
      * @param  \App\Game  $game
      * @return \Illuminate\Http\Response
      */
-    function live()
+    public function live()
     {
-        // Get the currently authenticated user's ID...
-        $id = Auth::id();
-
-        if ( (int) $id <= 0 ) {
+        // Get the currently authenticated user
+        $user_obj = \App\User::where('id', Auth::id())->first();
+        if ( empty( $user_obj ) ) {
           return redirect(url('/') );
 
         }
+
+        /** @var User $user_obj */
+        $id = $user_obj->getAttribute('id');
 
         $game_live = Game::where( [
           [ 'status', 'live' ],
@@ -145,14 +148,9 @@ class GamesController extends Controller
           return redirect(url('/') );
         }
 
-        $access_token = isset( $_COOKIE['user_access_token'] ) ? $_COOKIE['user_access_token'] : false;
+        $access_token = $user_obj->get_access_token();
         if ( empty( $access_token ) ) {
-            DB::table('oauth_access_tokens')->where([
-                [ 'user_id', '=', $id ],
-                [ 'name', '=', 'ReactToken' ],
-            ], '=', $id)->delete();
-            $access_token = Auth::user()->createToken('ReactToken')->accessToken;
-            setcookie('user_access_token', $access_token, time() + 30 * 3600 * 24, '/' );
+            return redirect(url('/') );
         }
 
         return view('games.live')->withToken($access_token);

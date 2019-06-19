@@ -87,8 +87,8 @@
 					},
 					{
 						"key": "Authorization",
-						"value": "Bearer {{access_token}}",
-						"type": "text"
+						"type": "text",
+						"value": "Bearer {{access_token}}"
 					}
 				],
 				"body": {
@@ -145,6 +145,48 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Add point",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"grant_type\":\"password\",\n\t\"client_id\":\"{{client_id}}\",\n\t\"client_secret\":\"{{client_secret}}\",\n\t\"username\":\"{{user_email}}\",\n\t\"password\" :\"{{user_password}}\",\n\t\"score\": \"*\"\n}"
+				},
+				"url": {
+					"raw": "{{home_url}}/api/games/1/points?action_type=1",
+					"host": [
+						"{{home_url}}"
+					],
+					"path": [
+						"api",
+						"games",
+						"1",
+						"points"
+					],
+					"query": [
+						{
+							"key": "action_type",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
 		}
 	],
 	"event": [
@@ -171,37 +213,37 @@
 	],
 	"variable": [
 		{
-			"id": "047309f4-7462-439d-8671-d69329cdfa59",
+			"id": "dc94938d-40fb-4d99-bab2-6695442b30fa",
 			"key": "home_url",
 			"value": "http://127.0.0.1:8000",
 			"type": "string"
 		},
 		{
-			"id": "67475751-25d1-4188-8e3b-7d3985b2fd0b",
+			"id": "52389643-14c4-4986-bc5d-681dbe8212a9",
 			"key": "client_id",
 			"value": "5",
 			"type": "string"
 		},
 		{
-			"id": "8ff6810e-54f8-48cd-b8f7-5c42ec2b96c3",
+			"id": "5c1236b6-70f0-4356-a69b-572cb4670fdb",
 			"key": "client_secret",
 			"value": "xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ",
 			"type": "string"
 		},
 		{
-			"id": "acdebef7-3660-43da-a201-a6ca6d222fe5",
+			"id": "5d56144b-954c-4bf0-a29d-50ce73c64ac3",
 			"key": "user_email",
 			"value": "b@gmail.com",
 			"type": "string"
 		},
 		{
-			"id": "ef3a4990-6d87-4fed-a143-4970f50fcc47",
+			"id": "ac9b26a8-33c1-4f20-a62f-a9530c96ef57",
 			"key": "user_password",
 			"value": "admin",
 			"type": "string"
 		},
 		{
-			"id": "00bcce1c-9988-4871-90a8-fd6e06f48c0a",
+			"id": "095fb571-e617-420b-a2a6-d8fd5cb0419b",
 			"key": "access_token",
 			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJmY2ExY2EyYzMyNjAyMGUyMGIzMDgxYjA0ODcwOGIzZWI3YWRhOTZhNDE5M2RkNTE1ZTA5MTE4ZWJjNGMzMTE0NmQzZmU3YWZhNDA4YTk2In0.eyJhdWQiOiI1IiwianRpIjoiMmZjYTFjYTJjMzI2MDIwZTIwYjMwODFiMDQ4NzA4YjNlYjdhZGE5NmE0MTkzZGQ1MTVlMDkxMThlYmM0YzMxMTQ2ZDNmZTdhZmE0MDhhOTYiLCJpYXQiOjE1NjA4Mzc0MTYsIm5iZiI6MTU2MDgzNzQxNiwiZXhwIjoxNTkyNDU5ODE2LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.X0dsFMiTdCP4A9s4PgQUAFsMQnDh472_q_1ZElg2MkoUa9iAd4aRAKdsYtMxBtSF17ILyyc80UTruwpK2ZPYbFD8LKHXkvr2zvRqW6tkv0wxzDAvB7LdODhKq0dZZUvHcKks3lVstPZliq43mL1NoVM3h7LiQQ6VtbT9eueANtxsWdSExKdZA_nNfRyd0RD_OpzpxSWHcaCFRTsVfnHXTHeKGOl7CsTx7x1u0ELXwzDCEL3hzZPY8M9Ooy9Qt1VJnBwPYPkho2bbsDh4lqgO1X1gmhUKN1fhhkWc_UFwbWnYNqUUQ9qieZoRz-6ycQNIQPrbXaF_pSdSxEhctIthGz96ezvdHBQMEJ6SzfplG0AfVOt3je3mSDCAKvvQoHacABMSU98cph7mJ-7yDs0Xw4XP7e-nSza1TaRkm_g-GqFQ2Kloxa1gFeG_9ANV43z2uA5Yj-IFrhD-4VJZ0J2qpxGqeuRcKC1z2MKfxuNjCXA_vSk1I458jwLkXPiinM76vkOqqHrWF3go--QtNsGT4DlPPf9kvYqDA-_UdZ2Dw3T6_MxzS1APvVMOxdniETVsOzCmLpvwwhZPqU9dS3051_59VZQ4ZQE_JBhBfBT9wdPQNTE3x5Prgf4gGN44X9luPmLPJ-op8F9IkBFLf5WEl4Os6CfaPzfwj9hUBvCt-mk",
 			"type": "string"

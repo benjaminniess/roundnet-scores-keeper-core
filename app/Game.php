@@ -17,7 +17,7 @@ class Game extends Model
      */
     public function get_history() {
         $game_points = Game_Point::where( [
-            [ 'game_id', $this->getAttribute('id') ],
+            [ 'game_id', $this->id ],
         ])->get();
 
         return $game_points;
@@ -30,7 +30,7 @@ class Game extends Model
      * @return bool
      */
     public function is_player_in_game( $player_id ) {
-        if ( (int) $player_id !== (int) $this->getAttribute( 'player1' ) && (int) $player_id !== (int) $this->getAttribute( 'player2' ) && (int) $player_id !== (int) $this->getAttribute( 'player3' ) && (int) $player_id !== (int) $this->getAttribute( 'player4' ) ) {
+        if ( (int) $player_id !== (int) $this->player1 && (int) $player_id !== (int) $this->player2 && (int) $player_id !== (int) $this->player3 && (int) $player_id !== (int) $this->player4 ) {
             return false;
         }
 
@@ -43,7 +43,7 @@ class Game extends Model
      * @return boolean
      */
     public function is_game_live() {
-        return $this->getAttribute( 'status' ) === 'live' ? true : false;
+        return $this->status === 'live' ? true : false;
     }
 
     /**
@@ -53,8 +53,54 @@ class Game extends Model
      */
     public function get_scores() {
         return [
-            'team1' => $this->getAttribute( 'score_team_1' ),
-            'team2' => $this->getAttribute( 'score_team_2' ),
+            'team1' => $this->score_team_1,
+            'team2' => $this->score_team_2,
+        ];
+    }
+
+    /**
+     * Get the 4 players \App\User objects
+     *
+     * @return array
+     */
+    public function get_players() {
+        return [
+            'player1' => \App\User::find( $this->player1 ),
+            'player2' => \App\User::find( $this->player2 ),
+            'player3' => \App\User::find( $this->player3 ),
+            'player4' => \App\User::find( $this->player4 ),
+        ];
+    }
+
+    /**
+     * Prepare all game data for API usage
+     *
+     * @return array
+     */
+    public function get_game_data() {
+        $players = $this->get_players();
+
+        return [
+            'success' => true,
+            'data'    => [
+                'teams'    => [
+                    'a' => [
+                        'players' => [
+                            'p1' => $players['player1']->get_user_data(),
+                            'p2' => $players['player2']->get_user_data(),
+                        ],
+                    ],
+                    'b' => [
+                        'players' => [
+                            'p3' => $players['player3']->get_user_data(),
+                            'p4' => $players['player4']->get_user_data(),
+                        ],
+                    ],
+                ],
+                'points'   => $this->get_history(),
+                'score'    => $this->get_scores(),
+                'duration' => $this->game_duration,
+            ],
         ];
     }
 
@@ -65,7 +111,7 @@ class Game extends Model
      * @param int $score_team_2
      */
     public function set_score( $score_team_1 = 0, $score_team_2 = 0 ) {
-        DB::table('games')->where('id', $this->getAttribute('id'))->update([
+        DB::table('games')->where('id', $this->id)->update([
             'score_team_1' => $score_team_1,
             'score_team_2' => $score_team_2,
         ]);
@@ -104,7 +150,7 @@ class Game extends Model
         $score_team_1 = $this->getAttribute( 'score_team_1' );
         $score_team_2 = $this->getAttribute( 'score_team_2' );
         // Player is in team 1 ?
-        if ( $player_id === $this->getAttribute( 'player_1' ) || $player_id === $this->getAttribute( 'player_1' ) ) {
+        if ( $player_id === $this->player_1 || $player_id === $this->player_1 ) {
             if ( 'positive' === $action_type->action_type ) {
                 $score_team_1 ++;
             } elseif ( 'negative' === $action_type->action_type ) {
@@ -126,6 +172,7 @@ class Game extends Model
                 'action_type_id' => $action_type_id,
                 'score_team_1'   => $score_team_1,
                 'score_team_2'   => $score_team_2,
+                'game_id'        => $this->id,
             ]
         );
 

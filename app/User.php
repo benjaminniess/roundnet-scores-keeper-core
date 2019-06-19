@@ -78,4 +78,17 @@ class User extends \TCG\Voyager\Models\User
 
         return $game_live;
     }
+
+    /**
+     * Prepare user data for rest API usage
+     *
+     * @return array
+     */
+    public function get_user_data() {
+        return [
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'avatar' => 'comming-soon',
+        ];
+    }
 }

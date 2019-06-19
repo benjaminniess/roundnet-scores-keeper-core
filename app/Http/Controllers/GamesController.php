@@ -130,22 +130,17 @@ class GamesController extends Controller
      */
     public function live()
     {
+        /** @var User $user_obj */
+
         // Get the currently authenticated user
-        $user_obj = \App\User::where('id', Auth::id())->first();
+        $user_obj = \App\User::find(Auth::id());
         if ( empty( $user_obj ) ) {
           return redirect(url('/') );
-
         }
 
-        /** @var User $user_obj */
-        $id = $user_obj->getAttribute('id');
-
-        $game_live = Game::where( [
-          [ 'status', 'live' ],
-        ])->first();
-
-        if ( empty( $game_live ) ) {
-          return redirect(url('/') );
+        $live_game = $user_obj->get_live_game();
+        if ( empty( $live_game ) ) {
+            return redirect(url('/') );
         }
 
         $access_token = $user_obj->get_access_token();

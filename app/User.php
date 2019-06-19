@@ -64,7 +64,7 @@ class User extends \TCG\Voyager\Models\User
     /**
      * Checks if the given user is in a live game and returns it
      *
-     * @return mixed
+     * @return \App\Game
      */
     public function get_live_game() {
         $user_id = $this->getAttribute( 'id' );

@@ -25,3 +25,15 @@ Route::get('/games/live', function () {
 
     return $game_live;
 })->middleware('auth:api');
+
+
+Route::post('/games/{game_id}/points', function (Request $request, $id) {
+    /** @var \App\User $user_obj */
+    $user_obj = \App\User::find( (int) $request->user()->getAttribute('id'));
+
+    /** @var \App\Game $game_obj */
+    $game_obj = \App\Game::find( (int) $id);
+
+    return response()->json( $game_obj->add_point( (int) $request->input('player_id'), (int) $request->input('action_type') ) );
+
+})->middleware('auth:api');

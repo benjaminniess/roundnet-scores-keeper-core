@@ -1,0 +1,252 @@
+{
+	"info": {
+		"_postman_id": "0b3d3ba3-a21b-4b0d-bcc4-317299daa4ba",
+		"name": "Roundnet Spikeball Scores",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Token generation",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"grant_type\":\"password\",\n\t\"client_id\":\"{{client_id}}\",\n\t\"client_secret\":\"{{client_secret}}\",\n\t\"username\":\"{{user_email}}\",\n\t\"password\" :\"{{user_password}}\",\n\t\"score\": \"*\"\n}"
+				},
+				"url": {
+					"raw": "{{home_url}}/oauth/token",
+					"host": [
+						"{{home_url}}"
+					],
+					"path": [
+						"oauth",
+						"token"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"disabled": true
+						},
+						{
+							"key": "client_id",
+							"value": "5",
+							"disabled": true
+						},
+						{
+							"key": "client_secret",
+							"value": "xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "b@gmail.com",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "scope",
+							"value": "*",
+							"disabled": true
+						},
+						{
+							"key": "form_params",
+							"value": "{\"grant_type\":\"password\",\"client_id\":5,\"client_secret\":\"xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ\"}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get live game",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"grant_type\":\"password\",\n\t\"client_id\":\"{{client_id}}\",\n\t\"client_secret\":\"{{client_secret}}\",\n\t\"username\":\"{{user_email}}\",\n\t\"password\" :\"{{user_password}}\",\n\t\"score\": \"*\"\n}"
+				},
+				"url": {
+					"raw": "{{home_url}}/api/games/live",
+					"host": [
+						"{{home_url}}"
+					],
+					"path": [
+						"api",
+						"games",
+						"live"
+					],
+					"query": [
+						{
+							"key": "grant_type",
+							"value": "password",
+							"disabled": true
+						},
+						{
+							"key": "client_id",
+							"value": "5",
+							"disabled": true
+						},
+						{
+							"key": "client_secret",
+							"value": "xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ",
+							"disabled": true
+						},
+						{
+							"key": "username",
+							"value": "b@gmail.com",
+							"disabled": true
+						},
+						{
+							"key": "password",
+							"value": "admin",
+							"disabled": true
+						},
+						{
+							"key": "scope",
+							"value": "*",
+							"disabled": true
+						},
+						{
+							"key": "form_params",
+							"value": "{\"grant_type\":\"password\",\"client_id\":5,\"client_secret\":\"xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ\"}",
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add point",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					},
+					{
+						"key": "Authorization",
+						"type": "text",
+						"value": "Bearer {{access_token}}"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"grant_type\":\"password\",\n\t\"client_id\":\"{{client_id}}\",\n\t\"client_secret\":\"{{client_secret}}\",\n\t\"username\":\"{{user_email}}\",\n\t\"password\" :\"{{user_password}}\",\n\t\"score\": \"*\"\n}"
+				},
+				"url": {
+					"raw": "{{home_url}}/api/games/1/points?action_type=1",
+					"host": [
+						"{{home_url}}"
+					],
+					"path": [
+						"api",
+						"games",
+						"1",
+						"points"
+					],
+					"query": [
+						{
+							"key": "action_type",
+							"value": "1"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "0cf4f6a7-212a-44a6-a0e8-015cc9be7824",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "f18c6869-3d28-4eee-b337-69d615cb28e0",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "dc94938d-40fb-4d99-bab2-6695442b30fa",
+			"key": "home_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"id": "52389643-14c4-4986-bc5d-681dbe8212a9",
+			"key": "client_id",
+			"value": "5",
+			"type": "string"
+		},
+		{
+			"id": "5c1236b6-70f0-4356-a69b-572cb4670fdb",
+			"key": "client_secret",
+			"value": "xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ",
+			"type": "string"
+		},
+		{
+			"id": "5d56144b-954c-4bf0-a29d-50ce73c64ac3",
+			"key": "user_email",
+			"value": "b@gmail.com",
+			"type": "string"
+		},
+		{
+			"id": "ac9b26a8-33c1-4f20-a62f-a9530c96ef57",
+			"key": "user_password",
+			"value": "admin",
+			"type": "string"
+		},
+		{
+			"id": "095fb571-e617-420b-a2a6-d8fd5cb0419b",
+			"key": "access_token",
+			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJmY2ExY2EyYzMyNjAyMGUyMGIzMDgxYjA0ODcwOGIzZWI3YWRhOTZhNDE5M2RkNTE1ZTA5MTE4ZWJjNGMzMTE0NmQzZmU3YWZhNDA4YTk2In0.eyJhdWQiOiI1IiwianRpIjoiMmZjYTFjYTJjMzI2MDIwZTIwYjMwODFiMDQ4NzA4YjNlYjdhZGE5NmE0MTkzZGQ1MTVlMDkxMThlYmM0YzMxMTQ2ZDNmZTdhZmE0MDhhOTYiLCJpYXQiOjE1NjA4Mzc0MTYsIm5iZiI6MTU2MDgzNzQxNiwiZXhwIjoxNTkyNDU5ODE2LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.X0dsFMiTdCP4A9s4PgQUAFsMQnDh472_q_1ZElg2MkoUa9iAd4aRAKdsYtMxBtSF17ILyyc80UTruwpK2ZPYbFD8LKHXkvr2zvRqW6tkv0wxzDAvB7LdODhKq0dZZUvHcKks3lVstPZliq43mL1NoVM3h7LiQQ6VtbT9eueANtxsWdSExKdZA_nNfRyd0RD_OpzpxSWHcaCFRTsVfnHXTHeKGOl7CsTx7x1u0ELXwzDCEL3hzZPY8M9Ooy9Qt1VJnBwPYPkho2bbsDh4lqgO1X1gmhUKN1fhhkWc_UFwbWnYNqUUQ9qieZoRz-6ycQNIQPrbXaF_pSdSxEhctIthGz96ezvdHBQMEJ6SzfplG0AfVOt3je3mSDCAKvvQoHacABMSU98cph7mJ-7yDs0Xw4XP7e-nSza1TaRkm_g-GqFQ2Kloxa1gFeG_9ANV43z2uA5Yj-IFrhD-4VJZ0J2qpxGqeuRcKC1z2MKfxuNjCXA_vSk1I458jwLkXPiinM76vkOqqHrWF3go--QtNsGT4DlPPf9kvYqDA-_UdZ2Dw3T6_MxzS1APvVMOxdniETVsOzCmLpvwwhZPqU9dS3051_59VZQ4ZQE_JBhBfBT9wdPQNTE3x5Prgf4gGN44X9luPmLPJ-op8F9IkBFLf5WEl4Os6CfaPzfwj9hUBvCt-mk",
+			"type": "string"
+		}
+	]
+}

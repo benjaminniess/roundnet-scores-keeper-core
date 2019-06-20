@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -38,4 +40,55 @@ class User extends \TCG\Voyager\Models\User
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Checks in cookies and returns a valid token for the current user. If no access token, it will generate a new one
+     *
+     * @return mixed
+     */
+    public function get_access_token() {
+        if ( isset( $_COOKIE['user_access_token'] ) && ! empty( $_COOKIE['user_access_token'] ) ) {
+            return $_COOKIE['user_access_token'];
+        }
+
+        DB::table('oauth_access_tokens')->where([
+            [ 'user_id', '=', $this->getAttribute( 'id' ) ],
+            [ 'name', '=', 'ReactToken' ],
+        ], '=', $this->getAttribute( 'id' ))->delete();
+        $access_token = Auth::user()->createToken('ReactToken')->accessToken;
+        setcookie('user_access_token', $access_token, time() + 30 * 3600 * 24, '/' );
+
+        return $access_token;
+    }
+
+    /**
+     * Checks if the given user is in a live game and returns it
+     *
+     * @return \App\Game
+     */
+    public function get_live_game() {
+        $user_id = $this->getAttribute( 'id' );
+
+        $game_live = Game::where( [
+            [ 'status', 'live' ],
+
+        ])->where(function ($query) use ($user_id) {
+            $query->where( 'player1', '=', $user_id )->orWhere( 'player2', '=', $user_id)->orWhere( 'player3', '=', $user_id)->orWhere( 'player4', '=', $user_id);
+        })->first();
+
+        return $game_live;
+    }
+
+    /**
+     * Prepare user data for rest API usage
+     *
+     * @return array
+     */
+    public function get_user_data() {
+        return [
+            'id'     => $this->id,
+            'name'   => $this->name,
+            'avatar' => 'comming-soon',
+        ];
+    }
 }

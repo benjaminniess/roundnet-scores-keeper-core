@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use \App\User;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class GamesController extends Controller
 {
@@ -128,31 +130,26 @@ class GamesController extends Controller
      * @param  \App\Game  $game
      * @return \Illuminate\Http\Response
      */
-    function live()
+    public function live()
     {
-        // Get the currently authenticated user's ID...
-        $id = Auth::id();
+        /** @var User $user_obj */
 
-        if ( (int) $id <= 0 ) {
-          return redirect(url('/') );
-
-        }
-
-        $game_live = Game::where( [
-          [ 'status', 'live' ],
-        ])->first();
-
-        if ( empty( $game_live ) ) {
+        // Get the currently authenticated user
+        $user_obj = \App\User::find(Auth::id());
+        if ( empty( $user_obj ) ) {
           return redirect(url('/') );
         }
 
-
-        $existing_token = Auth::user()->tokens()->first();
-        if ( empty( $existing_token ) ) {
-            Auth::user()->createToken('ReactToken')->accessToken;
-            $existing_token = Auth::user()->tokens()->first();
+        $live_game = $user_obj->get_live_game();
+        if ( empty( $live_game ) ) {
+            return redirect(url('/') );
         }
 
-        return view('games.live')->withToken($existing_token);
+        $access_token = $user_obj->get_access_token();
+        if ( empty( $access_token ) ) {
+            return redirect(url('/') );
+        }
+
+        return view('games.live')->withToken($access_token);
       }
 }

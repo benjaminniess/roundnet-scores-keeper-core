@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use \App\Game;
 use Illuminate\Support\Facades\Auth;
@@ -25,17 +26,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        // Get the currently authenticated user's ID...
-        $id = Auth::id();
+        /** @var User $user_obj */
 
-        if ( (int) $id > 0 ) {
-            $game_live = Game::where( [
-                [ 'status', 'live' ],
-            ])->first();
+        // Get the currently authenticated user
+        $user_obj = \App\User::find(Auth::id());
+        if ( empty( $user_obj ) ) {
+            return redirect(url('/') );
+        }
 
-            if ( ! empty( $game_live ) ) {
-                return redirect(url('/games/live') );
-            }
+        $live_game = $user_obj->get_live_game();
+        if ( ! empty( $live_game ) ) {
+            return redirect(url('/games/live') );
         }
 
         return view('home');

@@ -118,6 +118,22 @@ class Game extends Model
     }
 
     /**
+     * Change game status
+     *
+     * @param $status
+     * @return int
+     */
+    public function set_status( $status ) {
+        if( ! DB::table('games')->where('id', $this->id)->update([
+            'status' => 'closed',
+        ]) ) {
+            return false;
+        }
+
+        $this->status = $status;
+    }
+
+    /**
      * Ads a new point history to the game
      *
      * @param $player_id
@@ -176,8 +192,19 @@ class Game extends Model
             ]
         );
 
+        if ( $score_team_1 >= 21 || $score_team_2 >= 21 ) {
+            if ( abs( $score_team_1 - $score_team_2 ) >= 2 ) {
+                $this->set_status( 'closed' );
+                $this->fresh();
+            }
+        }
+
         return [
             'success' => true,
+            'data'    => [
+                'game_status' => $this->status,
+                'score'       => $this->get_scores(),
+            ],
         ];
     }
 }

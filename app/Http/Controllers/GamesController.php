@@ -20,6 +20,14 @@ class GamesController extends Controller
     {
         $games = Game::all();
 
+        if(empty($games)){
+            return redirect(url('/') );
+        }
+
+        foreach ($games as $game) {
+            $game->players = $game->get_players();
+        }
+
         return view('games.index')->withGames($games);
     }
 
@@ -62,17 +70,7 @@ class GamesController extends Controller
      */
     public function show(Game $game)
     {
-        $player1 = User::where('id',$game->player1)->first();
-        $player2 = User::where('id',$game->player2)->first();
-        $player3 = User::where('id',$game->player3)->first();
-        $player4 = User::where('id',$game->player4)->first();
-
-        $players = [
-            'Player 1' => $player1,
-            'Player 2' => $player2,
-            'Player 3' => $player3,
-            'Player 4' => $player4
-        ];
+        $players = $game->get_players();
 
         return view('games.show',compact('game','players'));
     }

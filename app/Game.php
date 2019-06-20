@@ -7,8 +7,12 @@ use Illuminate\Support\Facades\DB;
 
 class Game extends Model
 {
-    protected $table = 'games';
-    //
+    protected $fillable = [
+        'player1',
+        'player2',
+        'player3',
+        'player4'
+    ];
 
     /**
      * Get all points associated to the given game

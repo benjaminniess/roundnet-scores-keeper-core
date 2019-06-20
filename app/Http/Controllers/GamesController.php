@@ -20,6 +20,7 @@ class GamesController extends Controller
     {
         $games = Game::all();
 
+
         if(empty($games)){
             return redirect(url('/') );
         }
@@ -28,7 +29,7 @@ class GamesController extends Controller
             $game->players = $game->get_players();
         }
 
-        return view('games.index')->withGames($games);
+        return view('games.index',compact('games'));
     }
 
     /**
@@ -50,14 +51,14 @@ class GamesController extends Controller
      */
     public function store(Request $request)
     {
-        $game = new Game();
+        $attributes = request()->validate([
+            'player1' => 'required',
+            'player2' => 'required',
+            'player3' => 'required',
+            'player4' => 'required'
+        ]);
 
-        $game->player1 = request('player1');
-        $game->player2 = request('player2');
-        $game->player3 = request('player3');
-        $game->player4 = request('player4');
-
-        $game->save();
+        Game::create($attributes);
 
         return redirect('/games');
     }
@@ -97,12 +98,14 @@ class GamesController extends Controller
      */
     public function update(Request $request, Game $game)
     {
-        $game->player1 = (int) $request->player1;
-        $game->player2 = (int) $request->player2;
-        $game->player3 = (int) $request->player3;
-        $game->player4 = (int) $request->player4;
+        $attributes = request()->validate([
+            'player1' => 'required',
+            'player2' => 'required',
+            'player3' => 'required',
+            'player4' => 'required'
+        ]);
 
-        $game->save();
+        $game->update($attributes);
 
         return redirect()->route('games.show',$game);
     }

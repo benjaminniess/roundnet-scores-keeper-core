@@ -6,15 +6,16 @@
 
     @if (!$games->isEmpty())
         <table align=center border=1>
-            <th>Game id</th>
+            <th>Date</th>
             <th>Player 1</th>
             <th>Player 2</th>
             <th>Player 3</th>
             <th>Player 4</th>
+            <th colspan="2">Actions</th>
             @foreach($games as $game)
                 <tr>
                     <td>
-                        {{ $game->created_at->format('d/m/Y') }}
+                        {{ (!is_null($game->created_at)) ? $game->created_at->format('d/m/Y') : 'Not set'  }}
                     </td>
                     <td>
                         {{ $game->players['player1']->name }}

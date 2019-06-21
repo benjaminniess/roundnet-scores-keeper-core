@@ -1,4 +1,4 @@
-@extends('layouts.default');
+@extends('layouts.default')
 
 @section('content')
     <h2>Game title {{ $game->title }}</h2>

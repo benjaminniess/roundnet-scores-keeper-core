@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "0b3d3ba3-a21b-4b0d-bcc4-317299daa4ba",
+		"_postman_id": "b65a9a8c-e5b7-4fcf-96e8-7a4a961e0556",
 		"name": "Roundnet Spikeball Scores",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -29,43 +29,6 @@
 					"path": [
 						"oauth",
 						"token"
-					],
-					"query": [
-						{
-							"key": "grant_type",
-							"value": "password",
-							"disabled": true
-						},
-						{
-							"key": "client_id",
-							"value": "5",
-							"disabled": true
-						},
-						{
-							"key": "client_secret",
-							"value": "xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ",
-							"disabled": true
-						},
-						{
-							"key": "username",
-							"value": "b@gmail.com",
-							"disabled": true
-						},
-						{
-							"key": "password",
-							"value": "admin",
-							"disabled": true
-						},
-						{
-							"key": "scope",
-							"value": "*",
-							"disabled": true
-						},
-						{
-							"key": "form_params",
-							"value": "{\"grant_type\":\"password\",\"client_id\":5,\"client_secret\":\"xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ\"}",
-							"disabled": true
-						}
 					]
 				}
 			},
@@ -80,7 +43,7 @@
 				"method": "GET",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key": "Accept",
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
@@ -89,6 +52,10 @@
 						"key": "Authorization",
 						"type": "text",
 						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
 					}
 				],
 				"body": {
@@ -104,43 +71,6 @@
 						"api",
 						"games",
 						"live"
-					],
-					"query": [
-						{
-							"key": "grant_type",
-							"value": "password",
-							"disabled": true
-						},
-						{
-							"key": "client_id",
-							"value": "5",
-							"disabled": true
-						},
-						{
-							"key": "client_secret",
-							"value": "xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ",
-							"disabled": true
-						},
-						{
-							"key": "username",
-							"value": "b@gmail.com",
-							"disabled": true
-						},
-						{
-							"key": "password",
-							"value": "admin",
-							"disabled": true
-						},
-						{
-							"key": "scope",
-							"value": "*",
-							"disabled": true
-						},
-						{
-							"key": "form_params",
-							"value": "{\"grant_type\":\"password\",\"client_id\":5,\"client_secret\":\"xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ\"}",
-							"disabled": true
-						}
 					]
 				}
 			},
@@ -152,7 +82,7 @@
 				"method": "POST",
 				"header": [
 					{
-						"key": "Content-Type",
+						"key": "Accept",
 						"name": "Content-Type",
 						"type": "text",
 						"value": "application/json"
@@ -161,6 +91,10 @@
 						"key": "Authorization",
 						"type": "text",
 						"value": "Bearer {{access_token}}"
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json"
 					}
 				],
 				"body": {
@@ -213,37 +147,37 @@
 	],
 	"variable": [
 		{
-			"id": "dc94938d-40fb-4d99-bab2-6695442b30fa",
+			"id": "1d87ed11-df7d-4d53-9779-1df1fbf70480",
 			"key": "home_url",
 			"value": "http://127.0.0.1:8000",
 			"type": "string"
 		},
 		{
-			"id": "52389643-14c4-4986-bc5d-681dbe8212a9",
+			"id": "5a13d112-5a56-47e7-b0de-963a9fcc1d20",
 			"key": "client_id",
 			"value": "5",
 			"type": "string"
 		},
 		{
-			"id": "5c1236b6-70f0-4356-a69b-572cb4670fdb",
+			"id": "02cf3e56-e7d8-42c2-8cf6-7470b0ed9a7c",
 			"key": "client_secret",
 			"value": "xdQANtodWN5tft9kCsOyLFIMKrUHMwwIy7s5mqmQ",
 			"type": "string"
 		},
 		{
-			"id": "5d56144b-954c-4bf0-a29d-50ce73c64ac3",
+			"id": "e71f0c53-4729-4625-b8d6-88484c659216",
 			"key": "user_email",
 			"value": "b@gmail.com",
 			"type": "string"
 		},
 		{
-			"id": "ac9b26a8-33c1-4f20-a62f-a9530c96ef57",
+			"id": "ff2be8b4-8eeb-4bd1-a297-a1fa41ba7e0b",
 			"key": "user_password",
 			"value": "admin",
 			"type": "string"
 		},
 		{
-			"id": "095fb571-e617-420b-a2a6-d8fd5cb0419b",
+			"id": "9458effa-1462-407f-8633-0e1877668081",
 			"key": "access_token",
 			"value": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjJmY2ExY2EyYzMyNjAyMGUyMGIzMDgxYjA0ODcwOGIzZWI3YWRhOTZhNDE5M2RkNTE1ZTA5MTE4ZWJjNGMzMTE0NmQzZmU3YWZhNDA4YTk2In0.eyJhdWQiOiI1IiwianRpIjoiMmZjYTFjYTJjMzI2MDIwZTIwYjMwODFiMDQ4NzA4YjNlYjdhZGE5NmE0MTkzZGQ1MTVlMDkxMThlYmM0YzMxMTQ2ZDNmZTdhZmE0MDhhOTYiLCJpYXQiOjE1NjA4Mzc0MTYsIm5iZiI6MTU2MDgzNzQxNiwiZXhwIjoxNTkyNDU5ODE2LCJzdWIiOiIzIiwic2NvcGVzIjpbXX0.X0dsFMiTdCP4A9s4PgQUAFsMQnDh472_q_1ZElg2MkoUa9iAd4aRAKdsYtMxBtSF17ILyyc80UTruwpK2ZPYbFD8LKHXkvr2zvRqW6tkv0wxzDAvB7LdODhKq0dZZUvHcKks3lVstPZliq43mL1NoVM3h7LiQQ6VtbT9eueANtxsWdSExKdZA_nNfRyd0RD_OpzpxSWHcaCFRTsVfnHXTHeKGOl7CsTx7x1u0ELXwzDCEL3hzZPY8M9Ooy9Qt1VJnBwPYPkho2bbsDh4lqgO1X1gmhUKN1fhhkWc_UFwbWnYNqUUQ9qieZoRz-6ycQNIQPrbXaF_pSdSxEhctIthGz96ezvdHBQMEJ6SzfplG0AfVOt3je3mSDCAKvvQoHacABMSU98cph7mJ-7yDs0Xw4XP7e-nSza1TaRkm_g-GqFQ2Kloxa1gFeG_9ANV43z2uA5Yj-IFrhD-4VJZ0J2qpxGqeuRcKC1z2MKfxuNjCXA_vSk1I458jwLkXPiinM76vkOqqHrWF3go--QtNsGT4DlPPf9kvYqDA-_UdZ2Dw3T6_MxzS1APvVMOxdniETVsOzCmLpvwwhZPqU9dS3051_59VZQ4ZQE_JBhBfBT9wdPQNTE3x5Prgf4gGN44X9luPmLPJ-op8F9IkBFLf5WEl4Os6CfaPzfwj9hUBvCt-mk",
 			"type": "string"

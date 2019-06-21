@@ -87,6 +87,7 @@ class Game extends Model
         return [
             'success' => true,
             'data'    => [
+            	'id'  => $this->id,
                 'teams'    => [
                     'a' => [
                         'players' => [

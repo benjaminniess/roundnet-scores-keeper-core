@@ -86,6 +86,186 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/js-cookie/src/js.cookie.js":
+/*!*************************************************!*\
+  !*** ./node_modules/js-cookie/src/js.cookie.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+ * JavaScript Cookie v2.2.0
+ * https://github.com/js-cookie/js-cookie
+ *
+ * Copyright 2006, 2015 Klaus Hartl & Fagner Brack
+ * Released under the MIT license
+ */
+;(function (factory) {
+	var registeredInModuleLoader = false;
+	if (true) {
+		!(__WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
+				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
+				(__WEBPACK_AMD_DEFINE_FACTORY__.call(exports, __webpack_require__, exports, module)) :
+				__WEBPACK_AMD_DEFINE_FACTORY__),
+				__WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		registeredInModuleLoader = true;
+	}
+	if (true) {
+		module.exports = factory();
+		registeredInModuleLoader = true;
+	}
+	if (!registeredInModuleLoader) {
+		var OldCookies = window.Cookies;
+		var api = window.Cookies = factory();
+		api.noConflict = function () {
+			window.Cookies = OldCookies;
+			return api;
+		};
+	}
+}(function () {
+	function extend () {
+		var i = 0;
+		var result = {};
+		for (; i < arguments.length; i++) {
+			var attributes = arguments[ i ];
+			for (var key in attributes) {
+				result[key] = attributes[key];
+			}
+		}
+		return result;
+	}
+
+	function init (converter) {
+		function api (key, value, attributes) {
+			var result;
+			if (typeof document === 'undefined') {
+				return;
+			}
+
+			// Write
+
+			if (arguments.length > 1) {
+				attributes = extend({
+					path: '/'
+				}, api.defaults, attributes);
+
+				if (typeof attributes.expires === 'number') {
+					var expires = new Date();
+					expires.setMilliseconds(expires.getMilliseconds() + attributes.expires * 864e+5);
+					attributes.expires = expires;
+				}
+
+				// We're using "expires" because "max-age" is not supported by IE
+				attributes.expires = attributes.expires ? attributes.expires.toUTCString() : '';
+
+				try {
+					result = JSON.stringify(value);
+					if (/^[\{\[]/.test(result)) {
+						value = result;
+					}
+				} catch (e) {}
+
+				if (!converter.write) {
+					value = encodeURIComponent(String(value))
+						.replace(/%(23|24|26|2B|3A|3C|3E|3D|2F|3F|40|5B|5D|5E|60|7B|7D|7C)/g, decodeURIComponent);
+				} else {
+					value = converter.write(value, key);
+				}
+
+				key = encodeURIComponent(String(key));
+				key = key.replace(/%(23|24|26|2B|5E|60|7C)/g, decodeURIComponent);
+				key = key.replace(/[\(\)]/g, escape);
+
+				var stringifiedAttributes = '';
+
+				for (var attributeName in attributes) {
+					if (!attributes[attributeName]) {
+						continue;
+					}
+					stringifiedAttributes += '; ' + attributeName;
+					if (attributes[attributeName] === true) {
+						continue;
+					}
+					stringifiedAttributes += '=' + attributes[attributeName];
+				}
+				return (document.cookie = key + '=' + value + stringifiedAttributes);
+			}
+
+			// Read
+
+			if (!key) {
+				result = {};
+			}
+
+			// To prevent the for loop in the first place assign an empty array
+			// in case there are no cookies at all. Also prevents odd result when
+			// calling "get()"
+			var cookies = document.cookie ? document.cookie.split('; ') : [];
+			var rdecode = /(%[0-9A-Z]{2})+/g;
+			var i = 0;
+
+			for (; i < cookies.length; i++) {
+				var parts = cookies[i].split('=');
+				var cookie = parts.slice(1).join('=');
+
+				if (!this.json && cookie.charAt(0) === '"') {
+					cookie = cookie.slice(1, -1);
+				}
+
+				try {
+					var name = parts[0].replace(rdecode, decodeURIComponent);
+					cookie = converter.read ?
+						converter.read(cookie, name) : converter(cookie, name) ||
+						cookie.replace(rdecode, decodeURIComponent);
+
+					if (this.json) {
+						try {
+							cookie = JSON.parse(cookie);
+						} catch (e) {}
+					}
+
+					if (key === name) {
+						result = cookie;
+						break;
+					}
+
+					if (!key) {
+						result[name] = cookie;
+					}
+				} catch (e) {}
+			}
+
+			return result;
+		}
+
+		api.set = api;
+		api.get = function (key) {
+			return api.call(api, key);
+		};
+		api.getJSON = function () {
+			return api.apply({
+				json: true
+			}, [].slice.call(arguments));
+		};
+		api.defaults = {};
+
+		api.remove = function (key, attributes) {
+			api(key, '', extend(attributes, {
+				expires: -1
+			}));
+		};
+
+		api.withConverter = init;
+
+		return api;
+	}
+
+	return init(function () {});
+}));
+
+
+/***/ }),
+
 /***/ "./node_modules/object-assign/index.js":
 /*!*********************************************!*\
   !*** ./node_modules/object-assign/index.js ***!
@@ -25053,10 +25233,12 @@ function (_Component) {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _utils_Games__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/Games */ "./resources/js/utils/Games.js");
+/* harmony import */ var _utils_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/Api */ "./resources/js/utils/Api.js");
 /* harmony import */ var _StopWatch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../StopWatch */ "./resources/js/game-live/components/StopWatch.jsx");
 /* harmony import */ var _utils_Players__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils/Players */ "./resources/js/utils/Players.js");
 /* harmony import */ var _ActionButtons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ActionButtons */ "./resources/js/game-live/components/ActionButtons.jsx");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_5__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25074,6 +25256,7 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
+
 
 
 
@@ -25112,7 +25295,7 @@ function (_Component) {
           pointsTypes = _this$state.pointsTypes,
           buttonsTypes = _this$state.buttonsTypes;
 
-      if (game._id === undefined) {
+      if (game.id === undefined) {
         return "";
       }
 
@@ -25210,16 +25393,29 @@ function (_Component) {
   }, {
     key: "componentDidMount",
     value: function componentDidMount() {
-      var game = Object(_utils_Games__WEBPACK_IMPORTED_MODULE_1__["getCurrentGame"])();
-      var pointsTypes = Object(_utils_Games__WEBPACK_IMPORTED_MODULE_1__["getPointsTypes"])();
+      var _this3 = this;
+
+      fetch("http://127.0.0.1:8000/api/games/live", {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': ' application/json',
+          'Authorization': 'Bearer ' + js_cookie__WEBPACK_IMPORTED_MODULE_5___default.a.get('user_access_token')
+        }
+      }).then(function (res) {
+        return res.json();
+      }).then(function (result) {
+        if (result.success === true) {
+          _this3.setState({
+            game: result.data
+          });
+        }
+      }, function (error) {
+        console.log(error);
+      });
+      var pointsTypes = Object(_utils_Api__WEBPACK_IMPORTED_MODULE_1__["getPointsTypes"])();
       this.setState({
-        game: game,
         pointsTypes: pointsTypes
       });
-
-      if (null === game) {
-        this.props.history.push("/");
-      }
     }
   }, {
     key: "handleUpdate",
@@ -25239,7 +25435,7 @@ function (_Component) {
       var _this$state2 = this.state,
           currentPlayer = _this$state2.currentPlayer,
           buttonsTypes = _this$state2.buttonsTypes;
-      var game = Object(_utils_Games__WEBPACK_IMPORTED_MODULE_1__["addAction"])(this.state.game, currentPlayer, type, buttonsTypes);
+      var game = Object(_utils_Api__WEBPACK_IMPORTED_MODULE_1__["addAction"])(this.state.game, currentPlayer, type, buttonsTypes);
 
       if (null === game) {
         this.props.history.push("/games");
@@ -25275,10 +25471,10 @@ __webpack_require__(/*! ./components/App */ "./resources/js/game-live/components
 
 /***/ }),
 
-/***/ "./resources/js/utils/Games.js":
-/*!*************************************!*\
-  !*** ./resources/js/utils/Games.js ***!
-  \*************************************/
+/***/ "./resources/js/utils/Api.js":
+/*!***********************************!*\
+  !*** ./resources/js/utils/Api.js ***!
+  \***********************************/
 /*! exports provided: getCurrentGame, updateCurrentGame, startGame, closeGame, addAction, getPointsTypes */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -25469,6 +25665,10 @@ function getPointsTypes() {
   };
 }
 
+function getToken() {
+  return document.cookie;
+}
+
 /***/ }),
 
 /***/ "./resources/js/utils/Players.js":
@@ -25533,7 +25733,7 @@ function getGamePlayers(teams) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/charley/Sites/roundnet-scores-keeper-core/resources/js/game-live/game-live.js */"./resources/js/game-live/game-live.js");
+module.exports = __webpack_require__(/*! /home/bniess/www/others/roundnet-scores-keeper/resources/js/game-live/game-live.js */"./resources/js/game-live/game-live.js");
 
 
 /***/ })

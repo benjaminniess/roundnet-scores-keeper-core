@@ -1,8 +1,9 @@
 import React, { Component } from "react";
-import { getCurrentGame, addAction, getPointsTypes } from "../../../utils/Games";
+import { getCurrentGame, addAction, getPointsTypes } from "../../../utils/Api";
 import Stopwatch from "../StopWatch";
 import { getPlayerFromID } from "../../../utils/Players";
 import ActionButtons from "../ActionButtons";
+import Cookies from 'js-cookie';
 
 class GamesPlay extends Component {
   constructor(props) {
@@ -21,7 +22,7 @@ class GamesPlay extends Component {
   render() {
     const { game, pointsTypes, buttonsTypes } = this.state;
 
-    if (game._id === undefined) {
+    if (game.id === undefined) {
       return "";
     }
 
@@ -139,14 +140,28 @@ class GamesPlay extends Component {
     );
   }
 
-  componentDidMount() {
-    const game = getCurrentGame();
-    const pointsTypes = getPointsTypes();
-    this.setState({ game, pointsTypes });
+    componentDidMount() {
+        fetch("http://127.0.0.1:8000/api/games/live", {
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': ' application/json',
+              'Authorization': 'Bearer ' + Cookies.get('user_access_token')
+          }
+            })
+          .then(res => res.json())
+          .then(
+              (result) => {
+                  if ( result.success === true ) {
+                      this.setState({ game: result.data });
+                  }
+              },
+              (error) => {
+                  console.log(error);
+              }
+          )
 
-    if (null === game) {
-      this.props.history.push("/");
-    }
+    const pointsTypes = getPointsTypes();
+    this.setState({ pointsTypes });
   }
 
   handleUpdate(currentPlayer, buttonsTypes) {

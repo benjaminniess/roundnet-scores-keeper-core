@@ -69,10 +69,10 @@ class Game extends Model
      */
     public function get_players() {
         return [
-            'player1' => \App\User::find( $this->player1 ),
-            'player2' => \App\User::find( $this->player2 ),
-            'player3' => \App\User::find( $this->player3 ),
-            'player4' => \App\User::find( $this->player4 ),
+            'player1' => User::find( $this->player1 ),
+            'player2' => User::find( $this->player2 ),
+            'player3' => User::find( $this->player3 ),
+            'player4' => User::find( $this->player4 ),
         ];
     }
 

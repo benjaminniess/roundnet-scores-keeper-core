@@ -2,8 +2,6 @@
 
 @section('content')
     <h2>Games list</h2>
-
-
     @if (!$games->isEmpty())
         <table align=center border=1>
             <th>Date</th>

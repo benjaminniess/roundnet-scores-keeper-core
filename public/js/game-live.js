@@ -25235,10 +25235,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _utils_Api__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../utils/Api */ "./resources/js/utils/Api.js");
 /* harmony import */ var _StopWatch__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../StopWatch */ "./resources/js/game-live/components/StopWatch.jsx");
-/* harmony import */ var _utils_Players__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../utils/Players */ "./resources/js/utils/Players.js");
-/* harmony import */ var _ActionButtons__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../ActionButtons */ "./resources/js/game-live/components/ActionButtons.jsx");
-/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
-/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_5__);
+/* harmony import */ var _ActionButtons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../ActionButtons */ "./resources/js/game-live/components/ActionButtons.jsx");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+/* harmony import */ var js_cookie__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(js_cookie__WEBPACK_IMPORTED_MODULE_4__);
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -25256,7 +25255,6 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function"); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, writable: true, configurable: true } }); if (superClass) _setPrototypeOf(subClass, superClass); }
 
 function _setPrototypeOf(o, p) { _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) { o.__proto__ = p; return o; }; return _setPrototypeOf(o, p); }
-
 
 
 
@@ -25309,7 +25307,7 @@ function (_Component) {
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col timer_block bg-warning text-center"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_StopWatch__WEBPACK_IMPORTED_MODULE_2__["default"], {
-        start: game.date
+        start: game.start_date
       }))), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -25324,32 +25322,32 @@ function (_Component) {
         className: "col text-left p-0"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "player"
-      }, Object(_utils_Players__WEBPACK_IMPORTED_MODULE_3__["getPlayerFromID"])(game.teams.a.players.p1), "p1" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, game.teams.a.players.p1.name, "p1" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "service"
-      }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         player: "p1",
         onUpdate: this.handleUpdate
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "player"
-      }, Object(_utils_Players__WEBPACK_IMPORTED_MODULE_3__["getPlayerFromID"])(game.teams.a.players.p2), "p2" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, game.teams.a.players.p2.name, "p2" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "service"
-      }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         player: "p2",
         onUpdate: this.handleUpdate
       })), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col text-right p-0"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "player"
-      }, Object(_utils_Players__WEBPACK_IMPORTED_MODULE_3__["getPlayerFromID"])(game.teams.b.players.p3), "p3" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, game.teams.b.players.p3.name, "p3" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "service"
-      }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         player: "p3",
         onUpdate: this.handleUpdate
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "player"
-      }, Object(_utils_Players__WEBPACK_IMPORTED_MODULE_3__["getPlayerFromID"])(game.teams.b.players.p4), "p4" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, game.teams.b.players.p4.name, "p4" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "service"
-      }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_4__["default"], {
+      }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         player: "p4",
         onUpdate: this.handleUpdate
       }))), buttonsTypes === "positive" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -25399,7 +25397,7 @@ function (_Component) {
         headers: {
           'Accept': 'application/json',
           'Content-Type': ' application/json',
-          'Authorization': 'Bearer ' + js_cookie__WEBPACK_IMPORTED_MODULE_5___default.a.get('user_access_token')
+          'Authorization': 'Bearer ' + js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.get('user_access_token')
         }
       }).then(function (res) {
         return res.json();
@@ -25671,61 +25669,6 @@ function getToken() {
 
 /***/ }),
 
-/***/ "./resources/js/utils/Players.js":
-/*!***************************************!*\
-  !*** ./resources/js/utils/Players.js ***!
-  \***************************************/
-/*! exports provided: getPlayers, getPlayerFromID, getGamePlayers */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPlayers", function() { return getPlayers; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getPlayerFromID", function() { return getPlayerFromID; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getGamePlayers", function() { return getGamePlayers; });
-function getPlayers() {
-  return [{
-    "_id": "N3DzqTfzuTYbzsv",
-    "displayName": "Bniess"
-  }, {
-    "_id": "lMmGJ4r3KqjZa3G",
-    "displayName": "cguenier"
-  }, {
-    "_id": "nMqBpbL8p0huS1T",
-    "displayName": "aroche"
-  }, {
-    "_id": "B5AxOh8f3haroq1",
-    "displayName": "slepinard"
-  }];
-}
-function getPlayerFromID(ID) {
-  var players = getPlayers();
-
-  if (null === players) {
-    return null;
-  }
-
-  var player = players.find(function (player) {
-    return player._id === ID;
-  }).displayName;
-
-  if (player === null) {
-    return null;
-  }
-
-  return player;
-}
-function getGamePlayers(teams) {
-  return {
-    p1: getPlayerFromID(teams.a.players.p1),
-    p2: getPlayerFromID(teams.a.players.p2),
-    p3: getPlayerFromID(teams.b.players.p3),
-    p4: getPlayerFromID(teams.b.players.p4)
-  };
-}
-
-/***/ }),
-
 /***/ 1:
 /*!***************************************************!*\
   !*** multi ./resources/js/game-live/game-live.js ***!
@@ -25733,7 +25676,7 @@ function getGamePlayers(teams) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /home/bniess/www/others/roundnet-scores-keeper/resources/js/game-live/game-live.js */"./resources/js/game-live/game-live.js");
+module.exports = __webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/js/game-live/game-live.js */"./resources/js/game-live/game-live.js");
 
 
 /***/ })

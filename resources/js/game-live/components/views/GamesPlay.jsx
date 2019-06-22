@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { getCurrentGame, addAction, getPointsTypes } from "../../../utils/Api";
+import { addAction, getPointsTypes } from "../../../utils/Api";
 import Stopwatch from "../StopWatch";
-import { getPlayerFromID } from "../../../utils/Players";
 import ActionButtons from "../ActionButtons";
 import Cookies from 'js-cookie';
 
@@ -31,7 +30,7 @@ class GamesPlay extends Component {
         <div className="container">
           <div className="row">
             <div className="col timer_block bg-warning text-center">
-              <Stopwatch start={game.date} />
+              <Stopwatch start={game.start_date} />
             </div>
           </div>
           <div className="row">
@@ -45,7 +44,7 @@ class GamesPlay extends Component {
           <div className="row">
             <div className="col text-left p-0">
               <p className="player">
-                {getPlayerFromID(game.teams.a.players.p1)}
+                  { game.teams.a.players.p1.name }
                 {"p1" === game.currentServer && (
                   <span className="service">[S]</span>
                 )}
@@ -55,7 +54,7 @@ class GamesPlay extends Component {
               <hr />
 
               <p className="player">
-                {getPlayerFromID(game.teams.a.players.p2)}
+				  { game.teams.a.players.p2.name }
                 {"p2" === game.currentServer && (
                   <span className="service">[S]</span>
                 )}
@@ -64,7 +63,7 @@ class GamesPlay extends Component {
             </div>
             <div className="col text-right p-0">
               <p className="player">
-                {getPlayerFromID(game.teams.b.players.p3)}
+				  { game.teams.b.players.p3.name }
                 {"p3" === game.currentServer && (
                   <span className="service">[S]</span>
                 )}
@@ -73,7 +72,7 @@ class GamesPlay extends Component {
               <ActionButtons player="p3" onUpdate={this.handleUpdate} />
               <hr />
               <p className="player">
-                {getPlayerFromID(game.teams.b.players.p4)}
+				  { game.teams.b.players.p4.name }
                 {"p4" === game.currentServer && (
                   <span className="service">[S]</span>
                 )}

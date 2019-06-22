@@ -86,9 +86,9 @@ class Game extends Model
 
         return [
             'success' => true,
-            'data'           => [
-            	'id'         => $this->id,
-                'teams'      => [
+            'data'               => [
+            	'id'             => (int) $this->id,
+                'teams'          => [
                     'a' => [
                         'players' => [
                             'p1' => $players['player1']->get_user_data(),
@@ -102,10 +102,10 @@ class Game extends Model
                         ],
                     ],
                 ],
-                'points'     => $this->get_history(),
-                'score'      => $this->get_scores(),
-                'duration'   => $this->game_duration,
-                'start_date' => 1560613796030
+                'points'         => $this->get_history(),
+                'score'          => $this->get_scores(),
+                'start_date'     => (int) $this->start_date,
+                'current_server' => (int) $this->current_server
             ],
         ];
     }

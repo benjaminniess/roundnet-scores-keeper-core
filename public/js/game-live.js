@@ -25322,14 +25322,14 @@ function (_Component) {
         className: "col text-left p-0"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "player"
-      }, game.teams.a.players.p1.name, "p1" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, game.teams.a.players.p1.name, game.teams.a.players.p1.id === game.current_server && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "service"
       }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         player: "p1",
         onUpdate: this.handleUpdate
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "player"
-      }, game.teams.a.players.p2.name, "p2" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, game.teams.a.players.p2.name, game.teams.a.players.p2.id === game.current_server && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "service"
       }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         player: "p2",
@@ -25338,14 +25338,14 @@ function (_Component) {
         className: "col text-right p-0"
       }, react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "player"
-      }, game.teams.b.players.p3.name, "p3" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, game.teams.b.players.p3.name, game.teams.b.players.p3.id === game.current_server && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "service"
       }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         player: "p3",
         onUpdate: this.handleUpdate
       }), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("hr", null), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("p", {
         className: "player"
-      }, game.teams.b.players.p4.name, "p4" === game.currentServer && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
+      }, game.teams.b.players.p4.name, game.teams.b.players.p4.id === game.current_server && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("span", {
         className: "service"
       }, "[S]")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement(_ActionButtons__WEBPACK_IMPORTED_MODULE_3__["default"], {
         player: "p4",

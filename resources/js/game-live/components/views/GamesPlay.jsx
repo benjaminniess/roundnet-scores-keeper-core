@@ -45,7 +45,7 @@ class GamesPlay extends Component {
             <div className="col text-left p-0">
               <p className="player">
                   { game.teams.a.players.p1.name }
-                {"p1" === game.currentServer && (
+                {game.teams.a.players.p1.id === game.current_server && (
                   <span className="service">[S]</span>
                 )}
               </p>
@@ -55,7 +55,7 @@ class GamesPlay extends Component {
 
               <p className="player">
 				  { game.teams.a.players.p2.name }
-                {"p2" === game.currentServer && (
+                {game.teams.a.players.p2.id === game.current_server && (
                   <span className="service">[S]</span>
                 )}
               </p>
@@ -64,7 +64,7 @@ class GamesPlay extends Component {
             <div className="col text-right p-0">
               <p className="player">
 				  { game.teams.b.players.p3.name }
-                {"p3" === game.currentServer && (
+                {game.teams.b.players.p3.id === game.current_server && (
                   <span className="service">[S]</span>
                 )}
               </p>
@@ -73,7 +73,7 @@ class GamesPlay extends Component {
               <hr />
               <p className="player">
 				  { game.teams.b.players.p4.name }
-                {"p4" === game.currentServer && (
+                {game.teams.b.players.p4.id === game.current_server && (
                   <span className="service">[S]</span>
                 )}
               </p>

@@ -25314,7 +25314,7 @@ function (_Component) {
         className: "col p-0 text-right team"
       }, "Team 1"), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col-6 align-middle text-center scores p-0"
-      }, game.teams.a.score, " - ", game.teams.b.score), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
+      }, game.score.team1, " - ", game.score.team2), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "col p-0 team"
       }, "Team 2")), react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
         className: "row"
@@ -25393,7 +25393,8 @@ function (_Component) {
     value: function componentDidMount() {
       var _this3 = this;
 
-      fetch("http://127.0.0.1:8000/api/games/live", {
+      var game, pointsTypes;
+      fetch("/api/games/live", {
         headers: {
           'Accept': 'application/json',
           'Content-Type': ' application/json',
@@ -25403,16 +25404,30 @@ function (_Component) {
         return res.json();
       }).then(function (result) {
         if (result.success === true) {
-          _this3.setState({
-            game: result.data
+          game = result.data;
+          fetch("/api/games/actions", {
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': ' application/json',
+              'Authorization': 'Bearer ' + js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.get('user_access_token')
+            }
+          }).then(function (res) {
+            return res.json();
+          }).then(function (result) {
+            if (result.success === true) {
+              pointsTypes = result.data;
+
+              _this3.setState({
+                game: game,
+                pointsTypes: pointsTypes
+              });
+            }
+          }, function (error) {
+            console.log(error);
           });
         }
       }, function (error) {
         console.log(error);
-      });
-      var pointsTypes = Object(_utils_Api__WEBPACK_IMPORTED_MODULE_1__["getPointsTypes"])();
-      this.setState({
-        pointsTypes: pointsTypes
       });
     }
   }, {
@@ -25430,10 +25445,44 @@ function (_Component) {
   }, {
     key: "handleAction",
     value: function handleAction(type) {
+      var _this4 = this;
+
       var _this$state2 = this.state,
           currentPlayer = _this$state2.currentPlayer,
-          buttonsTypes = _this$state2.buttonsTypes;
-      var game = Object(_utils_Api__WEBPACK_IMPORTED_MODULE_1__["addAction"])(this.state.game, currentPlayer, type, buttonsTypes);
+          buttonsTypes = _this$state2.buttonsTypes,
+          game = _this$state2.game;
+      var player_id;
+
+      if ('p1' === currentPlayer || 'p2' === currentPlayer) {
+        player_id = game.teams.a.players[currentPlayer].id;
+      } else {
+        player_id = game.teams.b.players[currentPlayer].id;
+      }
+
+      fetch("/api/games/" + game.id + "/points", {
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': ' application/json',
+          'Authorization': 'Bearer ' + js_cookie__WEBPACK_IMPORTED_MODULE_4___default.a.get('user_access_token')
+        },
+        method: 'POST',
+        body: JSON.stringify({
+          'player_id': player_id,
+          'action_type': 1
+        })
+      }).then(function (res) {
+        return res.json();
+      }).then(function (result) {
+        console.log(result, 'ok');
+
+        if (result.success === true) {
+          _this4.setState({
+            game: result.data
+          });
+        }
+      }, function (error) {
+        console.log(error);
+      });
 
       if (null === game) {
         this.props.history.push("/games");

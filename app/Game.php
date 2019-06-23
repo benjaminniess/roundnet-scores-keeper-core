@@ -85,28 +85,38 @@ class Game extends Model
         $players = $this->get_players();
 
         return [
-            'success' => true,
-            'data'               => [
-            	'id'             => (int) $this->id,
-                'teams'          => [
-                    'a' => [
-                        'players' => [
-                            'p1' => $players['player1']->get_user_data(),
-                            'p2' => $players['player2']->get_user_data(),
-                        ],
-                    ],
-                    'b' => [
-                        'players' => [
-                            'p3' => $players['player3']->get_user_data(),
-                            'p4' => $players['player4']->get_user_data(),
-                        ],
+            'id'             => (int) $this->id,
+            'teams'          => [
+                'a' => [
+                    'players' => [
+                        'p1' => $players['player1']->get_user_data(),
+                        'p2' => $players['player2']->get_user_data(),
                     ],
                 ],
-                'points'         => $this->get_history(),
-                'score'          => $this->get_scores(),
-                'start_date'     => (int) $this->start_date,
-                'current_server' => (int) $this->current_server
+                'b' => [
+                    'players' => [
+                        'p3' => $players['player3']->get_user_data(),
+                        'p4' => $players['player4']->get_user_data(),
+                    ],
+                ],
             ],
+            'points'         => $this->get_history(),
+            'score'          => $this->get_scores(),
+            'start_date'     => (int) $this->start_date,
+            'current_server' => (int) $this->current_server
+        ];
+    }
+
+    /**
+     * Get the 3 families of action types
+     *
+     * @return array
+     */
+    public function get_actions_types() {
+        return [
+            'positive' => DB::table('actions_types')->where( 'action_type', 'positive' )->get(),
+            'neutral'  => DB::table('actions_types')->where( 'action_type', 'neutral' )->get(),
+            'negative' => DB::table('actions_types')->where( 'action_type', 'negative' )->get(),
         ];
     }
 
@@ -117,17 +127,24 @@ class Game extends Model
      * @param int $score_team_2
      */
     public function set_score( $score_team_1 = 0, $score_team_2 = 0 ) {
-        DB::table('games')->where('id', $this->id)->update([
+        if( ! DB::table('games')->where('id', $this->id)->update([
             'score_team_1' => $score_team_1,
             'score_team_2' => $score_team_2,
-        ]);
+        ]) ) {
+            return false;
+        }
+
+        $this->score_team_1 = $score_team_1;
+        $this->score_team_2 = $score_team_2;
+
+        return true;
     }
 
     /**
      * Change game status
      *
      * @param $status
-     * @return int
+     * @return bool
      */
     public function set_status( $status ) {
         if( ! DB::table('games')->where('id', $this->id)->update([
@@ -137,6 +154,8 @@ class Game extends Model
         }
 
         $this->status = $status;
+
+        return true;
     }
 
     /**
@@ -201,16 +220,12 @@ class Game extends Model
         if ( $score_team_1 >= 21 || $score_team_2 >= 21 ) {
             if ( abs( $score_team_1 - $score_team_2 ) >= 2 ) {
                 $this->set_status( 'closed' );
-                $this->fresh();
             }
         }
 
         return [
             'success' => true,
-            'data'    => [
-                'game_status' => $this->status,
-                'score'       => $this->get_scores(),
-            ],
+            'data'    => $this->get_game_data(),
         ];
     }
 }

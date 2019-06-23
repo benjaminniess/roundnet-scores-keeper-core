@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { addAction, getPointsTypes } from "../../../utils/Api";
+import { getPointsTypes } from "../../../utils/Api";
 import Stopwatch from "../StopWatch";
 import ActionButtons from "../ActionButtons";
 import Cookies from 'js-cookie';
@@ -36,7 +36,7 @@ class GamesPlay extends Component {
           <div className="row">
             <div className="col p-0 text-right team">Team 1</div>
             <div className="col-6 align-middle text-center scores p-0">
-              {game.teams.a.score} - {game.teams.b.score}
+              {game.score.team1} - {game.score.team2}
             </div>
             <div className="col p-0 team">Team 2</div>
           </div>
@@ -140,7 +140,9 @@ class GamesPlay extends Component {
   }
 
     componentDidMount() {
-        fetch("http://127.0.0.1:8000/api/games/live", {
+  		let game, pointsTypes;
+
+        fetch("/api/games/live", {
           headers: {
               'Accept': 'application/json',
               'Content-Type': ' application/json',
@@ -151,16 +153,32 @@ class GamesPlay extends Component {
           .then(
               (result) => {
                   if ( result.success === true ) {
-                      this.setState({ game: result.data });
+                  	game = result.data;
+					  fetch("/api/games/actions", {
+						  headers: {
+							  'Accept': 'application/json',
+							  'Content-Type': ' application/json',
+							  'Authorization': 'Bearer ' + Cookies.get('user_access_token')
+						  }
+					  })
+						  .then(res => res.json())
+						  .then(
+							  (result) => {
+								  if ( result.success === true ) {
+									  pointsTypes = result.data;
+									  this.setState({ game, pointsTypes });
+								  }
+							  },
+							  (error) => {
+								  console.log(error);
+							  }
+						  )
                   }
               },
               (error) => {
                   console.log(error);
               }
           )
-
-    const pointsTypes = getPointsTypes();
-    this.setState({ pointsTypes });
   }
 
   handleUpdate(currentPlayer, buttonsTypes) {
@@ -174,9 +192,40 @@ class GamesPlay extends Component {
   }
 
   handleAction(type) {
-    const { currentPlayer, buttonsTypes } = this.state;
+    const { currentPlayer, buttonsTypes, game } = this.state;
+	let player_id;
 
-    let game = addAction(this.state.game, currentPlayer, type, buttonsTypes);
+    if ( 'p1' === currentPlayer || 'p2' === currentPlayer ) {
+    	player_id = game.teams.a.players[currentPlayer].id;
+	} else {
+		player_id = game.teams.b.players[currentPlayer].id;
+	}
+
+	  fetch("/api/games/" + game.id + "/points", {
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': ' application/json',
+			  'Authorization': 'Bearer ' + Cookies.get('user_access_token')
+			},
+			method: 'POST',
+		    body : JSON.stringify({
+				'player_id' : player_id,
+				'action_type' : 1
+		   })
+	  })
+		  .then(res => res.json())
+		  .then(
+			  (result) => {
+			  	console.log(result, 'ok');
+				  if ( result.success === true ) {
+					  this.setState({ game: result.data });
+				  }
+			  },
+			  (error) => {
+				  console.log(error);
+			  }
+		  )
+
     if (null === game) {
       this.props.history.push("/games");
     } else {

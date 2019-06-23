@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import { getPointsTypes } from "../../../utils/Api";
 import Stopwatch from "../StopWatch";
 import ActionButtons from "../ActionButtons";
 import Cookies from 'js-cookie';

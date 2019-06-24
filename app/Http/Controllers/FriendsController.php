@@ -9,11 +9,46 @@ use Illuminate\Support\Facades\Auth;
 
 class FriendsController extends Controller
 {
-    public function show() {
-        $active_auth_user_friends = (new User_Relationships)->get_auth_user_friends(User_Relationships::ACTIVE_STATUS);
-        $pending_auth_user_friends = (new User_Relationships)->get_auth_user_friends(User_Relationships::PENDING_STATUS);
-        $blocked_auth_user_friends = (new User_Relationships)->get_auth_user_friends(User_Relationships::BLOCKED_STATUS);
 
-        return view('friends',compact('active_auth_user_friends','pending_auth_user_friends','blocked_auth_user_friends'));
+    /**
+     * Display the list of the user friends
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show() {
+        /** @var User $user_obj */
+
+        // Get the currently authenticated user
+        $user_obj = User::find(Auth::id());
+        if ( empty( $user_obj ) ) {
+          return redirect(url('/') );
+        }
+
+        $active_auth_user_friends = $user_obj->get_friends(User_Relationships::ACTIVE_STATUS);
+        $pending_auth_user_friends = $user_obj->get_friends(User_Relationships::PENDING_STATUS);
+        $blocked_auth_user_friends = $user_obj->get_friends(User_Relationships::BLOCKED_STATUS);
+
+        return view('friends.show',compact('active_auth_user_friends','pending_auth_user_friends','blocked_auth_user_friends'));
+    }
+
+    /**
+     * Accept or deny a friend request
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  App\User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $attributes = request()->validate([
+            'status' => 'required'
+        ]);
+
+        $user_obj = User::find(Auth::id());
+        $relationship = $user_obj->get_relationship($user->id);
+        dd($relationship);
+        $relationship->update_status($attributes);
+
+        return redirect()->route('friends.show');
     }
 }

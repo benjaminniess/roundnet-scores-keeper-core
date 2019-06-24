@@ -91,4 +91,51 @@ class User extends \TCG\Voyager\Models\User
             'avatar' => 'comming-soon',
         ];
     }
+
+    /**
+    * Get all user friends
+    *
+    *@return object
+    */
+    public function get_friends($status) {
+
+        $auth_user_friends = DB::table('users')
+        ->select('users.id','users.name','users.email', 'user_relationships.status')
+        ->join('user_relationships', function($join){
+            $join->on('users.id', '=', 'user_relationships.user_id_1')
+                 ->orOn('users.id', '=', 'user_relationships.user_id_2');
+        })
+        ->where('users.id', '<>', $this->id)
+        ->where('user_relationships.status', '=', $status)
+        ->where(function($query){
+            $query->where('user_relationships.user_id_1', '=', $this->id)
+                  ->orWhere('user_relationships.user_id_2', '=', $this->id);
+        })
+        ->groupBy('users.id')
+        ->get();
+
+        return $auth_user_friends;
+    }
+
+
+        /**
+        * Get one user relationship info
+        *
+        *@return object
+        */
+        public function get_relationship($friend_id) {
+
+            $relationship = DB::table('user_relationships')
+            ->select()
+            ->where(function($query) use($friend_id){
+                $query->where('user_relationships.user_id_1', '=', $this->id)
+                      ->orWhere('user_relationships.user_id_1', '=', $friend_id);
+            })->where(function($query) use($friend_id){
+                $query->where('user_relationships.user_id_2', '=', $this->id)
+                      ->orWhere('user_relationships.user_id_2', '=', $friend_id);
+            })
+            ->first();
+
+            return $relationship;
+        }
 }

@@ -24,13 +24,23 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Status</th>
+            <th colspan="2">Actions</th>
         </tr>
         @foreach ($pending_auth_user_friends as $pending_auth_user_friend)
             <tr>
                 <td>{{ $pending_auth_user_friend->name }}</td>
                 <td>{{ $pending_auth_user_friend->email }}</td>
-                <td>{{ $pending_auth_user_friend->status }}</td>
+                <td>
+                    <form class="form" action="/friends/{{ $pending_auth_user_friend->id }}" method="POST">
+                        @csrf
+                        @method('PATCH')
+                        <input type="hidden" name="friend_id" value="{{ $pending_auth_user_friend->id }}">
+                        <button name="status" type="submit" value="active">Accept</button>
+                </td>
+                <td>
+                        <button name="status" type="submit" value="declined">Deny</button>
+                    </form>
+                </td>
             </tr>
         @endforeach
     </table>

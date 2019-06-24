@@ -4,6 +4,7 @@
     <h2>Games list</h2>
     @if (!$games->isEmpty())
         <table align=center border=1>
+            <th>Status</th>
             <th>Date</th>
             <th>Player 1</th>
             <th>Player 2</th>
@@ -12,6 +13,7 @@
             <th colspan="2">Actions</th>
             @foreach($games as $game)
                 <tr>
+                    <td>{{ $game->status }}</td>
                     <td>
                         {{ (!is_null($game->created_at)) ? $game->created_at->format('d/m/Y') : 'Not set'  }}
                     </td>

@@ -52,10 +52,11 @@ class GamesController extends Controller
     public function store(Request $request)
     {
         $attributes = request()->validate([
-            'player1' => 'required',
-            'player2' => 'required',
-            'player3' => 'required',
-            'player4' => 'required'
+            'player1'     => 'required',
+            'player2'     => 'required',
+            'player3'     => 'required',
+            'player4'     => 'required',
+            'game_points' => 'required',
         ]);
 
         Game::create($attributes);

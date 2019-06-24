@@ -31,7 +31,30 @@ Route::get('/games/live', function (Request $request) {
         ] );
     }
 
-    return response()->json( $game_obj->get_game_data() );
+    return response()->json( [
+        'success' => true,
+        'data'    => $game_obj->get_game_data(),
+    ] );
+})->middleware('auth:api');
+
+
+Route::get('/games/actions', function (Request $request) {
+    /** @var \App\User $user_obj */
+    $user_obj = \App\User::find( $request->user()->id );
+
+    /** @var \App\Game $game_obj */
+    $game_obj = $user_obj->get_live_game();
+    if ( empty( $game_obj ) ) {
+        return response()->json( [
+            'success' => false,
+            'code' => 'no-live-games',
+        ] );
+    }
+
+    return response()->json( [
+        'success' => true,
+        'data' => $game_obj->get_actions_types(),
+    ] );
 })->middleware('auth:api');
 
 

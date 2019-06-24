@@ -6,48 +6,75 @@
     @csrf
 
     <h3>Team 1</h3>
-        <label for="player1">Player 1</label>
-        <select class="select" name="player1" required>
-            <option value="">Select a player</option>
-            @foreach($players as $player)
+    <label for="player1">Player 1</label>
+    <select class="select" name="player1" required>
+        <option value="">Select a player</option>
+        @foreach($players as $player)
 
-                <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option value="{{ $player->id }}">{{ $player->name }}</option>
 
-            @endforeach
-        </select>
+        @endforeach
+    </select>
 
-        <label for="player2">Player 2</label>
-        <select class="select" name="player2" required>
-            <option value="">Select a player</option>
-            @foreach($players as $player)
+    <label for="player2">Player 2</label>
+    <select class="select" name="player2" required>
+        <option value="">Select a player</option>
+        @foreach($players as $player)
 
-                <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option value="{{ $player->id }}">{{ $player->name }}</option>
 
-            @endforeach
-        </select>
+        @endforeach
+    </select>
 
     <h3>Team 2</h3>
-        <label for="player3">Player 3</label>
-        <select class="select" name="player3" required>
-            <option value="">Select a player</option>
-            @foreach($players as $player)
+    <label for="player3">Player 3</label>
+    <select class="select" name="player3" required>
+        <option value="">Select a player</option>
+        @foreach($players as $player)
 
-                <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option value="{{ $player->id }}">{{ $player->name }}</option>
 
-            @endforeach
-        </select>
+        @endforeach
+    </select>
 
-        <label for="player4">Player 4</label>
-        <select class="select" name="player4" required>
-            <option value="">Select a player</option>
-            @foreach($players as $player)
+    <label for="player4">Player 4</label>
+    <select class="select" name="player4" required>
+        <option value="">Select a player</option>
+        @foreach($players as $player)
 
-                <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option value="{{ $player->id }}">{{ $player->name }}</option>
 
-            @endforeach
-        </select>
+        @endforeach
+    </select>
 
-        <button type="submit"> Add project</button>
+    <h3>Options</h3>
+
+    <label for="referee">Referee</label>
+    <select class="select" name="referee">
+        <option value="">Select a referee if necessary</option>
+        @foreach($players as $player)
+
+            <option value="{{ $player->id }}">{{ $player->name }}</option>
+
+        @endforeach
+    </select>
+
+
+    <p>
+        <input type="number" name="game_points" id="game_points" required value="21">
+        <label for="game_points">points to win</label>
+    </p>
+
+    <p>
+        <input type="checkbox" name="enable_turns" id="enable_turns" checked>
+        <label for="enable_turns">Turn every 5 points?</label>
+    </p>
+
+    <p>
+        <input type="checkbox" name="start_now" id="start_now" checked>
+        <label for="start_now">Start now?</label>
+    </p>
+    <button type="submit"> Add project</button>
 </form>
 
     {{-- Return form errors --}}

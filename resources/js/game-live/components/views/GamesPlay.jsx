@@ -215,9 +215,11 @@ class GamesPlay extends Component {
 		  .then(res => res.json())
 		  .then(
 			  (result) => {
-			  	console.log(result, 'ok');
 				  if ( result.success === true ) {
-					  this.setState({ game: result.data });
+				  		if (result.data.status === 'closed') {
+							window.location.href = "/games";
+						}
+					    this.setState({ game: result.data });
 				  }
 			  },
 			  (error) => {

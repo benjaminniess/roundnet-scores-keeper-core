@@ -103,7 +103,10 @@ class Game extends Model
             'points'         => $this->get_history(),
             'score'          => $this->get_scores(),
             'start_date'     => (int) $this->start_date,
-            'current_server' => (int) $this->current_server
+            'current_server' => (int) $this->current_server,
+            'points_to_win'  => (int) $this->points_to_win,
+            'enable_turns'   => (int) $this->enable_turns,
+            'status'         => $this->status,
         ];
     }
 
@@ -191,7 +194,7 @@ class Game extends Model
         $score_team_1 = $this->getAttribute( 'score_team_1' );
         $score_team_2 = $this->getAttribute( 'score_team_2' );
         // Player is in team 1 ?
-        if ( $player_id === $this->player_1 || $player_id === $this->player_1 ) {
+        if ( $player_id === $this->player_1 || $player_id === $this->player_2 ) {
             if ( 'positive' === $action_type->action_type ) {
                 $score_team_1 ++;
             } elseif ( 'negative' === $action_type->action_type ) {
@@ -217,7 +220,7 @@ class Game extends Model
             ]
         );
 
-        if ( $score_team_1 >= 21 || $score_team_2 >= 21 ) {
+        if ( $score_team_1 >= $this->points_to_win || $score_team_2 >= $this->points_to_win ) {
             if ( abs( $score_team_1 - $score_team_2 ) >= 2 ) {
                 $this->set_status( 'closed' );
             }

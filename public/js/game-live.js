@@ -25471,9 +25471,11 @@ function (_Component) {
       }).then(function (res) {
         return res.json();
       }).then(function (result) {
-        console.log(result, 'ok');
-
         if (result.success === true) {
+          if (result.data.status === 'closed') {
+            window.location.href = "/games";
+          }
+
           _this4.setState({
             game: result.data
           });

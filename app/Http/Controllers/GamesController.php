@@ -105,7 +105,7 @@ class GamesController extends Controller
             'player3' => 'required',
             'player4' => 'required'
         ]);
-
+        
         $game->update($attributes);
 
         return redirect()->route('games.show',$game);

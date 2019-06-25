@@ -25,8 +25,6 @@ class UserRelationships extends Model
     }
 
     public function update_status($status){
-        return $this->update([
-            'status' => $status
-            ]);
+        return $this->update($status);
     }
 }

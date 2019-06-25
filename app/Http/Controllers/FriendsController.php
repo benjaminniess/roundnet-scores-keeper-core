@@ -44,7 +44,7 @@ class FriendsController extends Controller
         ]);
         $user_obj = User::find(Auth::id());
         $relationship = $user_obj->get_relationship($user->id);
-        $relationship->update_status($attributes['status']);
+        $relationship->update_status($attributes);
 
         return redirect('/friends');
     }

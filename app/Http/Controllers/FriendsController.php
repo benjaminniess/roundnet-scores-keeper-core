@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
-use App\User_Relationships;
+use App\UserRelationships;
 use Illuminate\Support\Facades\Auth;
 
 class FriendsController extends Controller
@@ -23,10 +23,9 @@ class FriendsController extends Controller
         if ( empty( $user_obj ) ) {
           return redirect(url('/') );
         }
-
-        $active_auth_user_friends = $user_obj->get_friends(User_Relationships::ACTIVE_STATUS);
-        $pending_auth_user_friends = $user_obj->get_friends(User_Relationships::PENDING_STATUS);
-        $blocked_auth_user_friends = $user_obj->get_friends(User_Relationships::BLOCKED_STATUS);
+        $active_auth_user_friends = $user_obj->get_friends(UserRelationships::ACTIVE_STATUS);
+        $pending_auth_user_friends = $user_obj->get_friends(UserRelationships::PENDING_STATUS);
+        $blocked_auth_user_friends = $user_obj->get_friends(UserRelationships::BLOCKED_STATUS);
 
         return view('friends.show',compact('active_auth_user_friends','pending_auth_user_friends','blocked_auth_user_friends'));
     }
@@ -43,12 +42,10 @@ class FriendsController extends Controller
         $attributes = request()->validate([
             'status' => 'required'
         ]);
-
         $user_obj = User::find(Auth::id());
         $relationship = $user_obj->get_relationship($user->id);
-        dd($relationship);
-        $relationship->update_status($attributes);
+        $relationship->update_status($attributes['status']);
 
-        return redirect()->route('friends.show');
+        return redirect('/friends');
     }
 }

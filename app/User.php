@@ -8,6 +8,7 @@ use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\UserRelationships;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -125,8 +126,7 @@ class User extends \TCG\Voyager\Models\User
         */
         public function get_relationship($friend_id) {
 
-            $relationship = DB::table('user_relationships')
-            ->select()
+            $relationship = UserRelationships::select()
             ->where(function($query) use($friend_id){
                 $query->where('user_relationships.user_id_1', '=', $this->id)
                       ->orWhere('user_relationships.user_id_1', '=', $friend_id);

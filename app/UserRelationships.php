@@ -7,7 +7,7 @@ use App\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class User_Relationships extends Model
+class UserRelationships extends Model
 {
     protected $fillable = [
         'user_id_1',
@@ -24,9 +24,9 @@ class User_Relationships extends Model
         return $this->status;
     }
 
-    // public function update_status($status){
-    //     return $this->status->update([
-    //         'status' => $status
-    //         ]);
-    // }
+    public function update_status($status){
+        return $this->update([
+            'status' => $status
+            ]);
+    }
 }

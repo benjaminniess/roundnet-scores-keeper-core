@@ -52,12 +52,15 @@ class GamesController extends Controller
     public function store(Request $request)
     {
         $attributes = request()->validate([
-            'player1'     => 'required',
-            'player2'     => 'required',
-            'player3'     => 'required',
-            'player4'     => 'required',
-            'game_points' => 'required',
+            'player1'       => 'required',
+            'player2'       => 'required',
+            'player3'       => 'required',
+            'player4'       => 'required',
+            'points_to_win' => 'required',
         ]);
+
+        $attributes['status'] = 'on' === request('start_now') ? 'live' : 'pending';
+        $attributes['enable_turns'] = 'on' === request('enable_turns') ? true : false;
 
         Game::create($attributes);
 
@@ -105,7 +108,7 @@ class GamesController extends Controller
             'player3' => 'required',
             'player4' => 'required'
         ]);
-        
+
         $game->update($attributes);
 
         return redirect()->route('games.show',$game);

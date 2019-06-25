@@ -61,7 +61,7 @@
 
 
     <p>
-        <input type="number" name="game_points" id="game_points" required value="21">
+        <input type="number" name="points_to_win" id="game_points" required value="21">
         <label for="game_points">points to win</label>
     </p>
 

@@ -7,11 +7,8 @@ use Illuminate\Support\Facades\DB;
 
 class Game extends Model
 {
-    protected $fillable = [
-        'player1',
-        'player2',
-        'player3',
-        'player4'
+    protected $guarded = [
+        'id'
     ];
 
     /**

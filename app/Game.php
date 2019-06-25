@@ -194,7 +194,8 @@ class Game extends Model
         $score_team_1 = $this->getAttribute( 'score_team_1' );
         $score_team_2 = $this->getAttribute( 'score_team_2' );
         // Player is in team 1 ?
-        if ( $player_id === $this->player_1 || $player_id === $this->player_2 ) {
+
+        if ( (int) $player_id === (int) $this->player1 || (int) $player_id === (int) $this->player2 ) {
             if ( 'positive' === $action_type->action_type ) {
                 $score_team_1 ++;
             } elseif ( 'negative' === $action_type->action_type ) {

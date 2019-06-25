@@ -88,7 +88,7 @@ class GamesPlay extends Component {
                     <button
                       key={i}
                       className="btn btn-primary btn-lg"
-                      onClick={() => this.handleAction(type.key)}
+                      onClick={() => this.handleAction(type.id)}
                     >
                       {type.name}
                     </button>
@@ -106,7 +106,7 @@ class GamesPlay extends Component {
                     <button
                       key={i}
                       className="btn btn-danger btn-lg"
-                      onClick={() => this.handleAction(type.key)}
+                      onClick={() => this.handleAction(type.id)}
                     >
                       {type.name}
                     </button>
@@ -124,7 +124,7 @@ class GamesPlay extends Component {
                     <button
                       key={i}
                       className="btn btn-warning btn-lg"
-                      onClick={() => this.handleAction(type.key)}
+                      onClick={() => this.handleAction(type.id)}
                     >
                       {type.name}
                     </button>
@@ -209,7 +209,7 @@ class GamesPlay extends Component {
 			method: 'POST',
 		    body : JSON.stringify({
 				'player_id' : player_id,
-				'action_type' : 1
+				'action_type' : type
 		   })
 	  })
 		  .then(res => res.json())

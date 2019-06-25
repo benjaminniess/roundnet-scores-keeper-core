@@ -25357,7 +25357,7 @@ function (_Component) {
           key: i,
           className: "btn btn-primary btn-lg",
           onClick: function onClick() {
-            return _this2.handleAction(type.key);
+            return _this2.handleAction(type.id);
           }
         }, type.name);
       }))), buttonsTypes === "negative" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -25369,7 +25369,7 @@ function (_Component) {
           key: i,
           className: "btn btn-danger btn-lg",
           onClick: function onClick() {
-            return _this2.handleAction(type.key);
+            return _this2.handleAction(type.id);
           }
         }, type.name);
       }))), buttonsTypes === "neutral" && react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement("div", {
@@ -25381,7 +25381,7 @@ function (_Component) {
           key: i,
           className: "btn btn-warning btn-lg",
           onClick: function onClick() {
-            return _this2.handleAction(type.key);
+            return _this2.handleAction(type.id);
           }
         }, type.name);
       })))));
@@ -25466,7 +25466,7 @@ function (_Component) {
         method: 'POST',
         body: JSON.stringify({
           'player_id': player_id,
-          'action_type': 1
+          'action_type': type
         })
       }).then(function (res) {
         return res.json();
@@ -25525,7 +25525,7 @@ __webpack_require__(/*! ./components/App */ "./resources/js/game-live/components
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/js/game-live/game-live.js */"./resources/js/game-live/game-live.js");
+module.exports = __webpack_require__(/*! /home/bniess/www/others/roundnet-scores-keeper/resources/js/game-live/game-live.js */"./resources/js/game-live/game-live.js");
 
 
 /***/ })

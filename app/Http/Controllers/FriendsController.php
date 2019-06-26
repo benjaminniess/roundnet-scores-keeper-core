@@ -42,9 +42,11 @@ class FriendsController extends Controller
         $attributes = request()->validate([
             'status' => 'required'
         ]);
+
+        /** @var \App\User $user_obj */
         $user_obj = User::find(Auth::id());
         $relationship = $user_obj->get_relationship($user->id);
-        $relationship->update_status($attributes);
+        $relationship->update($attributes);
 
         return redirect('/friends');
     }

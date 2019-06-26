@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
@@ -133,8 +134,7 @@ class User extends \TCG\Voyager\Models\User
             })->where(function($query) use($friend_id){
                 $query->where('user_relationships.user_id_2', '=', $this->id)
                       ->orWhere('user_relationships.user_id_2', '=', $friend_id);
-            })
-            ->first();
+            });
 
             return $relationship;
         }

@@ -35,7 +35,7 @@ class Game extends Model
             return false;
         }
 
-        return date('Y-m-d H:i');
+        return date('Y-m-d H:i', $start_date / 1000 );
     }
 
     /**

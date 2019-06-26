@@ -44,8 +44,21 @@ class GamesController extends Controller
      */
     public function create()
     {
-        $players = User::all();
-        return view('games.create',compact('players'));
+        /** @var User $user_obj */
+        $user_obj = \App\User::find(Auth::id());
+
+        $players = $user_obj->get_friends('active');
+        if ( empty( $players ) ) {
+            return false;
+        }
+
+        $current_user = new \stdClass;
+        $current_user->id = $user_obj->id;
+        $current_user->name = $user_obj->name;
+
+        $players->prepend( $current_user);
+
+        return view('games.create', compact('players'));
     }
 
     /**
@@ -64,7 +77,31 @@ class GamesController extends Controller
             'points_to_win' => 'required',
         ]);
 
-        $attributes['status'] = 'on' === request('start_now') ? 'live' : 'pending';
+        // Check if all players are unique
+        $all_players = array_unique( [ $attributes['player1'], $attributes['player2'], $attributes['player3'], $attributes['player4'] ] );
+        if ( 4 !== count( $all_players ) ) {
+            // TODO: use flash error messages
+            die('Cheating with players!');
+        }
+
+        // TODO: Check if the referee is not from the players
+        $referee = request('referee');
+        if ( 0 < (int) $referee ) {
+            $attributes['referee'] = $referee;
+        }
+
+        // TODO: Check that all players are active friends
+
+        // TODO: Check that nobody is already in a live game
+
+        // Starts now?
+        if ( 'on' === request('start_now') ) {
+            $attributes['status'] = 'live';
+            $attributes['start_date'] = time() * 1000;
+        } else {
+            $attributes['status'] = 'pending';
+        }
+
         $attributes['enable_turns'] = 'on' === request('enable_turns') ? true : false;
 
         Game::create($attributes);

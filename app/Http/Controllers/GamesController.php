@@ -18,8 +18,13 @@ class GamesController extends Controller
      */
     public function index()
     {
-        $games = Game::all();
+        $user_id = auth()->id();
 
+        $games = Game::where('player1', '=', $user_id )
+            ->orWhere('player2', '=', $user_id)
+            ->orWhere('player3', '=', $user_id)
+            ->orWhere('player4', '=', $user_id)
+            ->orderBy('start_date', 'desc')->get();
 
         if(empty($games)){
             return redirect(url('/') );

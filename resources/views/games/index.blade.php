@@ -15,7 +15,7 @@
                 <tr>
                     <td>{{ $game->status }}</td>
                     <td>
-                        {{ (!is_null($game->created_at)) ? $game->created_at->format('d/m/Y') : 'Not set'  }}
+                        {{ $game->get_date() }}
                     </td>
                     <td>
                         {{ $game->players['player1']->name }}

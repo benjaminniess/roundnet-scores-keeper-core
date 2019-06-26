@@ -25,6 +25,20 @@ class Game extends Model
     }
 
     /**
+     * Return the game start date if exists
+     *
+     * @return bool|false|string
+     */
+    public function get_date() {
+        $start_date = $this->start_date;
+        if ( 0 >= (int) $start_date ) {
+            return false;
+        }
+
+        return date('Y-m-d H:i');
+    }
+
+    /**
      * Verify that a given player is in the current game
      *
      * @param $player_id

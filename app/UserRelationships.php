@@ -24,7 +24,7 @@ class UserRelationships extends Model
         return $this->status;
     }
 
-    public function update_status($status){
-        return $this->update($status);
-    }
+    // public function update_status($status){
+    //     return $this->update($status);
+    // }
 }

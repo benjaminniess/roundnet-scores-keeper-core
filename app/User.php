@@ -2,16 +2,10 @@
 
 namespace App;
 
-use Illuminate\Database\Eloquent\Collection;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use App\UserRelationships;
 
 class User extends \TCG\Voyager\Models\User
 {
@@ -105,43 +99,33 @@ class User extends \TCG\Voyager\Models\User
     *
     *@return object
     */
-    public function get_friends($status) {
+    public function friends($status = '') {
+	    $query = $this->belongsToMany('App\User', 'user_relationships', 'user_id_1', 'user_id_2');
 
-        $auth_user_friends = DB::table('users')
-        ->select('users.id','users.name','users.email', 'user_relationships.status')
-        ->join('user_relationships', function($join){
-            $join->on('users.id', '=', 'user_relationships.user_id_1')
-                 ->orOn('users.id', '=', 'user_relationships.user_id_2');
-        })
-        ->where('users.id', '<>', $this->id)
-        ->where('user_relationships.status', '=', $status)
-        ->where(function($query){
-            $query->where('user_relationships.user_id_1', '=', $this->id)
-                  ->orWhere('user_relationships.user_id_2', '=', $this->id);
-        })
-        ->groupBy('users.id')
-        ->get();
+	    if ( ! empty( $status ) ) {
+	    	$query->where( 'status', '=', $status );
+	    }
 
-        return $auth_user_friends;
+	    return $query->get();
     }
 
 
-        /**
-        * Get one user relationship info
-        *
-        *@return object
-        */
-        public function get_relationship($friend_id) {
+    /**
+    * Get one user relationship info
+    *
+    *@return object
+    */
+    public function get_relationship($friend_id) {
 
-            $relationship = UserRelationships::select()
-            ->where(function($query) use($friend_id){
-                $query->where('user_relationships.user_id_1', '=', $this->id)
-                      ->orWhere('user_relationships.user_id_1', '=', $friend_id);
-            })->where(function($query) use($friend_id){
-                $query->where('user_relationships.user_id_2', '=', $this->id)
-                      ->orWhere('user_relationships.user_id_2', '=', $friend_id);
-            });
+        $relationship = UserRelationships::select()
+        ->where(function($query) use($friend_id){
+            $query->where('user_relationships.user_id_1', '=', $this->id)
+                  ->orWhere('user_relationships.user_id_1', '=', $friend_id);
+        })->where(function($query) use($friend_id){
+            $query->where('user_relationships.user_id_2', '=', $this->id)
+                  ->orWhere('user_relationships.user_id_2', '=', $friend_id);
+        });
 
-            return $relationship;
-        }
+        return $relationship;
+    }
 }

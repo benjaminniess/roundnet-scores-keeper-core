@@ -7,13 +7,11 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Status</th>
         </tr>
         @foreach ($active_auth_user_friends as $active_auth_user_friend)
             <tr>
                 <td>{{ $active_auth_user_friend->name }}</td>
                 <td>{{ $active_auth_user_friend->email }}</td>
-                <td>{{ $active_auth_user_friend->status }}</td>
             </tr>
         @endforeach
     </table>
@@ -51,13 +49,11 @@
         <tr>
             <th>Name</th>
             <th>Email</th>
-            <th>Status</th>
         </tr>
         @foreach ($blocked_auth_user_friends as $blocked_auth_user_friend)
             <tr>
                 <td>{{ $blocked_auth_user_friend->name }}</td>
                 <td>{{ $blocked_auth_user_friend->email }}</td>
-                <td>{{ $blocked_auth_user_friend->status }}</td>
             </tr>
         @endforeach
     </table>

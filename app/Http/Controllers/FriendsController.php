@@ -23,9 +23,10 @@ class FriendsController extends Controller
         if ( empty( $user_obj ) ) {
           return redirect(url('/') );
         }
-        $active_auth_user_friends = $user_obj->get_friends(UserRelationships::ACTIVE_STATUS);
-        $pending_auth_user_friends = $user_obj->get_friends(UserRelationships::PENDING_STATUS);
-        $blocked_auth_user_friends = $user_obj->get_friends(UserRelationships::BLOCKED_STATUS);
+
+        $active_auth_user_friends = $user_obj->friends(UserRelationships::ACTIVE_STATUS);
+        $pending_auth_user_friends = $user_obj->friends(UserRelationships::PENDING_STATUS);
+        $blocked_auth_user_friends = $user_obj->friends(UserRelationships::BLOCKED_STATUS);
 
         return view('friends.show',compact('active_auth_user_friends','pending_auth_user_friends','blocked_auth_user_friends'));
     }

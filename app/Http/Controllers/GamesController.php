@@ -35,7 +35,7 @@ class GamesController extends Controller
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
 
-        $players = $user_obj->get_friends('active');
+        $players = $user_obj->friends('active');
         if ( empty( $players ) ) {
             return false;
         }

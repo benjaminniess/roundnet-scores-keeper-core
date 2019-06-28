@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\User;
-use Illuminate\Http\Request;
-use \App\Game;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller

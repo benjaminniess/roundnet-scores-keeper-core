@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use \App\User;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class GamesController extends Controller
 {

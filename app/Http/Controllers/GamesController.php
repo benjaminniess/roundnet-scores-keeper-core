@@ -113,7 +113,7 @@ class GamesController extends Controller
      */
     public function show(Game $game)
     {
-        $players = $game->get_players();
+        $players = $game->players;
 
         return view('games.show',compact('game','players'));
     }

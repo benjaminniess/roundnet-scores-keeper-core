@@ -35,7 +35,7 @@ class FriendsController extends Controller
      * Accept or deny a friend request
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  App\User $user
+     * @param  \App\User $user
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, User $user)

@@ -3,9 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\User;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\Request;
 
 class UserRelationships extends Model
 {

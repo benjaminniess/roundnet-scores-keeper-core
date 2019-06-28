@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use \App\User;
-use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class GamesController extends Controller
 {
@@ -189,7 +187,7 @@ class GamesController extends Controller
     public function destroy(Game $game)
     {
         // Remove game history
-        foreach( $game->history()->get() as $game_point ) {
+        foreach( $game->points()->get() as $game_point ) {
             $game_point->delete();
         }
 
@@ -214,8 +212,6 @@ class GamesController extends Controller
     public function live()
     {
         /** @var User $user_obj */
-
-        // Get the currently authenticated user
         $user_obj = \App\User::find(Auth::id());
         if ( empty( $user_obj ) ) {
           return redirect(url('/') );
@@ -231,6 +227,6 @@ class GamesController extends Controller
             return redirect(url('/') );
         }
 
-        return view('games.live')->withToken($access_token);
+        return view('games.live');
       }
 }

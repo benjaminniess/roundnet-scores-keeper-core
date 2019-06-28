@@ -69,16 +69,7 @@ class User extends \TCG\Voyager\Models\User
      * @return \App\Game
      */
     public function get_live_game() {
-        $user_id = $this->getAttribute( 'id' );
-
-        $game_live = Game::where( [
-            [ 'status', 'live' ],
-
-        ])->where(function ($query) use ($user_id) {
-            $query->where( 'player1', '=', $user_id )->orWhere( 'player2', '=', $user_id)->orWhere( 'player3', '=', $user_id)->orWhere( 'player4', '=', $user_id);
-        })->first();
-
-        return $game_live;
+        return $this->games()->where('status', '=', 'live')->first();
     }
 
     /**

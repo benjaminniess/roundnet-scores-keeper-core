@@ -73,7 +73,7 @@ class Game extends Model
      *
      */
     public function players() {
-        return $this->belongsToMany('App\User', 'players', 'game_id','user_id' );
+        return $this->belongsToMany('App\User', 'players', 'game_id','user_id' )->withPivot('position');
     }
 
     /**
@@ -82,21 +82,21 @@ class Game extends Model
      * @return array
      */
     public function get_game_data() {
-        $players = $this->get_players();
+        $players = $this->players;
 
-        return [
+        $game_data = [
             'id'             => (int) $this->id,
             'teams'          => [
                 'a' => [
                     'players' => [
-                        'p1' => $players['player1']->get_user_data(),
-                        'p2' => $players['player2']->get_user_data(),
+                        'p1' => false,
+                        'p2' => false,
                     ],
                 ],
                 'b' => [
                     'players' => [
-                        'p3' => $players['player3']->get_user_data(),
-                        'p4' => $players['player4']->get_user_data(),
+                        'p3' => false,
+                        'p4' => false,
                     ],
                 ],
             ],
@@ -108,6 +108,25 @@ class Game extends Model
             'enable_turns'   => (int) $this->enable_turns,
             'status'         => $this->status,
         ];
+
+        foreach ($players as $player) {
+            switch( $player->pivot->position ) {
+                case '1':
+                    $game_data['teams']['a']['players']['p1'] = $player->get_user_data();
+                    break;
+                case '2':
+                    $game_data['teams']['a']['players']['p2'] = $player->get_user_data();
+                    break;
+                case '3':
+                    $game_data['teams']['b']['players']['p3'] = $player->get_user_data();
+                    break;
+                case '4':
+                    $game_data['teams']['b']['players']['p4'] = $player->get_user_data();
+                    break;
+            }
+        }
+
+        return $game_data;
     }
 
     /**

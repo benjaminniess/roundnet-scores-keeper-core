@@ -202,8 +202,6 @@ class GamesController extends Controller
     public function live()
     {
         /** @var User $user_obj */
-
-        // Get the currently authenticated user
         $user_obj = \App\User::find(Auth::id());
         if ( empty( $user_obj ) ) {
           return redirect(url('/') );
@@ -219,6 +217,6 @@ class GamesController extends Controller
             return redirect(url('/') );
         }
 
-        return view('games.live')->withToken($access_token);
+        return view('games.live');
       }
 }

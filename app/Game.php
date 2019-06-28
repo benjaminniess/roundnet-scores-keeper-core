@@ -40,11 +40,14 @@ class Game extends Model
      * @return bool
      */
     public function is_player_in_game( $player_id ) {
-        if ( (int) $player_id !== (int) $this->player1 && (int) $player_id !== (int) $this->player2 && (int) $player_id !== (int) $this->player3 && (int) $player_id !== (int) $this->player4 ) {
-            return false;
+        $players = $this->players()->get();
+        foreach ( $players as $player ){
+            if ( (int) $player->id === (int) $player_id ) {
+                return true;
+            }
         }
 
-        return true;
+        return false;
     }
 
     /**

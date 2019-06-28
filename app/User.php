@@ -100,13 +100,15 @@ class User extends \TCG\Voyager\Models\User
     *@return object
     */
     public function friends($status = '') {
-	    $query = $this->belongsToMany('App\User', 'user_relationships', 'user_id_1', 'user_id_2');
+	    $query_a_to_b = $this->belongsToMany('App\User', 'user_relationships', 'user_id_1', 'user_id_2');
+	    $query_b_to_a = $this->belongsToMany('App\User', 'user_relationships', 'user_id_2', 'user_id_1');
 
 	    if ( ! empty( $status ) ) {
-	    	$query->where( 'status', '=', $status );
+            $query_a_to_b->where( 'status', '=', $status );
+            $query_b_to_a->where( 'status', '=', $status );
 	    }
 
-	    return $query->get();
+	    return $query_a_to_b->get()->merge( $query_b_to_a->get() );
     }
 
 

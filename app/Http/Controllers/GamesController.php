@@ -18,21 +18,9 @@ class GamesController extends Controller
      */
     public function index()
     {
-        $user_id = auth()->id();
+        $user_obj = \App\User::find(Auth::id());
 
-        $games = Game::where('player1', '=', $user_id )
-            ->orWhere('player2', '=', $user_id)
-            ->orWhere('player3', '=', $user_id)
-            ->orWhere('player4', '=', $user_id)
-            ->orderBy('start_date', 'desc')->get();
-
-        if(empty($games)){
-            return redirect(url('/') );
-        }
-
-        foreach ($games as $game) {
-            $game->players = $game->get_players();
-        }
+        $games = $user_obj->games;
 
         return view('games.index',compact('games'));
     }

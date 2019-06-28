@@ -17,18 +17,11 @@
                     <td>
                         {{ $game->get_date() }}
                     </td>
-                    <td>
-                        {{ $game->players['player1']->name }}
-                    </td>
-                    <td>
-                        {{ $game->players['player2']->name }}
-                    </td>
-                    <td>
-                        {{ $game->players['player3']->name }}
-                    </td>
-                    <td>
-                        {{ $game->players['player4']->name }}
-                    </td>
+                    @foreach( $game->players as $player)
+                        <td>
+                            {{ $player->name }}
+                        </td>
+                    @endforeach
                     <td>
                         <a href="{{ url('/games') }}/{{ $game->id }}">
                             View

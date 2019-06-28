@@ -3,6 +3,8 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
@@ -61,6 +63,10 @@ class User extends \TCG\Voyager\Models\User
         setcookie('user_access_token', $access_token, time() + 30 * 3600 * 24, '/' );
 
         return $access_token;
+    }
+
+    public function games() {
+        return $this->belongsToMany('App\Game', 'players', 'user_id', 'game_id');
     }
 
     /**

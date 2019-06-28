@@ -76,15 +76,9 @@ class Game extends Model
     /**
      * Get the 4 players \App\User objects
      *
-     * @return array
      */
-    public function get_players() {
-        return [
-            'player1' => User::find( $this->player1 ),
-            'player2' => User::find( $this->player2 ),
-            'player3' => User::find( $this->player3 ),
-            'player4' => User::find( $this->player4 ),
-        ];
+    public function players() {
+        return $this->belongsToMany('App\User', 'players', 'game_id','user_id' );
     }
 
     /**

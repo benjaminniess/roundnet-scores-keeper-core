@@ -130,4 +130,11 @@ class User extends \TCG\Voyager\Models\User
 
         return $relationship->first();
     }
+
+    public function is_friend($friend_id){
+        if (empty($this->get_relationship($friend_id))) {
+            return false;
+        }
+        return true;
+    }
 }

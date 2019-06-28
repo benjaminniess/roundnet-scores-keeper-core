@@ -88,9 +88,19 @@ class GamesController extends Controller
             }
         }
 
-        // TODO: Check that all players are active friends
+        // Check that all players are friends with the auth user
+        $user_obj = User::find(auth()->id());
 
-        // TODO: Check that nobody is already in a live game
+        foreach ($all_players as $player) {
+            $player_obj = User::find($player);
+            if ((int) $user_obj->id !== (int) $player_obj->id) {
+                if (!$user_obj->is_friend($player_obj->id)) {
+                    die('vous n\'êtes pas ami avec ' . $player_obj->name);
+                }
+            }
+        }
+
+        // Check that nobody is already in a live game
         if ('on' === request('start_now')) {
             foreach ($all_players as $player) {
                 $user_obj = User::find($player);

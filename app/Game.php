@@ -80,6 +80,20 @@ class Game extends Model
     }
 
     /**
+     * Get a simple array with position => ID
+     *
+     * @return array
+     */
+    public function get_players_position() {
+        $positions = [];
+        foreach ($this->players()->get() as $player) {
+           $positions[$player->pivot->position] = $player->id;
+        }
+
+        return $positions;
+    }
+
+    /**
      * Prepare all game data for API usage
      *
      * @return array
@@ -215,9 +229,11 @@ class Game extends Model
 
         $score_team_1 = $this->getAttribute( 'score_team_1' );
         $score_team_2 = $this->getAttribute( 'score_team_2' );
-        // Player is in team 1 ?
 
-        if ( (int) $player_id === (int) $this->player1 || (int) $player_id === (int) $this->player2 ) {
+        $positions = $this->get_players_position();
+
+        // Player is in team 1 ?
+        if ( (int) $player_id === (int) $positions[1] || (int) $player_id === (int) $positions[2] ) {
             if ( 'positive' === $action_type->action_type ) {
                 $score_team_1 ++;
             } elseif ( 'negative' === $action_type->action_type ) {

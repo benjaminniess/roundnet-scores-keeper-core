@@ -48,6 +48,6 @@ class FriendsController extends Controller
         $relationship = $user_obj->get_relationship($user->id);
         $relationship->update($attributes);
 
-        return redirect('/friends');
+        return back();
     }
 }

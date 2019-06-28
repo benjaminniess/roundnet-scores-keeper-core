@@ -91,12 +91,14 @@ class GamesController extends Controller
         // TODO: Check that all players are active friends
 
         // TODO: Check that nobody is already in a live game
-        foreach ($all_players as $player) {
-            $user_obj = User::find($player);
-            $games = $user_obj->games;
-            foreach ($games as $game) {
-                if ($game->is_game_live()) {
-                    die($user_obj->name . ' is in a live game already');
+        if ('on' === request('start_now')) {
+            foreach ($all_players as $player) {
+                $user_obj = User::find($player);
+                $games = $user_obj->games;
+                foreach ($games as $game) {
+                    if ($game->is_game_live()) {
+                        die($user_obj->name . ' is in a live game already');
+                    }
                 }
             }
         }

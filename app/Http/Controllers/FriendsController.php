@@ -47,7 +47,7 @@ class FriendsController extends Controller
         /** @var \App\User $user_obj */
         $user_obj = User::find(Auth::id());
         $relationship = $user_obj->get_relationship($user->id);
-        $relationship->update($attributes);
+        $relationship->update_status($attributes);
 
         return back();
     }

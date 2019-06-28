@@ -126,6 +126,6 @@ class User extends \TCG\Voyager\Models\User
                   ->orWhere('user_relationships.user_id_2', '=', $friend_id);
         });
 
-        return $relationship;
+        return $relationship->first();
     }
 }

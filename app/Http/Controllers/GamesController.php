@@ -179,7 +179,7 @@ class GamesController extends Controller
     public function destroy(Game $game)
     {
         // Remove game history
-        foreach( $game->history()->get() as $game_point ) {
+        foreach( $game->points()->get() as $game_point ) {
             $game_point->delete();
         }
 

@@ -15,7 +15,7 @@ class Game extends Model
      * Get all points associated to the given game
      *
      */
-    public function history() {
+    public function points() {
         return $this->hasMany('\App\Game_Point', 'game_id');
     }
 

@@ -66,6 +66,7 @@ class GamesController extends Controller
 
         // Check if all players are unique
         $all_players = array_unique( [ $player_attributes['player1'], $player_attributes['player2'], $player_attributes['player3'], $player_attributes['player4'] ] );
+
         if ( 4 !== count( $all_players ) ) {
             // TODO: use flash error messages
            // die('Cheating with players!');
@@ -79,6 +80,12 @@ class GamesController extends Controller
         $referee = request('referee');
         if ( 0 < (int) $referee ) {
             $attributes['referee'] = $referee;
+
+            foreach ($all_players as $player) {
+                if ((int) $player === (int) $referee) {
+                    die('Referee cannot be a player');
+                }
+            }
         }
 
         // TODO: Check that all players are active friends

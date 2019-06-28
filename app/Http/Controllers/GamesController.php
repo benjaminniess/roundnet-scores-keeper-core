@@ -97,12 +97,10 @@ class GamesController extends Controller
 
         $game = Game::create($attributes);
 
-        // TODO: asociate player
-        $players = DB::table('players')->where('id', '=', $player_attributes['player1'])
-            ->orWhere('id', '=', $player_attributes['player2'])
-            ->orWhere('id', '=', $player_attributes['player3'])
-            ->orWhere('id', '=', $player_attributes['player4']);
-        //$game->players->associate($players);
+        $game->players()->attach( \App\User::find($player_attributes['player1'] ), [ 'position' => 1 ]);
+        $game->players()->attach( \App\User::find($player_attributes['player2'] ), [ 'position' => 2 ]);
+        $game->players()->attach( \App\User::find($player_attributes['player3'] ), [ 'position' => 3 ]);
+        $game->players()->attach( \App\User::find($player_attributes['player4'] ), [ 'position' => 4 ]);
 
         return redirect('/games');
     }

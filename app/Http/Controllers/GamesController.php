@@ -167,6 +167,18 @@ class GamesController extends Controller
      */
     public function destroy(Game $game)
     {
+        // Remove game history
+        foreach( $game->history()->get() as $game_point ) {
+            $game_point->delete();
+        }
+
+        // Remove game players
+        $players = $game->hasMany('\App\Player', 'game_id' )->get();
+        foreach ( $players as $player ) {
+            $player->delete();
+        }
+
+        // Remove game itself
         $game->delete();
 
         return redirect('/games');

@@ -14,14 +14,9 @@ class Game extends Model
     /**
      * Get all points associated to the given game
      *
-     * @return mixed
      */
-    public function get_history() {
-        $game_points = Game_Point::where( [
-            [ 'game_id', $this->id ],
-        ])->get();
-
-        return $game_points;
+    public function history() {
+        return $this->hasMany('\App\Game_Point', 'game_id');
     }
 
     /**
@@ -105,7 +100,7 @@ class Game extends Model
                     ],
                 ],
             ],
-            'points'         => $this->get_history(),
+            'points'         => $this->history,
             'score'          => $this->get_scores(),
             'start_date'     => (int) $this->start_date,
             'current_server' => (int) $this->current_server,

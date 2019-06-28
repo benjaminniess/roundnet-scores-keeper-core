@@ -57,20 +57,23 @@ class GamesController extends Controller
      */
     public function store(Request $request)
     {
-        $attributes = request()->validate([
+        $player_attributes = request()->validate([
             'player1'       => 'required',
             'player2'       => 'required',
             'player3'       => 'required',
             'player4'       => 'required',
-            'points_to_win' => 'required',
         ]);
 
         // Check if all players are unique
-        $all_players = array_unique( [ $attributes['player1'], $attributes['player2'], $attributes['player3'], $attributes['player4'] ] );
+        $all_players = array_unique( [ $player_attributes['player1'], $player_attributes['player2'], $player_attributes['player3'], $player_attributes['player4'] ] );
         if ( 4 !== count( $all_players ) ) {
             // TODO: use flash error messages
-            die('Cheating with players!');
+           // die('Cheating with players!');
         }
+
+        $attributes = request()->validate([
+            'points_to_win' => 'required',
+        ]);
 
         // TODO: Check if the referee is not from the players
         $referee = request('referee');
@@ -92,7 +95,14 @@ class GamesController extends Controller
 
         $attributes['enable_turns'] = 'on' === request('enable_turns') ? true : false;
 
-        Game::create($attributes);
+        $game = Game::create($attributes);
+
+        // TODO: asociate player
+        $players = DB::table('players')->where('id', '=', $player_attributes['player1'])
+            ->orWhere('id', '=', $player_attributes['player2'])
+            ->orWhere('id', '=', $player_attributes['player3'])
+            ->orWhere('id', '=', $player_attributes['player4']);
+        //$game->players->associate($players);
 
         return redirect('/games');
     }

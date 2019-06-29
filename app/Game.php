@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 class Game extends Model
 {
@@ -227,8 +228,8 @@ class Game extends Model
             ];
         }
 
-        $score_team_1 = $this->getAttribute( 'score_team_1' );
-        $score_team_2 = $this->getAttribute( 'score_team_2' );
+        $score_team_1 = $this->score_team_1;
+        $score_team_2 = $this->score_team_2;
 
         $positions = $this->get_players_position();
 
@@ -256,6 +257,7 @@ class Game extends Model
                 'score_team_1'   => $score_team_1,
                 'score_team_2'   => $score_team_2,
                 'game_id'        => $this->id,
+                'created_at'     => Carbon::now(),
             ]
         );
 

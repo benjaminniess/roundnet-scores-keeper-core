@@ -139,9 +139,15 @@ class GamesController extends Controller
      */
     public function show(Game $game)
     {
-        $players = $game->players;
+        $ordered_players = $game->get_players_position();
+        foreach ( $ordered_players as $position => $player_id ) {
+            $ordered_players[ $position ] = \App\User::find($player_id);
+        }
 
-        return view('games.show',compact('game','players'));
+        return view('games.show')->with([
+            'game' => $game,
+            'players' => $ordered_players,
+        ]);
     }
 
     /**

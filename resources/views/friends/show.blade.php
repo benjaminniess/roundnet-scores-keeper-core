@@ -1,6 +1,12 @@
 @extends('layouts.default')
 
 @section('content')
+    <h2>Search for friends</h2>
+    <form method="POST" action="/friends/search/">
+        @csrf
+        <input type="text" placeholder="nickname" name="nickname" />
+        <input type="submit" value="Search" />
+    </form>
     <h2>Your active friends</h2>
 
     <table align=center border=1>

@@ -35,7 +35,9 @@ Route::resource('games','GamesController');
 |--------------------------------------------------------------------------
 */
 Route::get('/friends', 'FriendsController@show');
+Route::get('/friends/request/{user}', 'FriendsController@request');
 Route::patch('/friends/{user}', 'FriendsController@update');
+Route::post('/friends/search', 'FriendsController@search');
 /*
 |--------------------------------------------------------------------------
 | End friends routes

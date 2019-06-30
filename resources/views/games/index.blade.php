@@ -1,7 +1,6 @@
 @extends('layouts.default')
 
 @section('content')
-    <h2>Games list</h2>
     @if (!$games->isEmpty())
         <table align=center border=1>
             <th>Status</th>
@@ -23,9 +22,15 @@
                         </td>
                     @endforeach
                     <td>
-                        <a href="{{ url('/games') }}/{{ $game->id }}">
-                            View
-                        </a>
+                        @if ( $game->status == 'pending' )
+                            <a href="{{ url('/games/' . $game->id . '/start') }}/{{ $game->id }}">
+                                Start
+                            </a>
+                        @else
+                            <a href="{{ url('/games') }}/{{ $game->id }}">
+                                View
+                            </a>
+                        @endif
                     </td>
                     <td>
                         <a href="{{ url('/games') }}/{{ $game->id }}/edit">

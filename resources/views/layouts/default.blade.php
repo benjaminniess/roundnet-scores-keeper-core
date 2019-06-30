@@ -15,7 +15,7 @@
 
     <div class="content">
         <div class="title m-b-md">
-            Roundnet Scores Keeper
+            <a href="/">Roundnet Scores Keeper</a>
         </div>
 
         @include( 'components.main-nav' )

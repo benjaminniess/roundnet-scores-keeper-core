@@ -23,7 +23,7 @@
                     @endforeach
                     <td>
                         @if ( $game->status == 'pending' )
-                            <a href="{{ url('/games/' . $game->id . '/start') }}/{{ $game->id }}">
+                            <a href="{{ url('/games/' . $game->id . '/start') }}">
                                 Start
                             </a>
                         @else

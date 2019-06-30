@@ -54,6 +54,44 @@ class GamesController extends Controller
     }
 
     /**
+     * When a user clicks to the "start" button on a pending game
+     *
+     * @param Request $request
+     * @param $game
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function start(Request $request, $game_id ) {
+        if ( 0 >= (int) $game_id ) {
+            return redirect(url('/') );
+        }
+
+        /** @var User $user_obj */
+        $user_obj = \App\User::find(Auth::id());
+        if ( empty( $user_obj ) ) {
+            abort(403, 'You must be logged.');
+        }
+
+        if ( $user_obj->is_in_a_live_game() ) {
+            abort(403, 'You are already in a live game.');
+        }
+
+        /** @var \App\Game $game_obj */
+        $game_obj = \App\Game::find( (int) $game_id );
+        if ( empty( $game_obj ) || ! $game_obj->is_player_in_game( $user_obj->id ) ) {
+            abort(403, 'Your are not in this game');
+        }
+
+        if ( 'pending' !== $game_obj->status ) {
+            abort(403, 'This game is not ready.');
+        }
+
+        $game_obj->status = 'live';
+        $game_obj->save();
+
+        return redirect(url('/games/live') );
+    }
+
+    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

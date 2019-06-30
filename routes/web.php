@@ -20,6 +20,7 @@ Route::get('/', 'HomeController@index');
 */
 
 Route::get('/games/live', 'GamesController@live');
+Route::get('/games/{game}/start', 'GamesController@start');
 
 Route::resource('games','GamesController');
 

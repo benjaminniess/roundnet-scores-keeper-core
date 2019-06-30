@@ -27,5 +27,6 @@
 
     <script src="{{ asset('js/game-live.js') }}"></script>
 </div>
+@include('components/copyright')
 </body>
 </html>

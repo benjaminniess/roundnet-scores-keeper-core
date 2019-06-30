@@ -65,10 +65,12 @@
         <label for="game_points">points to win</label>
     </p>
 
+    <!-- Disable for MVP
     <p>
         <input type="checkbox" name="enable_turns" id="enable_turns" checked>
         <label for="enable_turns">Turn every 5 points?</label>
     </p>
+    -->
 
     <p>
         <input type="checkbox" name="start_now" id="start_now" checked>

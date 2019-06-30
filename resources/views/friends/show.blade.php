@@ -49,6 +49,7 @@
         @endforeach
     </table>
 
+    <!-- Not necessary for MVP
     <h2>Your blocked friends</h2>
 
     <table align=center border=1>
@@ -63,4 +64,5 @@
             </tr>
         @endforeach
     </table>
+    -->
 @endsection

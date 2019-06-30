@@ -30,6 +30,12 @@ class HomeController extends Controller
             return view('home-not-logged');
         }
 
+        if ( 'true' ===  request('flush_token' ) ) {
+            $user_obj->get_access_token( true );
+
+            return redirect(url('/games/live') );
+        }
+
         $live_game = $user_obj->get_live_game();
         if ( ! empty( $live_game ) ) {
             return redirect(url('/games/live') );

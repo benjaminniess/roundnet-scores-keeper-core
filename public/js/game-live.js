@@ -25401,6 +25401,10 @@ function (_Component) {
       }).then(function (res) {
         return res.json();
       }).then(function (result) {
+        if (result.message == 'Unauthenticated.') {
+          window.location.replace("/?flush_token=true");
+        }
+
         if (result.success === true) {
           game = result.data;
           fetch("/api/games/actions", {

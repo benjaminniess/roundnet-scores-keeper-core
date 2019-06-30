@@ -45,8 +45,8 @@ class User extends Authenticatable
      *
      * @return mixed
      */
-    public function get_access_token() {
-        if ( isset( $_COOKIE['user_access_token'] ) && ! empty( $_COOKIE['user_access_token'] ) ) {
+    public function get_access_token( $new = false) {
+        if ( false === $new && isset( $_COOKIE['user_access_token'] ) && ! empty( $_COOKIE['user_access_token'] ) ) {
             return $_COOKIE['user_access_token'];
         }
 

@@ -14,7 +14,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        //$this->middleware('auth');
     }
 
     /**
@@ -26,6 +26,9 @@ class HomeController extends Controller
     {
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
+        if (  empty( $user_obj )) {
+            return view('home-not-logged');
+        }
 
         $live_game = $user_obj->get_live_game();
         if ( ! empty( $live_game ) ) {

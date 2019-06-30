@@ -17,6 +17,9 @@ class GamesController extends Controller
     public function index()
     {
         $user_obj = \App\User::find(Auth::id());
+        if ( empty( $user_obj ) ) {
+            return redirect(url('/') );
+        }
 
         $games = $user_obj->games;
 
@@ -32,10 +35,13 @@ class GamesController extends Controller
     {
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
+        if ( empty( $user_obj ) ) {
+            return redirect(url('/') );
+        }
 
         $players = $user_obj->friends('active');
         if ( empty( $players ) ) {
-            return false;
+            return redirect(url('/') );
         }
 
         $current_user = new \stdClass;
@@ -55,6 +61,11 @@ class GamesController extends Controller
      */
     public function store(Request $request)
     {
+        $user_obj = \App\User::find(Auth::id());
+        if ( empty( $user_obj ) ) {
+            return redirect(url('/') );
+        }
+
         $player_attributes = request()->validate([
             'player1'       => 'required',
             'player2'       => 'required',
@@ -85,9 +96,6 @@ class GamesController extends Controller
                 }
             }
         }
-
-        // Check that all players are friends with the auth user
-        $user_obj = User::find(auth()->id());
 
         foreach ($all_players as $player) {
             /** @var User $player_obj */
@@ -132,6 +140,11 @@ class GamesController extends Controller
      */
     public function show(Game $game)
     {
+        $user_obj = User::find(auth()->id());
+        if ( empty( $user_obj ) ) {
+            return redirect(url('/') );
+        }
+
         $ordered_players = $game->get_players_position();
         foreach ( $ordered_players as $position => $player_id ) {
             $ordered_players[ $position ] = \App\User::find($player_id);

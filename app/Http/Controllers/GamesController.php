@@ -167,6 +167,10 @@ class GamesController extends Controller
         $game->players()->attach( \App\User::find($player_attributes['player3'] ), [ 'position' => 3 ]);
         $game->players()->attach( \App\User::find($player_attributes['player4'] ), [ 'position' => 4 ]);
 
+        if ( 'on' === request('start_now') ) {
+            return redirect('/games/live');
+        }
+
         return redirect('/games');
     }
 

@@ -90,24 +90,17 @@ class GamesController extends Controller
         $user_obj = User::find(auth()->id());
 
         foreach ($all_players as $player) {
+            /** @var User $player_obj */
             $player_obj = User::find($player);
             if ((int) $user_obj->id !== (int) $player_obj->id) {
                 if (!$user_obj->is_friend($player_obj->id)) {
-                    die('vous n\'êtes pas ami avec ' . $player_obj->name);
+                    die( 'You are not friend with ' . $player_obj->name);
                 }
             }
-        }
 
-        // Check that nobody is already in a live game
-        if ('on' === request('start_now')) {
-            foreach ($all_players as $player) {
-                $user_obj = User::find($player);
-                $games = $user_obj->games;
-                foreach ($games as $game) {
-                    if ($game->is_game_live()) {
-                        die($user_obj->name . ' is in a live game already');
-                    }
-                }
+            // Check that nobody is already in a live game
+            if( 'on' === request('start_now' ) && $player_obj->is_in_a_live_game() ) {
+                die( $player_obj->name . ' is already in a live game');
             }
         }
 

@@ -73,6 +73,15 @@ class User extends \TCG\Voyager\Models\User
     }
 
     /**
+     * Checks if the user is already in a live game
+     *
+     * @return bool
+     */
+    public function is_in_a_live_game() {
+        return ! empty( $this->get_live_game() );
+    }
+
+    /**
      * Prepare user data for rest API usage
      *
      * @return array

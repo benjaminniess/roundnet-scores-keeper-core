@@ -18,15 +18,13 @@ class FriendsController extends Controller
      */
     public function show() {
         /** @var User $user_obj */
-
-        // Get the currently authenticated user
         $user_obj = User::find(Auth::id());
         if ( empty( $user_obj ) ) {
           return redirect(url('/') );
         }
 
         $active_auth_user_friends = $user_obj->friends(UserRelationships::ACTIVE_STATUS);
-        $pending_auth_user_friends = $user_obj->friends(UserRelationships::PENDING_STATUS);
+        $pending_auth_user_friends = $user_obj->get_friend_requests();
         $blocked_auth_user_friends = $user_obj->friends(UserRelationships::BLOCKED_STATUS);
 
         return view('friends.show',compact('active_auth_user_friends','pending_auth_user_friends','blocked_auth_user_friends'));

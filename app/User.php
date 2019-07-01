@@ -112,6 +112,17 @@ class User extends Authenticatable
 	    return $query_a_to_b->get()->merge( $query_b_to_a->get() );
     }
 
+    /**
+     * Get incoming friend requests
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function get_friend_requests() {
+        return $this->belongsToMany('App\User', 'user_relationships', 'user_id_2', 'user_id_1')
+            ->where( 'status', '=', 'pending' )
+            ->get();
+    }
+
 
     /**
     * Get one user relationship info

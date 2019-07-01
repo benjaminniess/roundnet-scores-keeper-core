@@ -36,38 +36,40 @@
                 </table>
             </div>
         </div>
-        <div class="row">
-            <div class="col">
-                <h2 class="heading">Your pending friends request</h2>
+        @if ( ! $pending_auth_user_friends->isEmpty() )
+            <div class="row">
+                <div class="col">
+                    <h2 class="heading">Your pending friends request</h2>
 
-                <table class="table table-striped table-sm">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th colspan="2">Actions</th>
-                        </tr>
-                    </thead>
-                    @foreach ($pending_auth_user_friends as $pending_auth_user_friend)
-                        <tr>
-                            <td>{{ $pending_auth_user_friend->name }}</td>
-                            <td>{{ $pending_auth_user_friend->email }}</td>
-                            <td>
-                                <form class="form" action="/friends/{{ $pending_auth_user_friend->id }}" method="POST">
-                                    @csrf
-                                    @method('PATCH')
-                                    <input type="hidden" name="friend_id" value="{{ $pending_auth_user_friend->id }}">
-                                    <button name="status" class="btn btn-info btn-lg m-3" type="submit" value="active">Accept</button>
-                            </td>
-                            <td>
-                                <button name="status" class="btn btn-danger btn-lg m-3" type="submit" value="declined">Deny</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </table>
+                    <table class="table table-striped table-sm">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th colspan="2">Actions</th>
+                            </tr>
+                        </thead>
+                        @foreach ($pending_auth_user_friends as $pending_auth_user_friend)
+                            <tr>
+                                <td>{{ $pending_auth_user_friend->name }}</td>
+                                <td>{{ $pending_auth_user_friend->email }}</td>
+                                <td>
+                                    <form class="form" action="/friends/{{ $pending_auth_user_friend->id }}" method="POST">
+                                        @csrf
+                                        @method('PATCH')
+                                        <input type="hidden" name="friend_id" value="{{ $pending_auth_user_friend->id }}">
+                                        <button name="status" class="btn btn-info btn-lg m-3" type="submit" value="active">Accept</button>
+                                </td>
+                                <td>
+                                    <button name="status" class="btn btn-danger btn-lg m-3" type="submit" value="declined">Deny</button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 
 

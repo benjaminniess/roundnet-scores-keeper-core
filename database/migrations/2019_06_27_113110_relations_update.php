@@ -19,7 +19,8 @@ class RelationsUpdate extends Migration
 			    $table->integer('user_id');
 			    $table->integer('game_id');
 			    $table->integer('position');
-
+            });
+            Schema::table('players', function (Blueprint $table) {
 			    $table->foreign('game_id')->references('id')->on('games');
 			    $table->foreign('user_id')->references('id')->on('users');
 		    });

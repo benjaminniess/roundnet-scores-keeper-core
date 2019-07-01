@@ -31,7 +31,9 @@ class CreateGamesTable extends Migration
             $table->integer('score_team_2');
             $table->integer('game_duration');
             $table->timestamps();
+        });
 
+        Schema::table('games', function (Blueprint $table) {
             $table->foreign('player1')->references('id')->on('users');
             $table->foreign('player2')->references('id')->on('users');
             $table->foreign('player3')->references('id')->on('users');
@@ -45,7 +47,9 @@ class CreateGamesTable extends Migration
             $table->integer('score_team_1');
             $table->integer('score_team_2');
             $table->timestamps();
+        });
 
+        Schema::table('game_points', function (Blueprint $table) {
             $table->foreign('action_type_id')->references('id')->on('actions_types');
         });
 
@@ -55,7 +59,8 @@ class CreateGamesTable extends Migration
             $table->integer('user_id_2');
             $table->integer('status');
             $table->timestamps();
-
+        });
+        Schema::table('user_relationships', function (Blueprint $table) {
             $table->foreign('user_id_1')->references('id')->on('users');
             $table->foreign('user_id_2')->references('id')->on('users');
 

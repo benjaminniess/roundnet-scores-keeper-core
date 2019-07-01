@@ -11,5 +11,5 @@ const mix = require('laravel-mix');
  |
  */
 
-mix.react('resources/js/app.js', 'public/js').sass('resources/sass/app.scss', 'public/css');
-mix.react('resources/js/game-live/game-live.js', 'public/js');
+mix.react('resources/js/app.js', 'htdocs/js').sass('resources/sass/app.scss', 'htdocs/css');
+mix.react('resources/js/game-live/game-live.js', 'htdocs/js');

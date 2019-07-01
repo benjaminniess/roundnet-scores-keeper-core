@@ -6,6 +6,7 @@ use App\Game;
 use \App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class GamesController extends Controller
 {
@@ -103,6 +104,14 @@ class GamesController extends Controller
         if ( empty( $user_obj ) ) {
             return redirect(url('/') );
         }
+
+	    $validator = Validator::make($request->all(),[
+		    'player1'       => 'required',
+		    'player2'       => 'required',
+		    'player3'       => 'required',
+		    'player4'       => 'required',
+	    ]);
+
 
         $player_attributes = request()->validate([
             'player1'       => 'required',

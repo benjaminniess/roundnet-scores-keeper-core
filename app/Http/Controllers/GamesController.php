@@ -112,6 +112,11 @@ class GamesController extends Controller
 		    'player4'       => 'required',
 	    ]);
 
+        if ( $validator->fails() ) {
+            return redirect('games/create')
+                ->withErrors($validator)
+                ->withInput();
+        }
 
         $player_attributes = request()->validate([
             'player1'       => 'required',
@@ -124,22 +129,26 @@ class GamesController extends Controller
         $all_players = array_unique( [ $player_attributes['player1'], $player_attributes['player2'], $player_attributes['player3'], $player_attributes['player4'] ] );
 
         if ( 4 !== count( $all_players ) ) {
-            // TODO: use flash error messages
-           // die('Cheating with players!');
+            $validator->errors()->add('4players', 'You must select 4 different players.');
+            return redirect('games/create')
+                ->withErrors($validator)
+                ->withInput();
         }
 
         $attributes = request()->validate([
             'points_to_win' => 'required',
         ]);
 
-        // TODO: Check if the referee is not from the players
         $referee = request('referee');
         if ( 0 < (int) $referee ) {
             $attributes['referee'] = $referee;
 
             foreach ($all_players as $player) {
                 if ((int) $player === (int) $referee) {
-                    die('Referee cannot be a player');
+                    $validator->errors()->add('referee', 'The referee cannot be in the game players.');
+                    return redirect('games/create')
+                        ->withErrors($validator)
+                        ->withInput();
                 }
             }
         }
@@ -149,13 +158,16 @@ class GamesController extends Controller
             $player_obj = User::find($player);
             if ((int) $user_obj->id !== (int) $player_obj->id) {
                 if (!$user_obj->is_friend($player_obj->id)) {
-                    die( 'You are not friend with ' . $player_obj->name);
+                    abort(403, 'Cheating with friends.');
                 }
             }
 
             // Check that nobody is already in a live game
             if( 'on' === request('start_now' ) && $player_obj->is_in_a_live_game() ) {
-                die( $player_obj->name . ' is already in a live game');
+                $validator->errors()->add('player-in-game', $player_obj->name . ' is already in a live game');
+                return redirect('games/create')
+                    ->withErrors($validator)
+                    ->withInput();
             }
         }
 

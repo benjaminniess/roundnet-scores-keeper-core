@@ -1,47 +1,56 @@
 @extends('layouts.default')
 
 @section('content')
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <h1 class="heading">Games list</h1>
+        </div>
+    </div>
+
+<div class="row mt-3 mb-5">
     @if (!$games->isEmpty())
-        <table align=center border=1>
-            <th>Status</th>
-            <th>Date</th>
-            <th>Player 1</th>
-            <th>Player 2</th>
-            <th>Player 3</th>
-            <th>Player 4</th>
-            <th colspan="2">Actions</th>
-            @foreach($games as $game)
-                <tr>
-                    <td>{{ $game->status }}</td>
-                    <td>
-                        {{ $game->get_date() }}
-                    </td>
-                    @foreach( $game->players as $player)
-                        <td>
-                            {{ $player->name }}
-                        </td>
-                    @endforeach
-                    <td>
-                        @if ( $game->status == 'pending' )
-                            <a href="{{ url('/games/' . $game->id . '/start') }}">
-                                Start
-                            </a>
-                        @else
-                            <a href="{{ url('/games') }}/{{ $game->id }}">
-                                View
-                            </a>
-                        @endif
-                    </td>
-                    <td>
-                        <a href="{{ url('/games') }}/{{ $game->id }}/edit">
-                            Edit
-                        </a>
-                    </td>
-                </tr>
-            @endforeach
-        </table>
+        @foreach($games as $game)
+            <div class="col-sm">
+                <div class="card text-center">
+                    <div class="card-header">
+                        <span class="badge badge-success">{{ $game->status }}</span>
+                    </div>
+
+                    <div class="card-body">
+                        <h2 class="card-title">Players</h2>
+                            <ul class="list-group list-group-flush">
+                                @foreach( $game->players as $player)
+                                <li class="list-group-item">{{ $player->name }}</li>
+                                @endforeach
+                            </ul>
+                            <div class="row mt-3">
+                                <div class="col-md-6 offset-md-3">
+                                    @if ( $game->status == 'pending' )
+                                        <a href="{{ url('/games/' . $game->id . '/start') }}" class="btn btn-success"> Start </a>
+                                    @else
+                                        <a href="{{ url('/games') }}/{{ $game->id }}" class="btn btn-info"> View </a>
+                                    @endif
+                                        <a href="{{ url('/games') }}/{{ $game->id }}/edit" class="btn btn-primary"> Edit </a>
+                                </div>
+                            </div>
+                    </div>
+
+                    <div class="card-footer text-muted"> {{ $game->get_date() }} </div>
+
+                </div>
+            </div>
+        @endforeach
+</div>
+
     @else {{ 'there is no game' }}
     @endif
-        <a href="{{ url('/games/create') }}"> Add a new game </a>
+    
+    <div class="row">
+        <div class="col-md-6 offset-md-3">
+            <a href="{{ url('/games/create') }}" class="btn-lg btn-block btn-primary"> Add a new game </a>
+        </div>
+    </div>
 
+</div>
 @endsection

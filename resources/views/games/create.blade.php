@@ -11,7 +11,7 @@
         <option value="">Select a player</option>
         @foreach($players as $player)
 
-            <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option @php echo old('player1') == $player->id ? 'selected' : '' @endphp value="{{ $player->id }}">{{ $player->name }}</option>
 
         @endforeach
     </select>
@@ -21,7 +21,7 @@
         <option value="">Select a player</option>
         @foreach($players as $player)
 
-            <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option @php echo old('player2') == $player->id ? 'selected' : '' @endphp value="{{ $player->id }}">{{ $player->name }}</option>
 
         @endforeach
     </select>
@@ -32,7 +32,7 @@
         <option value="">Select a player</option>
         @foreach($players as $player)
 
-            <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option @php echo old('player3') == $player->id ? 'selected' : '' @endphp value="{{ $player->id }}">{{ $player->name }}</option>
 
         @endforeach
     </select>
@@ -42,7 +42,7 @@
         <option value="">Select a player</option>
         @foreach($players as $player)
 
-            <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option @php echo old('player4') == $player->id ? 'selected' : '' @endphp value="{{ $player->id }}">{{ $player->name }}</option>
 
         @endforeach
     </select>
@@ -54,14 +54,14 @@
         <option value="">Select a referee if necessary</option>
         @foreach($players as $player)
 
-            <option value="{{ $player->id }}">{{ $player->name }}</option>
+            <option @php echo old('referee') == $player->id ? 'selected' : '' @endphp value="{{ $player->id }}">{{ $player->name }}</option>
 
         @endforeach
     </select>
 
 
     <p>
-        <input type="number" name="points_to_win" id="game_points" required value="21">
+        <input type="number" name="points_to_win" id="game_points" required value="{{ old('points_to_win', 21) }}">
         <label for="game_points">points to win</label>
     </p>
 

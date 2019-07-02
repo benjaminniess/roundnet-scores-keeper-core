@@ -45,7 +45,12 @@ class FriendsController extends Controller
 
         /** @var \App\User $user_obj */
         $user_obj = User::find(Auth::id());
+
         $relationship = $user_obj->get_relationship($user->id);
+	    if ( empty( $relationship ) || (int) $relationship->user_id_2 !== (int) $user_obj->id ) {
+		    abort(403, 'Cheating?');
+	    }
+
         $relationship->update_status($attributes);
 
         return back();
@@ -80,11 +85,13 @@ class FriendsController extends Controller
         $user_obj = User::find(Auth::id());
 
         if( $user_obj->is_friend( $user_id )) {
-            // TODO: manage laravel $errors var
-            die('You are already friends');
+	        abort(403, 'You are already friends');
         }
 
-        // TODO: Check that user exists
+        $friend_obj = User::find( $user_id );
+        if ( empty( $friend_obj ) ) {
+	        abort(403, 'Cheating?');
+        }
 
         $relationship = new \App\UserRelationships();
         $relationship->user_id_1 = $user_obj->id;

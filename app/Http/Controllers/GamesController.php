@@ -208,6 +208,9 @@ class GamesController extends Controller
             return redirect(url('/') );
         }
 
+        if ( $game->is_game_live() ) {
+	        return redirect('/games/live');
+        }
         $ordered_players = $game->get_players_position();
         foreach ( $ordered_players as $position => $player_id ) {
             $ordered_players[ $position ] = \App\User::find($player_id);

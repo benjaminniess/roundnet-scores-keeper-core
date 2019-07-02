@@ -57,9 +57,15 @@ class FriendsController extends Controller
      * @return $this
      */
     public function search() {
-        $friends = DB::table('users')->where( 'name', 'like', '%' . request('nickname') . '%' )->get();
+	    /** @var \App\User $user_obj */
+	    $user_obj = User::find(Auth::id());
 
-        return view( 'friends.search' )->with('results', $friends);
+        $friends = \App\User::where( 'name', 'like', '%' . request('nickname') . '%' )->get();
+
+        return view( 'friends.search', [
+        	'results'      => $friends,
+	        'current_user' => $user_obj,
+        ] );
     }
 
     /**

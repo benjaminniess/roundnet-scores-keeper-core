@@ -16,8 +16,8 @@ class RelationsUpdate extends Migration
 	    if ( ! Schema::hasTable( 'players' ) ) {
 		    Schema::create('players', function (Blueprint $table) {
 			    $table->bigIncrements('id');
-			    $table->integer('user_id');
-			    $table->integer('game_id');
+			    $table->bigInteger('user_id')->unsigned();
+			    $table->bigInteger('game_id')->unsigned();
 			    $table->integer('position');
             });
             Schema::table('players', function (Blueprint $table) {
@@ -48,8 +48,8 @@ class RelationsUpdate extends Migration
 	    if ( ! Schema::hasTable( 'user_relationships' ) ) {
 		    Schema::create('user_relationships', function (Blueprint $table) {
 			    $table->bigIncrements('id');
-			    $table->integer('user_id_1');
-			    $table->integer('user_id_2');
+			    $table->bigInteger('user_id_1')->unsigned();
+			    $table->bigInteger('user_id_2')->unsigned();
 			    $table->string('status');
 
 			    $table->timestamps();
@@ -71,10 +71,10 @@ class RelationsUpdate extends Migration
 
 	    if ( ! Schema::hasColumn( 'games', 'player1' ) ) {
 		    Schema::table('games', function (Blueprint $table) {
-			    $table->integer('player1')->nullable();
-			    $table->integer('player2')->nullable();
-			    $table->integer('player3')->nullable();
-			    $table->integer('player4')->nullable();
+			    $table->bigInteger('player1')->nullable();
+			    $table->bigInteger('player2')->nullable();
+			    $table->bigInteger('player3')->nullable();
+			    $table->bigInteger('player4')->nullable();
 
 			    $table->foreign('player1')->references('id')->on('users');
 			    $table->foreign('player2')->references('id')->on('users');

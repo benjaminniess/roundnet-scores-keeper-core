@@ -8,7 +8,7 @@
                 <h1 class="display-4">Search for friends</h1>
                 <div class="row justify-content-md-center">
                     <div class="col-md-6">
-                        <form method="POST" action="/friends/search/">
+                        <form method="POST" action="/friends/search">
                             @csrf
                             <div class="row justify-content-md-center mt-3">
                                 <div class="col-md-12">

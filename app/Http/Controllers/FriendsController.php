@@ -87,6 +87,8 @@ class FriendsController extends Controller
 
         $relationship->save();
 
+        // TODO: Send notif
+
         return redirect('/friends');
     }
 }

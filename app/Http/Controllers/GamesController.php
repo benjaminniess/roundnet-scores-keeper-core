@@ -227,6 +227,8 @@ class GamesController extends Controller
      */
     public function edit(Game $game)
     {
+	    abort(403, 'For admin only');
+
         $players = User::all();
 
         return view('games.edit', compact('game','players'));

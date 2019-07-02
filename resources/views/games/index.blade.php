@@ -12,7 +12,7 @@
                 <div class="col-sm-6 my-2">
                     <div class="card text-center">
                         <div class="card-header">
-                            <span class="badge 
+                            <span class="badge
                                 @if ($game->status == 'pending')
                                     {{ 'badge-dark' }}
                                 @endif
@@ -50,7 +50,8 @@
                                         @else
                                             <a href="{{ url('/games') }}/{{ $game->id }}" class="btn btn-info"> View </a>
                                         @endif
-                                            <a href="{{ url('/games') }}/{{ $game->id }}/edit" class="btn btn-primary"> Edit </a>
+
+                                        <!--<a href="{{ url('/games') }}/{{ $game->id }}/edit" class="btn btn-primary"> Edit </a>-->
                                     </div>
                                 </div>
                         </div>
@@ -65,7 +66,7 @@
 
     @else {{ 'there is no game' }}
     @endif
-    
+
     <div class="row my-3">
         <div class="col-md-6 offset-md-3">
             <a href="{{ url('/games/create') }}" class="btn-lg btn-block btn-primary"> Add a new game </a>

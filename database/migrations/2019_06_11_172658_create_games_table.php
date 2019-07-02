@@ -23,10 +23,10 @@ class CreateGamesTable extends Migration
 
         Schema::create('games', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('player1');
-            $table->integer('player2');
-            $table->integer('player3');
-            $table->integer('player4');
+            $table->bigInteger('player1')->unsigned();
+            $table->bigInteger('player2')->unsigned();
+            $table->bigInteger('player3')->unsigned();
+            $table->bigInteger('player4')->unsigned();
             $table->integer('score_team_1');
             $table->integer('score_team_2');
             $table->integer('game_duration');
@@ -42,8 +42,8 @@ class CreateGamesTable extends Migration
 
         Schema::create('game_points', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('player_id');
-            $table->integer('action_type_id');
+            $table->bigInteger('player_id')->unsigned();
+            $table->bigInteger('action_type_id')->unsigned();
             $table->integer('score_team_1');
             $table->integer('score_team_2');
             $table->timestamps();
@@ -55,8 +55,8 @@ class CreateGamesTable extends Migration
 
 
         Schema::create('user_relationships', function (Blueprint $table) {
-            $table->integer('user_id_1');
-            $table->integer('user_id_2');
+            $table->bigInteger('user_id_1')->unsigned();
+            $table->bigInteger('user_id_2')->unsigned();
             $table->integer('status');
             $table->timestamps();
         });

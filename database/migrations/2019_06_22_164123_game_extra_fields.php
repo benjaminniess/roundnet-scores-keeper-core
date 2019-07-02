@@ -27,7 +27,7 @@ class GameExtraFields extends Migration
 
 	    if ( ! Schema::hasColumn( 'games', 'current_server' ) ) {
 		    Schema::table('games', function (Blueprint $table) {
-			    $table->integer('current_server')->default(0);
+			    $table->bigInteger('current_server')->unsigned();
 			    $table->foreign('current_server')->references('id')->on('users');
 		    });
 	    }

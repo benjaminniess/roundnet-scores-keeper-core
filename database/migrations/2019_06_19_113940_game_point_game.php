@@ -13,11 +13,11 @@ class GamePointGame extends Migration
      */
     public function up()
     {
-	    Schema::table('game_points', function (Blueprint $table) {
-		    $table->integer('game_id')->nullable();
+        Schema::table('game_points', function (Blueprint $table) {
+            $table->bigInteger('game_id')->unsigned();
 
-		    $table->foreign('game_id')->references('id')->on('games');
-	    });
+            $table->foreign('game_id')->references('id')->on('games');
+        });
     }
 
     /**
@@ -27,8 +27,8 @@ class GamePointGame extends Migration
      */
     public function down()
     {
-	    Schema::table('game_points', function (Blueprint $table) {
-		    $table->dropColumn('game_id');
-	    });
+        Schema::table('game_points', function (Blueprint $table) {
+            $table->dropColumn('game_id');
+        });
     }
 }

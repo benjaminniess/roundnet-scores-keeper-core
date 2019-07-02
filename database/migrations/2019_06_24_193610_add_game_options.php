@@ -15,7 +15,7 @@ class AddGameOptions extends Migration
     {
         Schema::table('games', function (Blueprint $table) {
             $table->boolean('enable_turns')->default(true);
-            $table->integer('referee')->default(0);
+            $table->bigInteger('referee')->unsigned();
             $table->integer('points_to_win')->default(21);
 
             $table->foreign('referee')->references('id')->on('users');

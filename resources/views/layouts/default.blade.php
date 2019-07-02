@@ -22,8 +22,9 @@
 
         @yield('content')
     </div>
-</div>
 
-@include('components/copyright')
+    @include('components/copyright')
+    
+</div>
 </body>
 </html>

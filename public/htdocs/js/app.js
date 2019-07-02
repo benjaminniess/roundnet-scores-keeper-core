@@ -36986,8 +36986,8 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/charley/Sites/roundnet-scores-keeper-core/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/charley/Sites/roundnet-scores-keeper-core/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

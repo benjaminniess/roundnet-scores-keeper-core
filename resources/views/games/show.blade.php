@@ -2,27 +2,39 @@
 
 @section('content')
 
-        <table class="table">
-            <thead>
-            <tr>
-                <th scope="col" class="text-right">Team 1</th>
-                <th scope="col" class="text-center">Score</th>
-                <th scope="col">Team 2</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td class="text-right">{{ $players[1]->name }}
-                    <hr>{{ $players[2]->name }}
-                </td>
-                <td class="align-middle text-center scores">{{ $game->score_team_1 }} - {{ $game->score_team_2 }}</td>
-                <td>{{ $players[3]->name }}
-                    <hr>{{ $players[4]->name }}
-                </td>
-            </tr>
-            </tbody>
-        </table>
-        <div class="row row-separator">
+
+
+<div class="row my-2">
+    <div class="col-sm-12 my-2">
+        <div class="card text-center">
+            <div class="card-header">
+                {{ $game->start_date }}
+            </div>
+
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-sm-6 col-6">
+                        <h2 class="card-title">Team A</h2>
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item">{{ $players[1]->name }}</li>
+                            <li class="list-group-item">{{ $players[2]->name }}</li>
+                        </ul>
+                        <h2 class="heading">{{ $game->score_team_1 }}</h2>
+                    </div>
+                    <div class="col-sm-6 col-6">
+                        <h2 class="card-title">Team B</h2>
+                            <ul class="list-group list-group-flush">
+                                <li class="list-group-item">{{ $players[3]->name }}</li>
+                                <li class="list-group-item">{{ $players[4]->name }}</li>
+                            </ul>
+                            <h2 class="heading">{{ $game->score_team_2 }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
             <h3>Game history</h3>
         </div>
         <table class="table table-striped table-sm">

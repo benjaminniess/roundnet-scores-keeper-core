@@ -16,6 +16,9 @@
         "laravel/tinker": "^1.0",
         "spatie/laravel-cookie-consent": "^2.6"
     },
+    "files": [
+        "app/Helpers.php"
+    ],
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
         "filp/whoops": "^2.0",

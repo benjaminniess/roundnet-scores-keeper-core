@@ -15,7 +15,9 @@ class GamePointGame extends Migration
     {
         Schema::table('game_points', function (Blueprint $table) {
             $table->bigInteger('game_id')->unsigned();
+        });
 
+        Schema::table('game_points', function (Blueprint $table) {
             $table->foreign('game_id')->references('id')->on('games');
         });
     }

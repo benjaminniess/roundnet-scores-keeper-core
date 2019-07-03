@@ -13,6 +13,7 @@ class UserRelationships extends Model
     ];
 
     const ACTIVE_STATUS = 'active';
+    const GUEST_STATUS = 'guest';
     const PENDING_STATUS = 'pending';
     const BLOCKED_STATUS = 'blocked';
     const DECLINED_STATUS = 'declined';

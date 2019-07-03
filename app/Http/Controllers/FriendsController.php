@@ -24,10 +24,11 @@ class FriendsController extends Controller
         }
 
         $active_auth_user_friends = $user_obj->friends(UserRelationships::ACTIVE_STATUS);
+        $guest_auth_user_friends = $user_obj->friends(UserRelationships::GUEST_STATUS);
         $pending_auth_user_friends = $user_obj->get_friend_requests();
         $blocked_auth_user_friends = $user_obj->friends(UserRelationships::BLOCKED_STATUS);
 
-        return view('friends.show',compact('active_auth_user_friends','pending_auth_user_friends','blocked_auth_user_friends'));
+        return view('friends.show',compact('active_auth_user_friends', 'guest_auth_user_friends', 'pending_auth_user_friends','blocked_auth_user_friends'));
     }
 
     /**

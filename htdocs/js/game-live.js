@@ -25529,7 +25529,7 @@ __webpack_require__(/*! ./components/App */ "./resources/js/game-live/components
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/charley/Sites/roundnet-scores-keeper-core/resources/js/game-live/game-live.js */"./resources/js/game-live/game-live.js");
+module.exports = __webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/js/game-live/game-live.js */"./resources/js/game-live/game-live.js");
 
 
 /***/ })

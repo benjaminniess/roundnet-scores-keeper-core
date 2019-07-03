@@ -36982,20 +36982,11 @@ $(document).ready(function () {
     e.preventDefault();
     e.stopPropagation();
     var playerID = $(e.target).data('player');
-    var guestField = $('.guest-field[data-player=' + playerID + ']');
-    var playerField = $('.friend-selector[data-player=' + playerID + ']');
-    guestField.show();
-    guestField.attr('required', 'required');
-    playerField.removeAttr('required');
-    playerField.val('');
+    $('.guest-field[data-player=' + playerID + ']').show();
   });
   $('.friend-selector').change(function (e) {
     var playerID = $(e.target).data('player');
-    var guestField = $('.guest-field[data-player=' + playerID + ']');
-    var playerField = $('.friend-selector[data-player=' + playerID + ']');
-    playerField.attr('required', 'required');
-    guestField.hide();
-    guestField.removeAttr('required');
+    $('.guest-field[data-player=' + playerID + ']').hide();
   });
 });
 

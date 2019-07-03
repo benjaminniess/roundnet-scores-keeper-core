@@ -40,7 +40,7 @@ class GamesController extends Controller
             return redirect(url('/') );
         }
 
-        $players = $user_obj->friends('active');
+        $players = $user_obj->friends('active' )->merge( $user_obj->friends('guest' ) );
         if ( empty( $players ) ) {
             return redirect(url('/') );
         }
@@ -100,30 +100,62 @@ class GamesController extends Controller
      */
     public function store(Request $request)
     {
+        /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
         if ( empty( $user_obj ) ) {
             return redirect(url('/') );
         }
 
-	    $validator = Validator::make($request->all(),[
-		    'player1'       => 'required',
-		    'player2'       => 'required',
-		    'player3'       => 'required',
-		    'player4'       => 'required',
-	    ]);
+        $validator = Validator::make($request->all(), []);
+
+        $guests_to_create = [];
+
+        // Loop through players
+        for ( $i= 1; $i < 5; $i ++ ) {
+            $guest_field = request( 'guest' . $i );
+            $player_field = request( 'player' . $i );
+
+            // One of the 2 fields must be set
+            if ( empty( $guest_field ) && 0 >= (int) $player_field ) {
+                $validator->errors()->add('player' . $i, 'You must select a player or a guest for player 1');
+                return redirect('games/create')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            // Guest?
+            if ( ! empty( $guest_field ) ) {
+                if ( \App\Helpers::nickname_exists( $guest_field ) ) {
+                    $validator->errors()->add('guest' . $i, 'This nickname already exists');
+                    return redirect('games/create')
+                        ->withErrors($validator)
+                        ->withInput();
+                }
+
+                $guests_to_create[$i] = $guest_field;
+            } else {
+                $player_attributes['player' . $i] = request('player' . $i );
+            }
+        }
+
+        // Once we've checked that we have no doublons, we can create guests users
+        foreach ( $guests_to_create as $player_number => $nickname ) {
+            $guest_id = \App\Helpers::create_guest_account( $nickname, $user_obj->id );
+            if ( 0 >= (int) $guest_id ) {
+                $validator->errors()->add('guest' . $i, 'Error while creating guest');
+                return redirect('games/create')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+            $player_attributes['player' . $player_number] = $guest_id;
+        }
 
         if ( $validator->fails() ) {
             return redirect('games/create')
                 ->withErrors($validator)
                 ->withInput();
         }
-
-        $player_attributes = request()->validate([
-            'player1'       => 'required',
-            'player2'       => 'required',
-            'player3'       => 'required',
-            'player4'       => 'required',
-        ]);
 
         // Check if all players are unique
         $all_players = array_unique( [ $player_attributes['player1'], $player_attributes['player2'], $player_attributes['player3'], $player_attributes['player4'] ] );

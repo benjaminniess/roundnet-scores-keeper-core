@@ -10,7 +10,7 @@
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="player1">Player 1</label>
-                <select class="form-control" name="player1" required>
+                <select class="form-control friend-selector" data-player="1" name="player1" required>
                     <option value="">Select a player</option>
                     @foreach($players as $player)
 
@@ -18,10 +18,12 @@
 
                     @endforeach
                 </select>
+                or <a href="#" class="add-guest" data-player="1">add a guest.</a>
+                <input type="text" style="display: none" name="guest1" data-player="1" class="form-control guest-field" placeholder="Enter your buddy's nickname">
             </div>
             <div class="form-group col-md-6">
                 <label for="player2">Player 2</label>
-                <select class="form-control" name="player2" required>
+                <select class="form-control friend-selector" data-player="2" name="player2" required>
                     <option value="">Select a player</option>
                     @foreach($players as $player)
 
@@ -29,6 +31,8 @@
 
                     @endforeach
                 </select>
+                or <a href="#" class="add-guest" data-player="2">add a guest.</a>
+                <input type="text" style="display: none" name="guest2" data-player="2" class="form-control guest-field" placeholder="Enter your buddy's nickname">
             </div>
         </div>
 
@@ -36,7 +40,7 @@
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="player3">Player 3</label>
-                <select class="form-control" name="player3" required>
+                <select class="form-control friend-selector" data-player="3" name="player3" required>
                     <option value="">Select a player</option>
                     @foreach($players as $player)
 
@@ -44,10 +48,12 @@
 
                     @endforeach
                 </select>
+                or <a href="#" class="add-guest" data-player="3">add a guest.</a>
+                <input type="text" style="display: none" name="guest3" data-player="3" class="form-control guest-field" placeholder="Enter your buddy's nickname">
         </div>
         <div class="form-group col-md-6">
             <label for="player4">Player 4</label>
-            <select class="form-control" name="player4" required>
+            <select class="form-control friend-selector" data-player="4" name="player4" required>
                 <option value="">Select a player</option>
                 @foreach($players as $player)
 
@@ -55,6 +61,8 @@
 
                 @endforeach
             </select>
+            or <a href="#" class="add-guest" data-player="4">add a guest.</a>
+            <input type="text" style="display: none" name="guest4" data-player="4" class="form-control guest-field" placeholder="Enter your buddy's nickname">
         </div>
     </div>
 
@@ -92,7 +100,7 @@
         <label for="start_now" class="form-check-label">Start now?</label>
     </div>
 </div>
-    
+
     <button type="submit" class="btn btn-success">Create game</button>
 </form>
 

@@ -36908,6 +36908,8 @@ module.exports = function(module) {
  */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
+__webpack_require__(/*! ./main */ "./resources/js/main.js");
+
 /***/ }),
 
 /***/ "./resources/js/bootstrap.js":
@@ -36968,6 +36970,28 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/js/main.js":
+/*!******************************!*\
+  !*** ./resources/js/main.js ***!
+  \******************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+$(document).ready(function () {
+  $('.add-guest').on('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var playerID = $(e.target).data('player');
+    $('.guest-field[data-player=' + playerID + ']').show();
+  });
+  $('.friend-selector').change(function (e) {
+    var playerID = $(e.target).data('player');
+    $('.guest-field[data-player=' + playerID + ']').hide();
+  });
+});
+
+/***/ }),
+
 /***/ "./resources/sass/app.scss":
 /*!*********************************!*\
   !*** ./resources/sass/app.scss ***!
@@ -36986,8 +37010,8 @@ if (token) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/bniess/www/others/roundnet-scores-keeper/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/bniess/www/others/roundnet-scores-keeper/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

@@ -9,6 +9,8 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
 <div class="flex-center position-ref full-height">
@@ -25,7 +27,7 @@
     </div>
 
     @include('components/copyright')
-    
+
 </div>
 </body>
 </html>

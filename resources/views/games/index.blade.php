@@ -66,7 +66,8 @@
         </div>
     @endforeach
 
-    @else {{ 'there is no game' }}
+    @else
+    <div class="alert alert-info"> There is no game</div>
     @endif
 
     <div class="row my-3 justify-content-md-center">

@@ -2,7 +2,6 @@
 
 @section('content')
 
-<div class="container">
 <h2 class="heading mb-4">Create a new game</h2>
 
 <form action="/games" method="POST">
@@ -105,5 +104,4 @@
     @endforeach
 
     @endif
-</div>
 @endsection

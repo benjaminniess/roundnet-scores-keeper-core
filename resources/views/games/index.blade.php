@@ -1,9 +1,8 @@
 @extends('layouts.default')
 
 @section('content')
-<div class="container">
 
-            <h1 class="heading mb-4">Games list</h1>
+    <h1 class="heading mb-4">Games list</h1>
 
     @if (!$games->isEmpty())
     @foreach ($games->chunk(2) as $gamesRow)
@@ -73,5 +72,4 @@
         </div>
     </div>
 
-</div>
 @endsection

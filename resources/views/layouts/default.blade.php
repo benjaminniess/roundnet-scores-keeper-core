@@ -19,8 +19,9 @@
         </div>
 
         @include( 'components.main-nav' )
-
-        @yield('content')
+        <div class="container">
+            @yield('content')
+        </div>
     </div>
 
     @include('components/copyright')

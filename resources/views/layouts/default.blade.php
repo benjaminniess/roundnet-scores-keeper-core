@@ -13,14 +13,17 @@
     <script src="{{ asset('js/app.js') }}"></script>
 </head>
 <body>
-<div class="flex-center position-ref full-height">
-
-    <div class="content">
-        <div class="title m-b-md">
-            <a href="/">Roundnet Scores Keeper</a>
+    <div class="container">
+        <div class="row justify-content-md-center text-center">
+            <div class="col-md-12">
+                <div class="title m-b-md">
+                    <a href="/">Roundnet Scores Keeper</a>
+                </div>
+                @include( 'components.main-nav' )
+            </div>
         </div>
+    </div>
 
-        @include( 'components.main-nav' )
         <div class="container">
             @yield('content')
         </div>

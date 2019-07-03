@@ -4,7 +4,7 @@
 
         <div class="jumbotron jumbotron-fluid mt-5">
             <div class="container">
-                <h1 class="display-4">Search for friends</h1>
+                <h1 class="display-4 text-center">Search for friends</h1>
                 <div class="row justify-content-md-center">
                     <div class="col-md-6">
                         <form method="POST" action="/friends/search">
@@ -15,7 +15,7 @@
                                 </div>
                             </div>
                             <div class="row justify-content-md-center my-3">
-                                <div class="col-md-8">
+                                <div class="col-md-3">
                                     <input type="submit" value="Search" class="btn btn-primary mb-2">
                                 </div>
                             </div>

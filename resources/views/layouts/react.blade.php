@@ -13,20 +13,19 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-<div class="flex-center position-ref full-height">
-
-    <div class="content">
-        <div class="title m-b-md">
-            Roundnet Scores Keeper
+    <div class="container">
+        <div class="row justify-content-md-center text-center">
+            <div class="col-md-12">
+                <div class="title m-b-md">
+                    <a href="/games">Back to games</a>
+                </div>
+            </div>
         </div>
-
-        @include( 'components.main-nav' )
-
-        @yield('content')
     </div>
 
+        @yield('content')
+
     <script src="{{ asset('js/game-live.js') }}"></script>
-</div>
 @include('components/copyright')
 </body>
 </html>

@@ -65,6 +65,20 @@
         @endif
 
 
+        @if ( ! $guest_auth_user_friends->isEmpty() )
+            <h2 class="heading mt-5">Your guests friends</h2>
+            <div class="row my-3">
+                <div class="col-sm-12">
+                    <ul class="list-group list-group-flush">
+                        @foreach ($guest_auth_user_friends as $guest_auth_user_friend)
+                            <li class="list-group-item py-3">{{ $guest_auth_user_friend->name }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            </div>
+        @endif
+
+
     <!-- Not necessary for MVP
     <h2>Your blocked friends</h2>
 

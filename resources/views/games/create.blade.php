@@ -23,7 +23,7 @@
           <div class="card-body">
                 <div class="form-group">
                     <label for="player1">Player 1</label>
-                    <select class="form-control {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" name="player1" required>
+                    <select class="form-control friend-selector {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" data-player="1" name="player1" @php echo empty( old('guest1') ) ? 'required"' : '' @endphp >
                         <option value="">Select a player</option>
                         @foreach($players as $player)
 
@@ -31,11 +31,13 @@
 
                         @endforeach
                     </select>
+                    or <a href="#" class="add-guest" data-player="1">add a guest.</a>
+                    <input type="text" @php echo empty( old('guest1') ) ? 'style="display: none"' : '' @endphp name="guest1" data-player="1" value="{{ old('guest1') }}" class="form-control guest-field {{ $errors->has('guest1') ? 'is-invalid' : '' }}" placeholder="Enter your buddy's nickname">
                 </div>
 
                 <div class="form-group">
                     <label for="player2">Player 2</label>
-                    <select class="form-control {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" name="player2" required>
+                    <select class="form-control friend-selector {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" data-player="2" name="player2" @php echo empty( old('guest2') ) ? 'required"' : '' @endphp >
                         <option value="">Select a player</option>
                         @foreach($players as $player)
 
@@ -43,6 +45,8 @@
 
                         @endforeach
                     </select>
+                    or <a href="#" class="add-guest" data-player="2">add a guest.</a>
+                    <input type="text" @php echo empty( old('guest2') ) ? 'style="display: none"' : '' @endphp name="guest2" data-player="2" value="{{ old('guest2') }}" class="form-control guest-field {{ $errors->has('guest2') ? 'is-invalid' : '' }}" placeholder="Enter your buddy's nickname">
                 </div>
           </div>
         </div>  
@@ -54,7 +58,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="player3">Player 3</label>
-                        <select class="form-control {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" name="player3" required>
+                        <select class="form-control friend-selector {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" data-player="3" name="player3" @php echo empty( old('guest3') ) ? 'required"' : '' @endphp >
                             <option value="">Select a player</option>
                             @foreach($players as $player)
 
@@ -62,11 +66,13 @@
 
                             @endforeach
                         </select>
+                    or <a href="#" class="add-guest" data-player="3">add a guest.</a>
+                    <input type="text" @php echo empty( old('guest3') ) ? 'style="display: none"' : '' @endphp name="guest3" data-player="3" value="{{ old('guest3') }}" class="form-control guest-field {{ $errors->has('guest3') ? 'is-invalid' : '' }}" placeholder="Enter your buddy's nickname">
                 </div>
 
                 <div class="form-group">
                     <label for="player4">Player 4</label>
-                    <select class="form-control {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" name="player4" required>
+                    <select class="form-control friend-selector {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" data-player="4" name="player4" @php echo empty( old('guest4') ) ? 'required"' : '' @endphp >
                         <option value="">Select a player</option>
                         @foreach($players as $player)
 
@@ -74,6 +80,8 @@
 
                         @endforeach
                     </select>
+                    or <a href="#" class="add-guest" data-player="4">add a guest.</a>
+                    <input type="text" @php echo empty( old('guest4') ) ? 'style="display: none"' : '' @endphp name="guest4" data-player="4" value="{{ old('guest4') }}" class="form-control guest-field {{ $errors->has('guest4') ? 'is-invalid' : '' }}" placeholder="Enter your buddy's nickname">
                 </div>
             </div>
         </div>

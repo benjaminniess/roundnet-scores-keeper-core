@@ -23,7 +23,7 @@
           <div class="card-body">
                 <div class="form-group">
                     <label for="player1">Player 1</label>
-                    <select class="form-control" name="player1" required>
+                    <select class="form-control {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" name="player1" required>
                         <option value="">Select a player</option>
                         @foreach($players as $player)
 
@@ -35,7 +35,7 @@
 
                 <div class="form-group">
                     <label for="player2">Player 2</label>
-                    <select class="form-control" name="player2" required>
+                    <select class="form-control {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" name="player2" required>
                         <option value="">Select a player</option>
                         @foreach($players as $player)
 
@@ -54,7 +54,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="player3">Player 3</label>
-                        <select class="form-control" name="player3" required>
+                        <select class="form-control {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" name="player3" required>
                             <option value="">Select a player</option>
                             @foreach($players as $player)
 
@@ -66,7 +66,7 @@
 
                 <div class="form-group">
                     <label for="player4">Player 4</label>
-                    <select class="form-control" name="player4" required>
+                    <select class="form-control {{ $errors->has('4players') || $errors->has('player-in-game') ? 'is-invalid' : '' }}" name="player4" required>
                         <option value="">Select a player</option>
                         @foreach($players as $player)
 
@@ -87,7 +87,7 @@
             <div class="card-body">
                 <div class="form-group">
                     <label for="referee">Referee</label>
-                    <select class="form-control" name="referee">
+                    <select class="form-control {{ $errors->has('referee') ? 'is-invalid' : '' }}" name="referee">
                         <option value="">Select a referee if necessary</option>
                         @foreach($players as $player)
 

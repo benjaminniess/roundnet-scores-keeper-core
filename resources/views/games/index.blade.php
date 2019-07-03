@@ -18,6 +18,9 @@
                                 @if ($game->status == 'live')
                                     {{ 'badge-success' }}
                                 @endif
+                                @if ($game->status == 'closed')
+                                    {{ 'badge-danger' }}
+                                @endif
                             ">{{ $game->status }}</span>
                         </div>
 

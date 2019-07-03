@@ -58,6 +58,10 @@
                 </ul>            
             </div>
         </div>
+        @else
+            <div class="alert alert-info">
+                You don't have any friend yet :(
+            </div>
         @endif
 
 

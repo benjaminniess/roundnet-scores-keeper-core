@@ -1,7 +1,6 @@
 @extends('layouts.default')
 
 @section('content')
-    <div class="container">
 
         <div class="jumbotron jumbotron-fluid mt-5">
             <div class="container">

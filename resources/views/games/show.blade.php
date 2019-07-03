@@ -1,7 +1,7 @@
 @extends('layouts.default')
 
 @section('content')
-    <div class="container">
+
         <table class="table">
             <thead>
             <tr>
@@ -57,5 +57,4 @@
             </form>
 
         </div>
-    </div>
 @endsection

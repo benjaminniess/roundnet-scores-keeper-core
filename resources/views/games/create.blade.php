@@ -4,6 +4,15 @@
 
 <h2 class="heading mb-4">Create a new game</h2>
 
+{{-- Return form errors --}}
+    @if ($errors->any())
+
+    @foreach ($errors->all() as $error)
+        <div class="alert alert-danger my-3" role="alert">{{ $error }}</div>
+    @endforeach
+
+    @endif
+
 <form action="/games" method="POST">
     @csrf
 
@@ -121,12 +130,4 @@
 
 </form>
 
-    {{-- Return form errors --}}
-    @if ($errors->any())
-
-    @foreach ($errors->all() as $error)
-        <div class="alert alert-danger my-3" role="alert">{{ $error }}</div>
-    @endforeach
-
-    @endif
 @endsection

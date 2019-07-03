@@ -66,8 +66,8 @@
     @else {{ 'there is no game' }}
     @endif
 
-    <div class="row my-3">
-        <div class="col-md-6 offset-md-3">
+    <div class="row my-3 justify-content-md-center">
+        <div class="">
             <a href="{{ url('/games/create') }}" class="btn-lg btn-block btn-primary"> Add a new game </a>
         </div>
     </div>

@@ -6,7 +6,7 @@
 
 <form action="/games" method="POST">
     @csrf
-        <h3 class="heading mt-5">Team 1</h3>
+        <h3 class="heading my-3">Team 1</h3>
         <div class="form-row">
             <div class="form-group col-md-6">
                 <label for="player1">Player 1</label>
@@ -32,7 +32,7 @@
             </div>
         </div>
 
-    <h3 class="heading mt-5">Team 2</h3>
+    <h3 class="heading my-3">Team 2</h3>
     <div class="form-row">
         <div class="form-group col-md-6">
             <label for="player3">Player 3</label>
@@ -58,7 +58,7 @@
         </div>
     </div>
 
-    <h3 class="heading mt-5">Options</h3>
+    <h3 class="heading my-3">Options</h3>
 
     <div class="form-row">
         <div class="form-group col-md-6">

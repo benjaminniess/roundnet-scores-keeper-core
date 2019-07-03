@@ -11,5 +11,6 @@ const mix = require('laravel-mix');
  |
  */
 
+mix.setPublicPath('htdocs/');
 mix.react('resources/js/app.js', 'htdocs/js').sass('resources/sass/app.scss', 'htdocs/css');
 mix.react('resources/js/game-live/game-live.js', 'htdocs/js');

@@ -8,7 +8,7 @@
     <div class="col-sm-12 my-2">
         <div class="card text-center">
             <div class="card-header">
-                {{ $game->start_date }}
+                {{ $game->get_date() }}
             </div>
 
             <div class="card-body">

@@ -2,8 +2,7 @@
 
 @section('content')
 
-
-
+<h1 class="heading mb-4">Game recap</h1>
 <div class="row my-2">
     <div class="col-sm-12 my-2">
         <div class="card text-center">
@@ -35,38 +34,37 @@
     </div>
 </div>
 
-            <h3>Game history</h3>
-        </div>
-        <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th>Type</th>
-                <th>Player</th>
-                <th>Rally duration</th>
-                <th>Score</th>
-            </tr>
-            </thead>
-            <tbody>
-            @foreach($game->points as $point)
-                <tr>
-                    <td>{{ $point->action_type_id }}</td>
-                    <td>{{ $point->player_id }}</td>
-                    <td>{{ $point->get_duration() }}</td>
-                    <td>{{ $point->score_team_1 }} - {{ $point->score_team_2 }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
+<h2 class="heading my-4">Game history</h2>
+<table class="table">
+    <thead class="thead-dark">
+    <tr>
+        <th scope="col">Type</th>
+        <th scope="col">Player</th>
+        <th scope="col">Rally duration</th>
+        <th scope="col">Score</th>
+    </tr>
+    </thead>
+    <tbody>
+    @foreach($game->points as $point)
+        <tr>
+            <td>{{ $point->action_type_id }}</td>
+            <td>{{ $point->player_id }}</td>
+            <td>{{ $point->get_duration() }}</td>
+            <td>{{ $point->score_team_1 }} - {{ $point->score_team_2 }}</td>
+        </tr>
+    @endforeach
+    </tbody>
+</table>
 
-        <div class="">
-            <a class="btn btn-info btn-lg m-3" href="{{ url('/games') }}/{{ $game->id }}/edit">Edit</a>
-            <form class="form" action="/games/{{ $game->id }}" method="POST">
+<div class="">
+    {{-- <a class="btn btn-info btn-lg m-3" href="{{ url('/games') }}/{{ $game->id }}/edit">Edit</a> --}}
+    <form class="form" action="/games/{{ $game->id }}" method="POST">
 
-                @csrf
-                @method('DELETE')
+        @csrf
+        @method('DELETE')
 
-                <button type="submit" class="btn btn-danger btn-lg m-3">Delete</button>
-            </form>
+        <button type="submit" class="btn btn-danger my-3">Delete game</button>
+    </form>
+</div>
 
-        </div>
 @endsection

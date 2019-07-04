@@ -26,4 +26,11 @@ class Game_Point extends Model
 
         return $this->created_at->timestamp - ( $this->game()->start_date / 1000 ) . 's';
     }
+
+    public function get_point_owner() {
+
+        $player_obj = User::find($this->player_id);
+
+        return $player_obj;
+    }
 }

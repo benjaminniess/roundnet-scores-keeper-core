@@ -109,6 +109,7 @@ class GamesController extends Controller
         $validator = Validator::make($request->all(), []);
 
         $guests_to_create = [];
+	    $player_attributes = [];
 
         // Loop through players
         for ( $i= 1; $i < 5; $i ++ ) {
@@ -138,19 +139,6 @@ class GamesController extends Controller
             }
         }
 
-        // Once we've checked that we have no doublons, we can create guests users
-        foreach ( $guests_to_create as $player_number => $nickname ) {
-            $guest_id = \App\Helpers::create_guest_account( $nickname, $user_obj->id );
-            if ( 0 >= (int) $guest_id ) {
-                $validator->errors()->add('guest' . $i, 'Error while creating guest');
-                return redirect('games/create')
-                    ->withErrors($validator)
-                    ->withInput();
-            }
-
-            $player_attributes['player' . $player_number] = $guest_id;
-        }
-
         if ( $validator->fails() ) {
             return redirect('games/create')
                 ->withErrors($validator)
@@ -158,9 +146,9 @@ class GamesController extends Controller
         }
 
         // Check if all players are unique
-        $all_players = array_unique( [ $player_attributes['player1'], $player_attributes['player2'], $player_attributes['player3'], $player_attributes['player4'] ] );
+        $all_players = array_unique( $player_attributes );
 
-        if ( 4 !== count( $all_players ) ) {
+        if ( 4 !== ( count( $all_players ) + count( $guests_to_create ) ) ) {
             $validator->errors()->add('4players', 'You must select 4 different players.');
             return redirect('games/create')
                 ->withErrors($validator)
@@ -212,6 +200,19 @@ class GamesController extends Controller
         }
 
         $attributes['enable_turns'] = 'on' === request('enable_turns') ? true : false;
+
+	    // Once we've checked that we have no doublons, we can create guests users
+	    foreach ( $guests_to_create as $player_number => $nickname ) {
+		    $guest_id = \App\Helpers::create_guest_account( $nickname, $user_obj->id );
+		    if ( 0 >= (int) $guest_id ) {
+			    $validator->errors()->add('guest' . $i, 'Error while creating guest');
+			    return redirect('games/create')
+				    ->withErrors($validator)
+				    ->withInput();
+		    }
+
+		    $player_attributes['player' . $player_number] = $guest_id;
+	    }
 
         $game = Game::create($attributes);
 

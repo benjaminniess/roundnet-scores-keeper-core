@@ -33,4 +33,11 @@ class Game_Point extends Model
 
         return $player_obj;
     }
+
+    public function get_point_action_type() {
+
+        $action_type_obj = Action_Type::find($this->action_type_id);
+
+        return $action_type_obj;
+    }
 }

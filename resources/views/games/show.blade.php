@@ -47,7 +47,7 @@
     <tbody>
     @foreach($game->points as $point)
         <tr>
-            <td>{{ $point->action_type_id }}</td>
+            <td>{{ $point->action_type->name }}</td>
             <td>{{ $point->player->name }}</td>
             <td>{{ $point->get_duration() }}</td>
             <td>{{ $point->score_team_1 }} - {{ $point->score_team_2 }}</td>

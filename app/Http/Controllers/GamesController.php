@@ -249,8 +249,14 @@ class GamesController extends Controller
             $ordered_players[ $position ] = \App\User::find($player_id);
         }
 
+        // Get player object foreach point
         foreach ($game->points as $point) {
             $point->player = $point->get_point_owner();
+        }
+
+        // Get action type object foreach point
+        foreach ($game->points as $point) {
+            $point->action_type = $point->get_point_action_type();
         }
 
         return view('games.show')->with([

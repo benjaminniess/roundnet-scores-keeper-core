@@ -46,7 +46,7 @@
             </div>
             @endforeach
     @endif
-        
+
         @if ( ! $active_auth_user_friends->isEmpty() )
         <h2 class="heading mt-5">Your active friends</h2>
         <div class="row my-3">
@@ -55,7 +55,7 @@
                     @foreach ($active_auth_user_friends as $active_auth_user_friend)
                                 <li class="list-group-item py-3">{{ $active_auth_user_friend->name . ' (' . $active_auth_user_friend->email . ')' }}</li>
                     @endforeach
-                </ul>            
+                </ul>
             </div>
         </div>
         @else
@@ -66,12 +66,29 @@
 
 
         @if ( ! $guest_auth_user_friends->isEmpty() )
-            <h2 class="heading mt-5">Your guests friends</h2>
+            <h2 id="guest-friends" class="heading mt-5">Your guests friends</h2>
+            <p>Now that you have gest friends, you can send them an invitation to create their own account and keep their games history with you.</p>
+
+            @if ($errors->any())
+
+                @foreach ($errors->all() as $error)
+                    <div class="alert alert-danger my-3" role="alert">{{ $error }}</div>
+                @endforeach
+
+            @endif
+
             <div class="row my-3">
                 <div class="col-sm-12">
                     <ul class="list-group list-group-flush">
                         @foreach ($guest_auth_user_friends as $guest_auth_user_friend)
-                            <li class="list-group-item py-3">{{ $guest_auth_user_friend->name }}</li>
+                            <li class="list-group-item py-3">{{ $guest_auth_user_friend->name }}
+                            <form class="form-inline" action="/friends/send-invitation#guest-friends" method="post">
+                                @csrf
+                                <input type="text" class="form-control {{ $errors->has('guest_email') ? 'is-invalid' : '' }}" name="guest_email" placeholder="Your friend's email">
+                                <input type="hidden" name="guest_id" value="{{ $guest_auth_user_friend->id }}">
+                                <input type="submit" class="btn btn-primary" value="Send invitation">
+                            </form>
+                            </li>
                         @endforeach
                     </ul>
                 </div>

@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\UserRelationships;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class FriendsController extends Controller
 {
@@ -104,5 +104,55 @@ class FriendsController extends Controller
         // TODO: Send notif
 
         return redirect('/friends');
+    }
+
+    public function invite(Request $request) {
+	    /** @var \App\User $user_obj */
+	    $user_obj = User::find(Auth::id());
+
+	    if ( ! $user_obj->is_friend( (int) request('guest_id') ) ) {
+		    abort(403, 'Cheating?');
+	    }
+
+	    $validator = Validator::make($request->all(), [
+	    	'guest_email' => 'required|email|max:255|unique:users',
+	    ]);
+
+	    if ( $validator->fails() ) {
+		    return redirect('friends')
+			    ->withErrors($validator)
+			    ->withInput();
+	    }
+
+	    $user_exists = \App\User::where( 'email', '=', request('guest_email') )->first();
+	    if ( ! empty( $user_exists ) ) {
+		    $validator->errors()->add('guest_email', 'This email is already taken');
+		    return redirect('friends')
+			    ->withErrors($validator)
+			    ->withInput();
+	    }
+
+	    $guest_obj = User::find( (int) request('guest_id') );
+
+	    $friendship_obj = \App\UserRelationships::where(
+	    	[
+	    		'user_id_1' => $user_obj->id,
+			    'user_id_2' => $guest_obj->id
+		    ]
+	    )->first();
+	    if ( empty( $friendship_obj ) ) {
+		    abort(403, 'Cheating?');
+	    }
+
+	    $friendship_obj->status = 'active';
+	    $friendship_obj->save();
+
+	    $guest_obj->email = request('guest_email');
+	    $guest_obj->save();
+
+	    // TODO: Send the welcome email
+	    // TODO: display a success message
+
+	    return redirect('/friends');
     }
 }

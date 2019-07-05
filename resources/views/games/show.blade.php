@@ -47,7 +47,20 @@
     <tbody>
     @foreach($game->points as $point)
         <tr>
-            <td>{{ $point->action_type->name }}</td>
+            <td>
+                {{ $point->action_type->name }}
+                <span class="badge 
+                @if ($point->action_type->action_type === 'positive')
+                    {{ 'badge-success' }}
+                @endif
+                @if ($point->action_type->action_type === 'negative')
+                    {{ 'badge-danger' }}
+                @endif
+                @if ($point->action_type->action_type === 'neutral')
+                    {{ 'badge-warning' }}
+                @endif
+                ">{{ $point->action_type->action_type }}</span>
+            </td>
             <td>{{ $point->player->name }}</td>
             <td>{{ $point->get_duration() }}</td>
             <td>{{ $point->score_team_1 }} - {{ $point->score_team_2 }}</td>

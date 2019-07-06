@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class ActionType extends Model
+class Game extends Model
 {
     use CrudTrait;
 
@@ -15,8 +15,8 @@ class ActionType extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'actions_types';
-     protected $primaryKey = 'id';
+    protected $table = 'games';
+    // protected $primaryKey = 'id';
     // public $timestamps = false;
     // protected $guarded = ['id'];
     protected $fillable = [];

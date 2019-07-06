@@ -14,18 +14,17 @@
     {!! Analytics::render() !!}
 </head>
 <body>
-    <div class="container">
-        <div class="row justify-content-md-center text-center">
-            <div class="col-md-12">
-                <div class="title m-b-md">
-                    <a href="/games">Back to games</a>
+        @yield('content')
+
+        <div class="container">
+            <div class="row justify-content-md-center text-center">
+                <div class="col-md-12">
+                    <div class="m-b-md">
+                        <a href="/games"><< Back to games</a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-
-        @yield('content')
-
     <script src="{{ asset('js/game-live.js') }}"></script>
 @include('components/copyright')
 </body>

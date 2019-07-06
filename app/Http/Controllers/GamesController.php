@@ -18,9 +18,6 @@ class GamesController extends Controller
     public function index()
     {
         $user_obj = \App\User::find(Auth::id());
-        if ( empty( $user_obj ) ) {
-            return redirect(url('/') );
-        }
 
         $games = $user_obj->games;
 
@@ -36,9 +33,6 @@ class GamesController extends Controller
     {
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
-        if ( empty( $user_obj ) ) {
-            return redirect(url('/') );
-        }
 
         $players = $user_obj->friends('active' )->merge( $user_obj->friends('guest' ) );
         if ( empty( $players ) ) {
@@ -63,7 +57,7 @@ class GamesController extends Controller
      */
     public function start(Request $request, $game_id ) {
         if ( 0 >= (int) $game_id ) {
-            return redirect(url('/') );
+            abort(403, 'No game ID');
         }
 
         /** @var User $user_obj */
@@ -102,9 +96,6 @@ class GamesController extends Controller
     {
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
-        if ( empty( $user_obj ) ) {
-            return redirect(url('/') );
-        }
 
         $validator = Validator::make($request->all(), []);
 
@@ -237,13 +228,11 @@ class GamesController extends Controller
     public function show(Game $game)
     {
         $user_obj = User::find(auth()->id());
-        if ( empty( $user_obj ) ) {
-            return redirect(url('/') );
-        }
 
         if ( $game->is_game_live() ) {
 	        return redirect('/games/live');
         }
+
         $ordered_players = $game->get_players_position();
         foreach ( $ordered_players as $position => $player_id ) {
             $ordered_players[ $position ] = \App\User::find($player_id);
@@ -310,9 +299,6 @@ class GamesController extends Controller
     {
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
-        if ( empty( $user_obj ) ) {
-            abort(403, 'Cheating?');
-        }
 
         if ( ! $game->is_player_in_game( $user_obj->id ) ) {
             abort(403, 'Cheating?');
@@ -345,9 +331,6 @@ class GamesController extends Controller
     {
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
-        if ( empty( $user_obj ) ) {
-          return redirect(url('/') );
-        }
 
         $live_game = $user_obj->get_live_game();
         if ( empty( $live_game ) ) {

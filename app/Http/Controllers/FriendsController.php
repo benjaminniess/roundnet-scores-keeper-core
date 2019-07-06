@@ -21,9 +21,6 @@ class FriendsController extends Controller
     public function show() {
         /** @var User $user_obj */
         $user_obj = User::find(Auth::id());
-        if ( empty( $user_obj ) ) {
-          return redirect(url('/') );
-        }
 
         $active_auth_user_friends = $user_obj->friends(UserRelationships::ACTIVE_STATUS);
         $guest_auth_user_friends = $user_obj->friends(UserRelationships::GUEST_STATUS);

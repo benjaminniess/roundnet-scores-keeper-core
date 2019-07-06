@@ -19,10 +19,10 @@ Route::get('/', 'HomeController@index');
 |--------------------------------------------------------------------------
 */
 
-Route::get('/games/live', 'GamesController@live');
-Route::get('/games/{game}/start', 'GamesController@start');
+Route::get('/games/live', 'GamesController@live')->middleware('auth');
+Route::get('/games/{game}/start', 'GamesController@start')->middleware('auth');
 
-Route::resource('games','GamesController');
+Route::resource('games','GamesController')->middleware('auth');
 
 /*
 |--------------------------------------------------------------------------
@@ -35,11 +35,11 @@ Route::resource('games','GamesController');
 | Start Friends routes
 |--------------------------------------------------------------------------
 */
-Route::get('/friends', 'FriendsController@show');
-Route::get('/friends/request/{user}', 'FriendsController@request');
-Route::patch('/friends/{user}', 'FriendsController@update');
-Route::post('/friends/send-invitation/', 'FriendsController@invite');
-Route::post('/friends/search', 'FriendsController@search');
+Route::get('/friends', 'FriendsController@show')->middleware('auth');
+Route::get('/friends/request/{user}', 'FriendsController@request')->middleware('auth');
+Route::patch('/friends/{user}', 'FriendsController@update')->middleware('auth');
+Route::post('/friends/send-invitation/', 'FriendsController@invite')->middleware('auth');
+Route::post('/friends/search', 'FriendsController@search')->middleware('auth');
 /*
 |--------------------------------------------------------------------------
 | End friends routes
@@ -47,7 +47,7 @@ Route::post('/friends/search', 'FriendsController@search');
 */
 
 Route::get('/account', function () {
-	return view('account');
+	return view('account')->middleware('auth');
 });
 
 Auth::routes();

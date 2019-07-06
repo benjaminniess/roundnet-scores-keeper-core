@@ -7,6 +7,7 @@ use App\User;
 use App\UserRelationships;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Password;
 
 class FriendsController extends Controller
 {
@@ -126,7 +127,7 @@ class FriendsController extends Controller
 
 	    $user_exists = \App\User::where( 'email', '=', request('guest_email') )->first();
 	    if ( ! empty( $user_exists ) ) {
-		    $validator->errors()->add('guest_email', 'This email is already taken');
+		    $validator->errors()->add('guest_email_' . (int) request('guest_id'), 'This email is already taken');
 		    return redirect('friends')
 			    ->withErrors($validator)
 			    ->withInput();
@@ -150,9 +151,9 @@ class FriendsController extends Controller
 	    $guest_obj->email = request('guest_email');
 	    $guest_obj->save();
 
-	    // TODO: Send the welcome email
-	    // TODO: display a success message
+        $credentials = ['email' => $guest_obj->email ];
+        Password::sendResetLink($credentials);
 
-	    return redirect('/friends');
+	    return redirect()->back()->with('message', 'Invitation sent successfully');
     }
 }

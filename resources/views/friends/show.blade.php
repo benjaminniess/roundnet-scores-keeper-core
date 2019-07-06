@@ -77,6 +77,12 @@
 
             @endif
 
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
+
             <div class="row my-3">
                 <div class="col-sm-12">
                     <ul class="list-group list-group-flush">
@@ -84,7 +90,7 @@
                             <li class="list-group-item py-3">{{ $guest_auth_user_friend->name }}
                             <form class="form-inline" action="/friends/send-invitation#guest-friends" method="post">
                                 @csrf
-                                <input type="text" class="form-control {{ $errors->has('guest_email') ? 'is-invalid' : '' }}" name="guest_email" placeholder="Your friend's email">
+                                <input type="text" class="form-control {{ $errors->has('guest_email_' . $guest_auth_user_friend->id ) ? 'is-invalid' : '' }}" name="guest_email" placeholder="Your friend's email">
                                 <input type="hidden" name="guest_id" value="{{ $guest_auth_user_friend->id }}">
                                 <input type="submit" class="btn btn-primary" value="Send invitation">
                             </form>

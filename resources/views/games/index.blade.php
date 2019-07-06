@@ -4,6 +4,12 @@
 
     <h1 class="heading mb-4">Games list</h1>
 
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
+
     @if (!$games->isEmpty())
     @foreach ($games->chunk(2) as $gamesRow)
         <div class="row my-2">
@@ -52,6 +58,12 @@
                                         @else
                                             <a href="{{ url('/games') }}/{{ $game->id }}" class="btn btn-info"> View </a>
                                         @endif
+
+                                        <form onsubmit="return confirm('Do you really want to delete this game?');" class="form" action="/games/{{ $game->id }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger my-3">Delete game</button>
+                                        </form>
 
                                         <!--<a href="{{ url('/games') }}/{{ $game->id }}/edit" class="btn btn-primary"> Edit </a>-->
                                     </div>

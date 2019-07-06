@@ -71,11 +71,9 @@
 
 <div class="">
     {{-- <a class="btn btn-info btn-lg m-3" href="{{ url('/games') }}/{{ $game->id }}/edit">Edit</a> --}}
-    <form class="form" action="/games/{{ $game->id }}" method="POST">
-
+    <form onsubmit="return confirm('Do you really want to delete this game?');" class="form" action="/games/{{ $game->id }}" method="POST">
         @csrf
         @method('DELETE')
-
         <button type="submit" class="btn btn-danger my-3">Delete game</button>
     </form>
 </div>

@@ -225,7 +225,7 @@ class GamesController extends Controller
             return redirect('/games/live');
         }
 
-        return redirect('/games');
+        return redirect('/games')->with('message', 'The game has been created. You can start it whenever you like.');
     }
 
     /**
@@ -305,10 +305,19 @@ class GamesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  \App\Game  $game
-     * @return \Illuminate\Http\Response
      */
     public function destroy(Game $game)
     {
+        /** @var User $user_obj */
+        $user_obj = \App\User::find(Auth::id());
+        if ( empty( $user_obj ) ) {
+            abort(403, 'Cheating?');
+        }
+
+        if ( ! $game->is_player_in_game( $user_obj->id ) ) {
+            abort(403, 'Cheating?');
+        }
+
         // Remove game history
         foreach( $game->points()->get() as $game_point ) {
             $game_point->delete();
@@ -323,7 +332,7 @@ class GamesController extends Controller
         // Remove game itself
         $game->delete();
 
-        return redirect('/games');
+        return redirect()->back()->with('message', 'The game has been deleted.');
     }
 
     /**

@@ -4,6 +4,12 @@
 
     <h1 class="heading mb-4">Games list</h1>
 
+    @if(session()->has('message'))
+        <div class="alert alert-success">
+            {{ session()->get('message') }}
+        </div>
+    @endif
+
     @if (!$games->isEmpty())
     @foreach ($games->chunk(2) as $gamesRow)
         <div class="row my-2">

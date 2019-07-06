@@ -68,6 +68,10 @@ class FriendsController extends Controller
 	    /** @var \App\User $user_obj */
 	    $user_obj = User::find(Auth::id());
 
+	    if ( empty( request('nickname') ) ) {
+            abort(403, 'Cheating?');
+        }
+
         $friends = \App\User::where( 'name', 'like', '%' . request('nickname') . '%' )->get();
 
         return view( 'friends.search', [

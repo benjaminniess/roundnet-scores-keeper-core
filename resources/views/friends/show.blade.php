@@ -11,7 +11,7 @@
                             @csrf
                             <div class="row justify-content-md-center mt-3">
                                 <div class="col-md-12">
-                                    <input type="text" placeholder="Username" name="nickname" class="form-control"/>
+                                    <input type="text" placeholder="Username" name="nickname" required class="form-control"/>
                                 </div>
                             </div>
                             <div class="row justify-content-md-center my-3">

@@ -11,6 +11,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="description" content="Save your Spikeball / Roundnet scores history and play againsts your friends" />
+    <link rel="icon" href="favicon.ico" />
     <script src="{{ asset('js/app.js') }}"></script>
     {!! Analytics::render() !!}
 </head>

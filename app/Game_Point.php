@@ -20,11 +20,34 @@ class Game_Point extends Model
      * @return bool|string
      */
     public function get_duration() {
-        if ( empty( $this->created_at->timestamp ) || empty( $this->game()->start_date ) ) {
-            return false;
+
+
+        $previous_point_obj = Game_Point::where(
+            'created_at', '<', $this->created_at
+        )
+        ->orderBy('created_at', 'desc')
+        ->first();
+
+        $current_point = $this->created_at;
+
+        if(!empty($previous_point_obj)){
+
+            $previous_point = $previous_point_obj->created_at;
+
+        } else{
+            $previous_point = $this->game()->created_at;
         }
 
-        return $this->created_at->timestamp - ( $this->game()->start_date / 1000 ) . 's';
+        $duration_obj = $current_point->diff($previous_point);
+
+        $duration = '';
+
+        $duration .= ( (int) $duration_obj->h > 0) ? $duration_obj->h . 'h' : '';
+        $duration .= ( (int) $duration_obj->m > 0) ? $duration_obj->m . 'm' : '';
+        $duration .= ! empty( $duration ) && ! empty( $duration_obj->s ) ? ':' : '';
+        $duration .= ( (int) $duration_obj->s > 0) ? $duration_obj->s . 's' : '';
+
+        return $duration;
     }
 
     public function get_point_owner() {

@@ -8,6 +8,7 @@ use App\UserRelationships;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
+use Illuminate\Support\Facades\Mail;
 
 class FriendsController extends Controller
 {
@@ -152,6 +153,8 @@ class FriendsController extends Controller
 	    $guest_obj->save();
 
         $credentials = ['email' => $guest_obj->email ];
+
+        Mail::to($guest_obj->email)->send(new \App\Mail\GuestInvitation( $guest_obj, $user_obj ) );
         Password::sendResetLink($credentials);
 
 	    return redirect()->back()->with('message', 'Invitation sent successfully');

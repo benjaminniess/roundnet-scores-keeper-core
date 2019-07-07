@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Upload dir
@@ -39,8 +38,8 @@ return [
     */
 
     'route' => [
-        'prefix'     => config('backpack.base.route_prefix', 'admin').'/elfinder',
-        'middleware' => ['web', config('backpack.base.middleware_key', 'admin')], //Set to null to disable middleware filter
+        'prefix' => config('backpack.base.route_prefix', 'admin') . '/elfinder',
+        'middleware' => ['web', config('backpack.base.middleware_key', 'admin')] //Set to null to disable middleware filter
     ],
 
     /*
@@ -76,6 +75,5 @@ return [
     |
     */
 
-    'options' => [],
-
+    'options' => []
 ];

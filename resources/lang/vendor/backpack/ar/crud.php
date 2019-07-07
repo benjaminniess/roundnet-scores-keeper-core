@@ -1,6 +1,6 @@
 <?php
 
-    /*
+/*
     |--------------------------------------------------------------------------
     | Backpack Crud Language Lines - Arabic
     |--------------------------------------------------------------------------
@@ -13,16 +13,18 @@
     |
     */
 
- return [
+return [
     'infoFiltered' => '(filtered from _MAX_ total entries)',
     'thousands' => ',',
     'admin' => 'المشرف',
     'browse_uploads' => 'تصفح التحميلات',
     'table_cant_add' => 'لا يمكن إضافة :entity جديد',
     'clear' => 'نظف',
-    'save_action_changed_notification' => 'تم تغيير السلوك الافتراضي بعد الحفظ.',
+    'save_action_changed_notification' =>
+        'تم تغيير السلوك الافتراضي بعد الحفظ.',
     'edit_translations' => 'تعديل الترجمة',
-    'internal_link_placeholder' => "Internal slug. Ex: 'admin/page' (no quotes) for ':url'",
+    'internal_link_placeholder' =>
+        "Internal slug. Ex: 'admin/page' (no quotes) for ':url'",
     'table_max_reached' => 'أقصى عدد :max تم الوصول إليه',
     'zeroRecords' => 'لم يتم العثور على سجلات متطابقة',
     'infoEmpty' => 'Showing 0 to 0 of 0 entries',
@@ -42,7 +44,8 @@
     'choose_file' => 'اختر ملف',
     'restore_this_value' => 'استعادة هذه القيمة',
     'add' => 'اضافة',
-    'unauthorized_access' => 'الدخول غير مصرح به - ليس لديك الأذونات اللازمة للاطلاع على هذه الصفحة.',
+    'unauthorized_access' =>
+        'الدخول غير مصرح به - ليس لديك الأذونات اللازمة للاطلاع على هذه الصفحة.',
     'filters' => 'الفلاتر',
     'to' => 'الى',
     'reorder_success_title' => 'انتهى',
@@ -57,7 +60,8 @@
     'revision_restored' => 'تمت استعادة المراجعة بنجاح',
     'loadingRecords' => 'جار التحميل...',
     'infoPostFix' => 'جميع السجلات',
-    'details_row_loading_error' => 'حدث خطأ أثناء تحميل التفاصيل. الرجاء اعادة المحاولة.',
+    'details_row_loading_error' =>
+        'حدث خطأ أثناء تحميل التفاصيل. الرجاء اعادة المحاولة.',
     'delete_confirmation_not_message' => 'حدث خطأ. ربما لم يتم حذف العنصر.',
     'guest_user' => 'حساب زائر',
     'save' => 'حفظ',
@@ -80,7 +84,8 @@
     'language' => 'لغة',
     'delete_confirmation_not_title' => 'لم يتم الحذف',
     'delete_confirmation_not_deleted_title' => 'لم يتم الحذف',
-    'delete_confirmation_not_deleted_message' => 'لم يحدث شيء. البند الخاص بك هو آمن.',
+    'delete_confirmation_not_deleted_message' =>
+        'لم يحدث شيء. البند الخاص بك هو آمن.',
     'file_manager' => 'مدير الملفات',
     'revisions' => 'مراجعات',
     'delete' => 'مسح',
@@ -91,13 +96,13 @@
     'please_fix' => 'يرجى تصحيح الأخطاء التالية:',
     'aria' => [
         'sortAscending' => ': تفعيل لفرز العمود تصاعدي',
-        'sortDescending' => ': تفعيل لفرز العمود تنازلي',
+        'sortDescending' => ': تفعيل لفرز العمود تنازلي'
     ],
     'paginate' => [
         'first' => 'الأول',
         'last' => 'الاخير',
         'next' => 'التالى',
-        'previous' => 'السابق',
+        'previous' => 'السابق'
     ],
     'export' => [
         'copy' => 'نسخ',
@@ -105,6 +110,6 @@
         'csv' => 'CSV',
         'pdf' => 'PDF',
         'print' => 'طباعة',
-        'column_visibility' => 'رؤية العمود',
-    ],
+        'column_visibility' => 'رؤية العمود'
+    ]
 ];

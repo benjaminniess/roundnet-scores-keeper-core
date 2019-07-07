@@ -24,7 +24,7 @@ class ActionTypeCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
         $this->crud->setModel('App\Models\ActionType');
-        $this->crud->setRoute(config('backpack.base.route_prefix') . '/actiontype');
+        $this->crud->setRoute("admin/action-type");
         $this->crud->setEntityNameStrings('actiontype', 'action_types');
 
         $this->crud->setColumns(['name', 'action_type']);

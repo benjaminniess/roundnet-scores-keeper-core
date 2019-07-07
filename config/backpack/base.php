@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Look & feel customizations
@@ -15,7 +14,7 @@ return [
     'project_name' => 'Backpack',
 
     // Menu logos
-    'logo_lg'   => '<b>Back</b>pack',
+    'logo_lg' => '<b>Back</b>pack',
     'logo_mini' => '<b>B</b>p',
 
     // Developer or company name. Shown in footer.
@@ -32,7 +31,7 @@ return [
     // Options: skin-black, skin-blue, skin-purple, skin-red, skin-yellow, skin-green, skin-blue-light, skin-black-light, skin-purple-light, skin-green-light, skin-red-light, skin-yellow-light
 
     // Date & Datetime Format Syntax: https://carbon.nesbot.com/docs/#api-localization
-    'default_date_format'     => 'D MMM YYYY',
+    'default_date_format' => 'D MMM YYYY',
     'default_datetime_format' => 'D MMM YYYY, HH:mm',
 
     // Content of the HTML meta robots tag to prevent indexing and link following
@@ -41,7 +40,7 @@ return [
     // Overlays - CSS files that change the look and feel of the admin panel
     'overlays' => [
         'vendor/backpack/base/backpack.bold.css',
-        'vendor/backpack/base/backpack.content.is.king.css',
+        'vendor/backpack/base/backpack.content.is.king.css'
     ],
 
     /*
@@ -56,7 +55,10 @@ return [
     | By default the registration is open only on localhost.
     */
 
-    'registration_open' => env('BACKPACK_REGISTRATION_OPEN', env('APP_ENV') === 'local'),
+    'registration_open' => env(
+        'BACKPACK_REGISTRATION_OPEN',
+        env('APP_ENV') === 'local'
+    ),
 
     /*
     |--------------------------------------------------------------------------
@@ -93,7 +95,7 @@ return [
     // Can be a single class or an array of clases
     'middleware_class' => [
         App\Http\Middleware\CheckIfAdmin::class,
-        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
+        \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class
         // \Backpack\Base\app\Http\Middleware\UseBackpackAuthGuardInsteadOfDefaultAuthGuard::class,
     ],
 
@@ -104,7 +106,7 @@ return [
     // Username column for authentication
     // The Backpack default is the same as the Laravel default (email)
     // If you need to switch to username, you also need to create that column in your db
-    'authentication_column'      => 'email',
+    'authentication_column' => 'email',
     'authentication_column_name' => 'Email',
 
     // The guard that protects the Backpack admin panel.
@@ -149,5 +151,5 @@ return [
     |
     */
 
-    'license_code' => env('BACKPACK_LICENSE', false),
+    'license_code' => env('BACKPACK_LICENSE', false)
 ];

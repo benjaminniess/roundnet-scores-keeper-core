@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Backpack\CRUD preferences
@@ -33,11 +32,11 @@ return [
 
     // Here you may override the css-classes for the content section of the edit view globally
     // To override per view use $this->crud->setEditContentClass('class-string')
-    'edit_content_class'   => 'col-md-8 col-md-offset-2',
+    'edit_content_class' => 'col-md-8 col-md-offset-2',
 
     // Here you may override the css-classes for the content section of the revisions timeline view globally
     // To override per view use $this->crud->setRevisionsTimelineContentClass('class-string')
-    'revisions_timeline_content_class'   => 'col-md-10 col-md-offset-1',
+    'revisions_timeline_content_class' => 'col-md-10 col-md-offset-1',
 
     /*
     |------------
@@ -63,7 +62,10 @@ return [
     // A 1D array of options which will be used for both the displayed option and the value, or
     // A 2D array in which the first array is used to define the value options and the second array the displayed options
     // If a 2D array is used, strings in the right hand array will be automatically run through trans()
-    'page_length_menu' => [[10, 25, 50, 100, -1], [10, 25, 50, 100, 'backpack::crud.all']],
+    'page_length_menu' => [
+        [10, 25, 50, 100, -1],
+        [10, 25, 50, 100, 'backpack::crud.all']
+    ],
 
     // Here you may override the css-class for the content section of the list view globally
     // To override per view use $this->crud->setListContentClass('class-string')
@@ -73,7 +75,7 @@ return [
 
     // Here you may override the css-classes for the content section of the show view globally
     // To override per view use $this->crud->setShowContentClass('class-string')
-    'show_content_class'   => 'col-md-8 col-md-offset-2',
+    'show_content_class' => 'col-md-8 col-md-offset-2',
 
     /*
     |------------
@@ -89,7 +91,7 @@ return [
 
     // Here you may override the css-classes for the content section of the reorder view globally
     // To override per view use $this->crud->setReorderContentClass('class-string')
-    'reorder_content_class'   => 'col-md-8 col-md-offset-2',
+    'reorder_content_class' => 'col-md-8 col-md-offset-2',
 
     /*
     |------------
@@ -418,7 +420,7 @@ return [
         // "pa" => "Punjabi",
         // "ro_MD" => "Romanian (Moldova)",
         // "ro_RO" => "Romanian (Romania)",
-        'ro' => 'Romanian',
+        'ro' => 'Romanian'
         // "rm_CH" => "Romansh (Switzerland)",
         // "rm" => "Romansh",
         // "rof_TZ" => "Rombo (Tanzania)",
@@ -541,6 +543,5 @@ return [
         // "yo" => "Yoruba",
         // "zu_ZA" => "Zulu (South Africa)",
         // "zu" => "Zulu"
-    ],
-
+    ]
 ];

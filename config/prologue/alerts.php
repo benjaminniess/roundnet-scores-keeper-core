@@ -1,7 +1,6 @@
 <?php
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Alert Levels
@@ -17,12 +16,7 @@ return [
     |
     */
 
-    'levels' => [
-        'info',
-        'warning',
-        'error',
-        'success',
-    ],
+    'levels' => ['info', 'warning', 'error', 'success'],
 
     /*
     |--------------------------------------------------------------------------
@@ -34,6 +28,5 @@ return [
     |
     */
 
-    'session_key' => 'alert_messages',
-
+    'session_key' => 'alert_messages'
 ];

@@ -26,8 +26,8 @@ class GameRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'name' => 'required|min:5|max:255'
-        ];
+                // 'name' => 'required|min:5|max:255'
+            ];
     }
 
     /**
@@ -38,8 +38,8 @@ class GameRequest extends FormRequest
     public function attributes()
     {
         return [
-            //
-        ];
+                //
+            ];
     }
 
     /**
@@ -50,7 +50,7 @@ class GameRequest extends FormRequest
     public function messages()
     {
         return [
-            //
-        ];
+                //
+            ];
     }
 }

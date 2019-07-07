@@ -77,12 +77,14 @@
             @endforeach
         </div>
     @endforeach
+    
+    {{ $games->links() }}
 
     @else
     <div class="alert alert-info"> There is no game</div>
     @endif
 
-    <div class="row my-3 justify-content-md-center">
+    <div class="row my-5 justify-content-md-center">
         <div class="">
             <a href="{{ url('/games/create') }}" class="btn-lg btn-block btn-primary"> Add a new game </a>
         </div>

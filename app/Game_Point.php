@@ -10,8 +10,9 @@ class Game_Point extends Model
     protected $table = 'game_points';
     //
 
-    public function game() {
-        return $this->belongsTo( '\App\Game', 'game_id')->first();
+    public function game()
+    {
+        return $this->belongsTo('\App\Game', 'game_id')->first();
     }
 
     /**
@@ -19,22 +20,21 @@ class Game_Point extends Model
      *
      * @return bool|string
      */
-    public function get_duration() {
-
-
+    public function get_duration()
+    {
         $previous_point_obj = Game_Point::where(
-            'created_at', '<', $this->created_at
+            'created_at',
+            '<',
+            $this->created_at
         )
-        ->orderBy('created_at', 'desc')
-        ->first();
+            ->orderBy('created_at', 'desc')
+            ->first();
 
         $current_point = $this->created_at;
 
-        if(!empty($previous_point_obj)){
-
+        if (!empty($previous_point_obj)) {
             $previous_point = $previous_point_obj->created_at;
-
-        } else{
+        } else {
             $previous_point = $this->game()->created_at;
         }
 
@@ -42,23 +42,23 @@ class Game_Point extends Model
 
         $duration = '';
 
-        $duration .= ( (int) $duration_obj->h > 0) ? $duration_obj->h . 'h' : '';
-        $duration .= ( (int) $duration_obj->m > 0) ? $duration_obj->m . 'm' : '';
-        $duration .= ! empty( $duration ) && ! empty( $duration_obj->s ) ? ':' : '';
-        $duration .= ( (int) $duration_obj->s > 0) ? $duration_obj->s . 's' : '';
+        $duration .= (int) $duration_obj->h > 0 ? $duration_obj->h . 'h' : '';
+        $duration .= (int) $duration_obj->m > 0 ? $duration_obj->m . 'm' : '';
+        $duration .= !empty($duration) && !empty($duration_obj->s) ? ':' : '';
+        $duration .= (int) $duration_obj->s > 0 ? $duration_obj->s . 's' : '';
 
         return $duration;
     }
 
-    public function get_point_owner() {
-
+    public function get_point_owner()
+    {
         $player_obj = User::find($this->player_id);
 
         return $player_obj;
     }
 
-    public function get_point_action_type() {
-
+    public function get_point_action_type()
+    {
         $action_type_obj = Action_Type::find($this->action_type_id);
 
         return $action_type_obj;

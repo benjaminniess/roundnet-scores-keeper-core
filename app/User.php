@@ -37,6 +37,21 @@ class User extends Authenticatable
     ];
 
     /**
+     * Checks if the current user is an admin
+     *
+     * @return bool
+     */
+    public function is_admin()
+    {
+        $admin_role_id = config('auth.admin_role_id');
+        if (empty($admin_role_id) || (int) $this->role_id !== $admin_role_id) {
+            return false;
+        }
+
+        return true;
+    }
+
+    /**
      * Checks in cookies and returns a valid token for the current user. If no access token, it will generate a new one
      *
      * @return mixed

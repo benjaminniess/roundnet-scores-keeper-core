@@ -19,7 +19,7 @@ class GamesController extends Controller
     {
         $user_obj = \App\User::find(Auth::id());
 
-        $games = $user_obj->games;
+        $games = $user_obj->games()->paginate(10);
 
         return view('games.index', compact('games'));
     }

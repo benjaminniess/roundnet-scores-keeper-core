@@ -17,9 +17,6 @@ return [
         'passwords' => 'users'
     ],
 
-    // The administrator role ID
-    'admin_role_id' => env('ADMIN_ROLE_ID', 1),
-
     /*
     |--------------------------------------------------------------------------
     | Authentication Guards

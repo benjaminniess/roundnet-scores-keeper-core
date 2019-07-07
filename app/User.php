@@ -43,12 +43,7 @@ class User extends Authenticatable
      */
     public function is_admin()
     {
-        $admin_role_id = config('auth.admin_role_id');
-        if (empty($admin_role_id) || (int) $this->role_id !== $admin_role_id) {
-            return false;
-        }
-
-        return true;
+        return 'admin' === $this->type;
     }
 
     /**

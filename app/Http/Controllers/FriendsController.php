@@ -137,12 +137,15 @@ class FriendsController extends Controller
         /** @var \App\User $user_obj */
         $user_obj = User::find(Auth::id());
 
-        if (!$user_obj->is_friend((int) request('guest_id'))) {
+        $guest_id = (int) request('guest_id');
+        $guest_email = (int) request('guest_email');
+
+        if (!$user_obj->is_friend($guest_id)) {
             abort(403, 'Cheating?');
         }
 
         $validator = Validator::make($request->all(), [
-            'guest_email' => 'required|email|max:255|unique:users'
+            'guest_email' => 'required|email|max:255'
         ]);
 
         if ($validator->fails()) {
@@ -151,16 +154,12 @@ class FriendsController extends Controller
                 ->withInput();
         }
 
-        $user_exists = \App\User::where(
-            'email',
-            '=',
-            request('guest_email')
-        )->first();
+        $user_exists = \App\User::where('email', '=', $guest_email)->first();
         if (!empty($user_exists)) {
             $validator
                 ->errors()
                 ->add(
-                    'guest_email_' . (int) request('guest_id'),
+                    'guest_email_' . $guest_id,
                     'This email is already taken'
                 );
             return redirect('friends')
@@ -168,7 +167,10 @@ class FriendsController extends Controller
                 ->withInput();
         }
 
-        $guest_obj = User::find((int) request('guest_id'));
+        $guest_obj = User::find($guest_id);
+        if (empty($guest_obj)) {
+            abort(403, 'Cheating?');
+        }
 
         $friendship_obj = \App\UserRelationships::where([
             'user_id_1' => $user_obj->id,
@@ -181,7 +183,7 @@ class FriendsController extends Controller
         $friendship_obj->status = 'active';
         $friendship_obj->save();
 
-        $guest_obj->email = request('guest_email');
+        $guest_obj->email = $guest_email;
         $guest_obj->save();
 
         $credentials = ['email' => $guest_obj->email];

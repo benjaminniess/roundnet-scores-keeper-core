@@ -18,18 +18,14 @@ class User extends Authenticatable
      *
      * @var array
      */
-    protected $fillable = [
-        'name', 'email', 'password',
-    ];
+    protected $fillable = ['name', 'email', 'password'];
 
     /**
      * The attributes that should be hidden for arrays.
      *
      * @var array
      */
-    protected $hidden = [
-        'password', 'remember_token',
-    ];
+    protected $hidden = ['password', 'remember_token'];
 
     /**
      * The attributes that should be cast to native types.
@@ -37,7 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'email_verified_at' => 'datetime'
     ];
 
     /**
@@ -45,23 +41,45 @@ class User extends Authenticatable
      *
      * @return mixed
      */
-    public function get_access_token( $new = false) {
-        if ( false === $new && isset( $_COOKIE['user_access_token'] ) && ! empty( $_COOKIE['user_access_token'] ) ) {
+    public function get_access_token($new = false)
+    {
+        if (
+            false === $new &&
+            isset($_COOKIE['user_access_token']) &&
+            !empty($_COOKIE['user_access_token'])
+        ) {
             return $_COOKIE['user_access_token'];
         }
 
-        DB::table('oauth_access_tokens')->where([
-            [ 'user_id', '=', $this->getAttribute( 'id' ) ],
-            [ 'name', '=', 'ReactToken' ],
-        ], '=', $this->getAttribute( 'id' ))->delete();
+        DB::table('oauth_access_tokens')
+            ->where(
+                [
+                    ['user_id', '=', $this->getAttribute('id')],
+                    ['name', '=', 'ReactToken']
+                ],
+                '=',
+                $this->getAttribute('id')
+            )
+            ->delete();
         $access_token = Auth::user()->createToken('ReactToken')->accessToken;
-        setcookie('user_access_token', $access_token, time() + 30 * 3600 * 24, '/' );
+        setcookie(
+            'user_access_token',
+            $access_token,
+            time() + 30 * 3600 * 24,
+            '/'
+        );
 
         return $access_token;
     }
 
-    public function games() {
-        return $this->belongsToMany('App\Game', 'players', 'user_id', 'game_id');
+    public function games()
+    {
+        return $this->belongsToMany(
+            'App\Game',
+            'players',
+            'user_id',
+            'game_id'
+        );
     }
 
     /**
@@ -69,8 +87,11 @@ class User extends Authenticatable
      *
      * @return \App\Game
      */
-    public function get_live_game() {
-        return $this->games()->where('status', '=', 'live')->first();
+    public function get_live_game()
+    {
+        return $this->games()
+            ->where('status', '=', 'live')
+            ->first();
     }
 
     /**
@@ -78,8 +99,9 @@ class User extends Authenticatable
      *
      * @return bool
      */
-    public function is_in_a_live_game() {
-        return ! empty( $this->get_live_game() );
+    public function is_in_a_live_game()
+    {
+        return !empty($this->get_live_game());
     }
 
     /**
@@ -87,29 +109,41 @@ class User extends Authenticatable
      *
      * @return array
      */
-    public function get_user_data() {
+    public function get_user_data()
+    {
         return [
-            'id'     => $this->id,
-            'name'   => $this->name,
-            'avatar' => 'comming-soon',
+            'id' => $this->id,
+            'name' => $this->name,
+            'avatar' => 'comming-soon'
         ];
     }
 
     /**
-    * Get all user friends
-    *
-    *@return object
-    */
-    public function friends($status = '') {
-	    $query_a_to_b = $this->belongsToMany('App\User', 'user_relationships', 'user_id_1', 'user_id_2');
-	    $query_b_to_a = $this->belongsToMany('App\User', 'user_relationships', 'user_id_2', 'user_id_1');
+     * Get all user friends
+     *
+     *@return object
+     */
+    public function friends($status = '')
+    {
+        $query_a_to_b = $this->belongsToMany(
+            'App\User',
+            'user_relationships',
+            'user_id_1',
+            'user_id_2'
+        );
+        $query_b_to_a = $this->belongsToMany(
+            'App\User',
+            'user_relationships',
+            'user_id_2',
+            'user_id_1'
+        );
 
-	    if ( ! empty( $status ) ) {
-            $query_a_to_b->where( 'status', '=', $status );
-            $query_b_to_a->where( 'status', '=', $status );
-	    }
+        if (!empty($status)) {
+            $query_a_to_b->where('status', '=', $status);
+            $query_b_to_a->where('status', '=', $status);
+        }
 
-	    return $query_a_to_b->get()->merge( $query_b_to_a->get() );
+        return $query_a_to_b->get()->merge($query_b_to_a->get());
     }
 
     /**
@@ -117,33 +151,42 @@ class User extends Authenticatable
      *
      * @return \Illuminate\Database\Eloquent\Collection
      */
-    public function get_friend_requests() {
-        return $this->belongsToMany('App\User', 'user_relationships', 'user_id_2', 'user_id_1')
-            ->where( 'status', '=', 'pending' )
+    public function get_friend_requests()
+    {
+        return $this->belongsToMany(
+            'App\User',
+            'user_relationships',
+            'user_id_2',
+            'user_id_1'
+        )
+            ->where('status', '=', 'pending')
             ->get();
     }
 
-
     /**
-    * Get one user relationship info
-    *
-    *@return object
-    */
-    public function get_relationship($friend_id) {
-
+     * Get one user relationship info
+     *
+     *@return object
+     */
+    public function get_relationship($friend_id)
+    {
         $relationship = UserRelationships::select()
-        ->where(function($query) use($friend_id){
-            $query->where('user_relationships.user_id_1', '=', $this->id)
-                  ->orWhere('user_relationships.user_id_1', '=', $friend_id);
-        })->where(function($query) use($friend_id){
-            $query->where('user_relationships.user_id_2', '=', $this->id)
-                  ->orWhere('user_relationships.user_id_2', '=', $friend_id);
-        });
+            ->where(function ($query) use ($friend_id) {
+                $query
+                    ->where('user_relationships.user_id_1', '=', $this->id)
+                    ->orWhere('user_relationships.user_id_1', '=', $friend_id);
+            })
+            ->where(function ($query) use ($friend_id) {
+                $query
+                    ->where('user_relationships.user_id_2', '=', $this->id)
+                    ->orWhere('user_relationships.user_id_2', '=', $friend_id);
+            });
 
         return $relationship->first();
     }
 
-    public function is_friend($friend_id){
+    public function is_friend($friend_id)
+    {
         if (empty($this->get_relationship($friend_id))) {
             return false;
         }

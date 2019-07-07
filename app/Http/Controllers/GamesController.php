@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Game;
-use \App\User;
+use App\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,9 +19,9 @@ class GamesController extends Controller
     {
         $user_obj = \App\User::find(Auth::id());
 
-        $games = $user_obj->games;
+        $games = $user_obj->games()->paginate(10);
 
-        return view('games.index',compact('games'));
+        return view('games.index', compact('games'));
     }
 
     /**
@@ -34,16 +34,18 @@ class GamesController extends Controller
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
 
-        $players = $user_obj->friends('active' )->merge( $user_obj->friends('guest' ) );
-        if ( empty( $players ) ) {
-            return redirect(url('/') );
+        $players = $user_obj
+            ->friends('active')
+            ->merge($user_obj->friends('guest'));
+        if (empty($players)) {
+            return redirect(url('/'));
         }
 
-        $current_user = new \stdClass;
+        $current_user = new \stdClass();
         $current_user->id = $user_obj->id;
         $current_user->name = $user_obj->name;
 
-        $players->prepend( $current_user);
+        $players->prepend($current_user);
 
         return view('games.create', compact('players'));
     }
@@ -55,35 +57,36 @@ class GamesController extends Controller
      * @param $game
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
      */
-    public function start(Request $request, $game_id ) {
-        if ( 0 >= (int) $game_id ) {
+    public function start(Request $request, $game_id)
+    {
+        if (0 >= (int) $game_id) {
             abort(403, 'No game ID');
         }
 
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
-        if ( empty( $user_obj ) ) {
+        if (empty($user_obj)) {
             abort(403, 'You must be logged.');
         }
 
-        if ( $user_obj->is_in_a_live_game() ) {
+        if ($user_obj->is_in_a_live_game()) {
             abort(403, 'You are already in a live game.');
         }
 
         /** @var \App\Game $game_obj */
-        $game_obj = \App\Game::find( (int) $game_id );
-        if ( empty( $game_obj ) || ! $game_obj->is_player_in_game( $user_obj->id ) ) {
+        $game_obj = \App\Game::find((int) $game_id);
+        if (empty($game_obj) || !$game_obj->is_player_in_game($user_obj->id)) {
             abort(403, 'Your are not in this game');
         }
 
-        if ( 'pending' !== $game_obj->status ) {
+        if ('pending' !== $game_obj->status) {
             abort(403, 'This game is not ready.');
         }
 
         $game_obj->status = 'live';
         $game_obj->save();
 
-        return redirect(url('/games/live') );
+        return redirect(url('/games/live'));
     }
 
     /**
@@ -100,25 +103,32 @@ class GamesController extends Controller
         $validator = Validator::make($request->all(), []);
 
         $guests_to_create = [];
-	    $player_attributes = [];
+        $player_attributes = [];
 
         // Loop through players
-        for ( $i= 1; $i < 5; $i ++ ) {
-            $guest_field = request( 'guest' . $i );
-            $player_field = request( 'player' . $i );
+        for ($i = 1; $i < 5; $i++) {
+            $guest_field = request('guest' . $i);
+            $player_field = request('player' . $i);
 
             // One of the 2 fields must be set
-            if ( empty( $guest_field ) && 0 >= (int) $player_field ) {
-                $validator->errors()->add('player' . $i, 'You must select a player or a guest for player 1');
+            if (empty($guest_field) && 0 >= (int) $player_field) {
+                $validator
+                    ->errors()
+                    ->add(
+                        'player' . $i,
+                        'You must select a player or a guest for player 1'
+                    );
                 return redirect('games/create')
                     ->withErrors($validator)
                     ->withInput();
             }
 
             // Guest?
-            if ( ! empty( $guest_field ) ) {
-                if ( \App\Helpers::nickname_exists( $guest_field ) ) {
-                    $validator->errors()->add('guest' . $i, 'This nickname already exists');
+            if (!empty($guest_field)) {
+                if (\App\Helpers::nickname_exists($guest_field)) {
+                    $validator
+                        ->errors()
+                        ->add('guest' . $i, 'This nickname already exists');
                     return redirect('games/create')
                         ->withErrors($validator)
                         ->withInput();
@@ -126,37 +136,44 @@ class GamesController extends Controller
 
                 $guests_to_create[$i] = $guest_field;
             } else {
-                $player_attributes['player' . $i] = request('player' . $i );
+                $player_attributes['player' . $i] = request('player' . $i);
             }
         }
 
-        if ( $validator->fails() ) {
+        if ($validator->fails()) {
             return redirect('games/create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
         // Check if all players are unique
-        $all_players = array_unique( $player_attributes );
+        $all_players = array_unique($player_attributes);
 
-        if ( 4 !== ( count( $all_players ) + count( $guests_to_create ) ) ) {
-            $validator->errors()->add('4players', 'You must select 4 different players.');
+        if (4 !== count($all_players) + count($guests_to_create)) {
+            $validator
+                ->errors()
+                ->add('4players', 'You must select 4 different players.');
             return redirect('games/create')
                 ->withErrors($validator)
                 ->withInput();
         }
 
         $attributes = request()->validate([
-            'points_to_win' => 'required',
+            'points_to_win' => 'required'
         ]);
 
         $referee = request('referee');
-        if ( 0 < (int) $referee ) {
+        if (0 < (int) $referee) {
             $attributes['referee'] = $referee;
 
             foreach ($all_players as $player) {
                 if ((int) $player === (int) $referee) {
-                    $validator->errors()->add('referee', 'The referee cannot be in the game players.');
+                    $validator
+                        ->errors()
+                        ->add(
+                            'referee',
+                            'The referee cannot be in the game players.'
+                        );
                     return redirect('games/create')
                         ->withErrors($validator)
                         ->withInput();
@@ -174,8 +191,16 @@ class GamesController extends Controller
             }
 
             // Check that nobody is already in a live game
-            if( 'on' === request('start_now' ) && $player_obj->is_in_a_live_game() ) {
-                $validator->errors()->add('player-in-game', $player_obj->name . ' is already in a live game');
+            if (
+                'on' === request('start_now') &&
+                $player_obj->is_in_a_live_game()
+            ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        'player-in-game',
+                        $player_obj->name . ' is already in a live game'
+                    );
                 return redirect('games/create')
                     ->withErrors($validator)
                     ->withInput();
@@ -183,40 +208,65 @@ class GamesController extends Controller
         }
 
         // Starts now?
-        if ( 'on' === request('start_now') ) {
+        if ('on' === request('start_now')) {
             $attributes['status'] = 'live';
             $attributes['start_date'] = time() * 1000;
         } else {
             $attributes['status'] = 'pending';
         }
 
-        $attributes['enable_turns'] = 'on' === request('enable_turns') ? true : false;
+        $attributes['enable_turns'] =
+            'on' === request('enable_turns') ? true : false;
 
-	    // Once we've checked that we have no doublons, we can create guests users
-	    foreach ( $guests_to_create as $player_number => $nickname ) {
-		    $guest_id = \App\Helpers::create_guest_account( $nickname, $user_obj->id );
-		    if ( 0 >= (int) $guest_id ) {
-			    $validator->errors()->add('guest' . $i, 'Error while creating guest');
-			    return redirect('games/create')
-				    ->withErrors($validator)
-				    ->withInput();
-		    }
+        // Once we've checked that we have no doublons, we can create guests users
+        foreach ($guests_to_create as $player_number => $nickname) {
+            $guest_id = \App\Helpers::create_guest_account(
+                $nickname,
+                $user_obj->id
+            );
+            if (0 >= (int) $guest_id) {
+                $validator
+                    ->errors()
+                    ->add('guest' . $i, 'Error while creating guest');
+                return redirect('games/create')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
 
-		    $player_attributes['player' . $player_number] = $guest_id;
-	    }
+            $player_attributes['player' . $player_number] = $guest_id;
+        }
 
         $game = Game::create($attributes);
 
-        $game->players()->attach( \App\User::find($player_attributes['player1'] ), [ 'position' => 1 ]);
-        $game->players()->attach( \App\User::find($player_attributes['player2'] ), [ 'position' => 2 ]);
-        $game->players()->attach( \App\User::find($player_attributes['player3'] ), [ 'position' => 3 ]);
-        $game->players()->attach( \App\User::find($player_attributes['player4'] ), [ 'position' => 4 ]);
+        $game
+            ->players()
+            ->attach(\App\User::find($player_attributes['player1']), [
+                'position' => 1
+            ]);
+        $game
+            ->players()
+            ->attach(\App\User::find($player_attributes['player2']), [
+                'position' => 2
+            ]);
+        $game
+            ->players()
+            ->attach(\App\User::find($player_attributes['player3']), [
+                'position' => 3
+            ]);
+        $game
+            ->players()
+            ->attach(\App\User::find($player_attributes['player4']), [
+                'position' => 4
+            ]);
 
-        if ( 'on' === request('start_now') ) {
+        if ('on' === request('start_now')) {
             return redirect('/games/live');
         }
 
-        return redirect('/games')->with('message', 'The game has been created. You can start it whenever you like.');
+        return redirect('/games')->with(
+            'message',
+            'The game has been created. You can start it whenever you like.'
+        );
     }
 
     /**
@@ -229,13 +279,13 @@ class GamesController extends Controller
     {
         $user_obj = User::find(auth()->id());
 
-        if ( $game->is_game_live() ) {
-	        return redirect('/games/live');
+        if ($game->is_game_live()) {
+            return redirect('/games/live');
         }
 
         $ordered_players = $game->get_players_position();
-        foreach ( $ordered_players as $position => $player_id ) {
-            $ordered_players[ $position ] = \App\User::find($player_id);
+        foreach ($ordered_players as $position => $player_id) {
+            $ordered_players[$position] = \App\User::find($player_id);
         }
 
         // Get player object foreach point
@@ -250,7 +300,7 @@ class GamesController extends Controller
 
         return view('games.show')->with([
             'game' => $game,
-            'players' => $ordered_players,
+            'players' => $ordered_players
         ]);
     }
 
@@ -262,11 +312,11 @@ class GamesController extends Controller
      */
     public function edit(Game $game)
     {
-	    abort(403, 'For admin only');
+        abort(403, 'For admin only');
 
         $players = User::all();
 
-        return view('games.edit', compact('game','players'));
+        return view('games.edit', compact('game', 'players'));
     }
 
     /**
@@ -287,7 +337,7 @@ class GamesController extends Controller
 
         $game->update($attributes);
 
-        return redirect()->route('games.show',$game);
+        return redirect()->route('games.show', $game);
     }
 
     /**
@@ -300,25 +350,27 @@ class GamesController extends Controller
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
 
-        if ( ! $game->is_player_in_game( $user_obj->id ) ) {
+        if (!$game->is_player_in_game($user_obj->id)) {
             abort(403, 'Cheating?');
         }
 
         // Remove game history
-        foreach( $game->points()->get() as $game_point ) {
+        foreach ($game->points()->get() as $game_point) {
             $game_point->delete();
         }
 
         // Remove game players
-        $players = $game->hasMany('\App\Player', 'game_id' )->get();
-        foreach ( $players as $player ) {
+        $players = $game->hasMany('\App\Player', 'game_id')->get();
+        foreach ($players as $player) {
             $player->delete();
         }
 
         // Remove game itself
         $game->delete();
 
-        return redirect()->back()->with('message', 'The game has been deleted.');
+        return redirect()
+            ->back()
+            ->with('message', 'The game has been deleted.');
     }
 
     /**
@@ -333,15 +385,15 @@ class GamesController extends Controller
         $user_obj = \App\User::find(Auth::id());
 
         $live_game = $user_obj->get_live_game();
-        if ( empty( $live_game ) ) {
-            return redirect(url('/') );
+        if (empty($live_game)) {
+            return redirect(url('/'));
         }
 
         $access_token = $user_obj->get_access_token();
-        if ( empty( $access_token ) ) {
-            return redirect(url('/') );
+        if (empty($access_token)) {
+            return redirect(url('/'));
         }
 
         return view('games.live');
-      }
+    }
 }

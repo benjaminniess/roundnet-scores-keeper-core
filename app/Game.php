@@ -29,6 +29,43 @@ class Game extends Model
     }
 
     /**
+     * Get game rallies average duration
+     *
+     */
+    public function average_duration()
+    {
+        $points = $this->points;
+        
+        $duration_array = [];
+
+        foreach ($points as $point) {
+
+            $previous_point_obj = Game_Point::where(
+                'created_at',
+                '<',
+                $point->created_at
+            )
+                ->orderBy('created_at', 'desc')
+                ->first();
+        
+            $current_point = $point->created_at;
+
+            if (!empty($previous_point_obj)) {
+                $previous_point = $previous_point_obj->created_at;
+            } else {
+                $previous_point = $this->created_at;
+            }
+
+            $duration_in_seconds = $current_point->diffInSeconds($previous_point);            
+            array_push($duration_array, $duration_in_seconds);
+        }
+
+        $duration_average = array_sum($duration_array) / count($duration_array);
+
+        return $duration_average . 's';
+    }
+
+    /**
      * Return the game start date if exists
      *
      * @return bool|false|string

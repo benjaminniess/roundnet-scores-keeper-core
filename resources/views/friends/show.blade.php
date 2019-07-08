@@ -53,11 +53,12 @@
             <div class="col-sm-12">
                 <ul class="list-group list-group-flush">
                     @foreach ($active_auth_user_friends as $active_auth_user_friend)
-                                <li class="list-group-item py-3">{{ $active_auth_user_friend->name . ' (' . $active_auth_user_friend->email . ')' }}</li>
+                                <li class="list-group-item py-3">{{ $active_auth_user_friend['name'] . ' (' . $active_auth_user_friend['email'] . ')' }}</li>
                     @endforeach
                 </ul>
             </div>
         </div>
+        {{ $active_auth_user_friends->links() }}
         @else
             <div class="alert alert-info">
                 You don't have any friend yet :(

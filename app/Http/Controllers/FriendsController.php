@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class FriendsController extends Controller
 {
@@ -22,7 +23,7 @@ class FriendsController extends Controller
         /** @var User $user_obj */
         $user_obj = User::find(Auth::id());
 
-        $active_auth_user_friends = $user_obj->friends(
+        $raw_active_auth_user_friends = $user_obj->friends(
             UserRelationships::ACTIVE_STATUS
         );
         $guest_auth_user_friends = $user_obj->friends(
@@ -33,6 +34,13 @@ class FriendsController extends Controller
             UserRelationships::BLOCKED_STATUS
         );
 
+        $perPage = 2;
+        $currentPage = LengthAwarePaginator::resolveCurrentPage();
+        $currentItems = array_slice($raw_active_auth_user_friends->toArray(), $perPage * ($currentPage - 1), $perPage);
+        
+        $active_auth_user_friends = new LengthAwarePaginator($currentItems, count($raw_active_auth_user_friends), $perPage, $currentPage);
+        $active_auth_user_friends->setPath('/friends');
+        
         return view(
             'friends.show',
             compact(

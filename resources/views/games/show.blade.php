@@ -35,6 +35,7 @@
 </div>
 
 <h2 class="heading my-4">Game history</h2>
+<p>number of rallies : {{ $game->count_points() }}</p>
 <table class="table">
     <thead class="thead-dark">
     <tr>

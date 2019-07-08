@@ -20,6 +20,15 @@ class Game extends Model
     }
 
     /**
+     * Get amount of points in a game
+     *
+     */
+    public function count_points()
+    {
+        return $this->hasMany('\App\Game_Point', 'game_id')->count();
+    }
+
+    /**
      * Return the game start date if exists
      *
      * @return bool|false|string

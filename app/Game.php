@@ -35,7 +35,7 @@ class Game extends Model
     public function average_duration()
     {
         $points = $this->points;
-        
+
         $duration_array = [];
 
         foreach ($points as $point) {
@@ -47,7 +47,7 @@ class Game extends Model
             )
                 ->orderBy('created_at', 'desc')
                 ->first();
-        
+
             $current_point = $point->created_at;
 
             if (!empty($previous_point_obj)) {
@@ -56,7 +56,7 @@ class Game extends Model
                 $previous_point = $this->created_at;
             }
 
-            $duration_in_seconds = $current_point->diffInSeconds($previous_point);            
+            $duration_in_seconds = $current_point->diffInSeconds($previous_point);
             array_push($duration_array, $duration_in_seconds);
         }
 
@@ -238,15 +238,22 @@ class Game extends Model
      * @param int $score_team_1
      * @param int $score_team_2
      */
-    public function set_score($score_team_1 = 0, $score_team_2 = 0)
+    public function set_score($score_team_1 = 0, $score_team_2 = 0, $next_server = false )
     {
+    	$to_update = [
+		    'score_team_1' => $score_team_1,
+		    'score_team_2' => $score_team_2
+	    ];
+
+	    if ( 0 < (int) $next_server ) {
+	    	$to_update['current_server'] = $next_server;
+		    $this->current_server = $next_server;
+	    }
+
         if (
             !DB::table('games')
                 ->where('id', $this->id)
-                ->update([
-                    'score_team_1' => $score_team_1,
-                    'score_team_2' => $score_team_2
-                ])
+                ->update($to_update)
         ) {
             return false;
         }
@@ -318,6 +325,11 @@ class Game extends Model
 
         $positions = $this->get_players_position();
 
+        $current_server = (int) $this->current_server;
+        $serve_order = [ 1 => $positions[1], 2=> $positions[3], 3 => $positions[2], 4 => $positions[4] ];
+        $current_server_position = array_search( $current_server, $serve_order );
+	    $next_server = 3 < $current_server_position ? $serve_order[1] : $serve_order[ $current_server_position + 1 ];
+
         // Player is in team 1 ?
         if (
             (int) $player_id === (int) $positions[1] ||
@@ -325,18 +337,30 @@ class Game extends Model
         ) {
             if ('positive' === $action_type->action_type) {
                 $score_team_1++;
+                if ( $current_server_position === 3 || $current_server_position === 4 ) {
+                	$current_server = $next_server;
+                }
             } elseif ('negative' === $action_type->action_type) {
                 $score_team_2++;
+	            if ( $current_server_position === 1 || $current_server_position === 2 ) {
+		            $current_server = $next_server;
+	            }
             }
         } else {
             if ('positive' === $action_type->action_type) {
                 $score_team_2++;
+	            if ( $current_server_position === 3 || $current_server_position === 4 ) {
+		            $current_server = $next_server;
+	            }
             } elseif ('negative' === $action_type->action_type) {
                 $score_team_1++;
+	            if ( $current_server_position === 1 || $current_server_position === 2 ) {
+		            $current_server = $next_server;
+	            }
             }
         }
 
-        $this->set_score($score_team_1, $score_team_2);
+        $this->set_score($score_team_1, $score_team_2, $current_server );
 
         DB::table('game_points')->insert([
             'player_id' => $player_id,
@@ -344,7 +368,7 @@ class Game extends Model
             'score_team_1' => $score_team_1,
             'score_team_2' => $score_team_2,
             'game_id' => $this->id,
-            'created_at' => Carbon::now()
+            'created_at' => Carbon::now(),
         ]);
 
         if (

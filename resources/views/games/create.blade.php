@@ -49,12 +49,12 @@
                     <input type="text" @php echo empty( old('guest2') ) ? 'style="display: none"' : '' @endphp name="guest2" data-player="2" value="{{ old('guest2') }}" class="form-control guest-field {{ $errors->has('guest2') ? 'is-invalid' : '' }}" placeholder="Enter your buddy's nickname">
                 </div>
           </div>
-        </div>  
+        </div>
     </div>
 
     <div class="col-sm-6 my-2">
         <div class="card">
-            <h5 class="card-header">Team 2</h5>          
+            <h5 class="card-header">Team 2</h5>
             <div class="card-body">
                 <div class="form-group">
                     <label for="player3">Player 3</label>
@@ -91,7 +91,7 @@
 <div class="row my-2">
     <div class="col-sm-6 my-2">
         <div class="card">
-            <h5 class="card-header">Options</h5>          
+            <h5 class="card-header">Options</h5>
             <div class="card-body">
                 <div class="form-group">
                     <label for="referee">Referee</label>
@@ -114,13 +114,23 @@
 
     <div class="col-sm-6 my-2">
         <div class="card">
-            <h5 class="card-header">Start game</h5>          
+            <h5 class="card-header">Start game</h5>
             <div class="card-body">
+                <div class="form-group">
+                    <label for="first-to-serve">First to serve</label>
+                    <select class="form-control {{ $errors->has('first-to-serve') ? 'is-invalid' : '' }}" name="first_to_serve">
+                        <option value="rand">Random</option>
+                        <option value="1">Player 1</option>
+                        <option value="2">Player 2</option>
+                        <option value="3">Player 3</option>
+                        <option value="4">Player 4</option>
+                    </select>
+                </div>
                 <div class="form-group form-check">
                     <input type="checkbox" name="start_now" id="start_now" class="form-check-input" checked>
                     <label for="start_now" class="form-check-label">Start now?</label>
                 </div>
-            
+
             <button type="submit" class="btn btn-success">Create game</button>
             </div>
         </div>

@@ -159,7 +159,7 @@ class GamesController extends Controller
         }
 
         $attributes = request()->validate([
-            'points_to_win' => 'required'
+            'points_to_win'  => 'required'
         ]);
 
         $referee = request('referee');
@@ -235,6 +235,15 @@ class GamesController extends Controller
 
             $player_attributes['player' . $player_number] = $guest_id;
         }
+
+        // First to serve
+	    $first_to_serve = request( 'first_to_serve');
+	    if ( 'rand' === $first_to_serve ) {
+		    $first_to_serve = rand( 1, 4);
+	    }
+
+	    $first_to_serve = (int) $first_to_serve;
+	    $attributes['current_server'] = $player_attributes[ 'player' . $first_to_serve ];
 
         $game = Game::create($attributes);
 

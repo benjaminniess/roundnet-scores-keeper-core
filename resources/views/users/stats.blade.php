@@ -5,4 +5,6 @@
 
     <h2>Stats</h2>
 
+    {{ $coming_soon }}
+
 @endsection

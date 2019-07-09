@@ -195,6 +195,11 @@ class User extends Authenticatable
         return $relationship->first();
     }
 
+    /**
+     * Check relationship between 2 users
+     *
+     *@return boolean
+     */
     public function is_friend($friend_id)
     {
         if (empty($this->get_relationship($friend_id))) {
@@ -202,4 +207,21 @@ class User extends Authenticatable
         }
         return true;
     }
+
+    /**
+     * Return total time spent playing
+     *
+     *@return int
+     */
+    public function total_time_playing()
+    {
+        
+    }
 }
+
+
+
+
+
+
+

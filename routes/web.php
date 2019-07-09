@@ -50,6 +50,10 @@ Route::get('/account', function () {
 	return view('account');
 })->middleware('auth');
 
+Route::get('/stats', function () {
+	return view('stats');
+})->middleware('auth');
+
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 

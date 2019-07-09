@@ -8,6 +8,7 @@
     @else
         <a href="/games">Games</a>
         <a href="/friends">Friends</a>
+        <a href="/stats">Your stats</a>
         <!--<a href="/account">Account</a>-->
         <a href="/logout">Logout</a>
         @endguest

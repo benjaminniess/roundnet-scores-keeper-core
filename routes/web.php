@@ -47,8 +47,8 @@ Route::post('/friends/search', 'FriendsController@search')->middleware('auth');
 */
 
 Route::get('/account', function () {
-	return view('account')->middleware('auth');
-});
+	return view('account');
+})->middleware('auth');
 
 Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');

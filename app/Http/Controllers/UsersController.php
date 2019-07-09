@@ -14,7 +14,7 @@ class UsersController extends Controller
      */
     public function stats()
     {
-        $coming_soon = 'comming soon';
+        $coming_soon = 'coming soon';
 
         return view('users.stats', compact('coming_soon'));
     }

@@ -62,7 +62,7 @@ class Game extends Model
 
         $duration_average = array_sum($duration_array) / count($duration_array);
 
-        return $duration_average . 's';
+        return round($duration_average,1) . 's';
     }
 
     /**

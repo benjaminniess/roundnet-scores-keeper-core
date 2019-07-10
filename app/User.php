@@ -209,13 +209,28 @@ class User extends Authenticatable
     }
 
     /**
-     * Return total time spent playing
+     * Return all user points
      *
      *@return int
      */
-    public function total_time_playing()
+    public function points()
     {
-        
+        return $this->hasMany('\App\Game_Point', 'player_id');
+    }
+
+    /**
+     * Return all user positive points
+     *
+     *@return int
+     */
+    public function points_by_type( $type )
+    {
+        $query = $this->hasMany('\App\Game_Point', 'player_id')
+        ->join('actions_types', 'game_points.action_type_id', '=', 'actions_types.id')
+        ->where('actions_types.action_type', '=', $type)
+        ->count();
+
+        return $query;
     }
 }
 

@@ -5,6 +5,8 @@
 
     <h2>Stats</h2>
 
-    {{ $coming_soon }}
+    <p>Number of positive points : {{ $positive_points }}</p>
+    <p>Number of negative points : {{ $negative_points }}</p>
+    <p>Number of neutral points : {{ $neutral_points }}</p>
 
 @endsection

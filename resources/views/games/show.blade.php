@@ -34,6 +34,86 @@
     </div>
 </div>
 
+
+<canvas id="canvas" width="400" height="400"></canvas>
+<script>
+    var ctx = document.getElementById('canvas').getContext('2d');
+    var lineChartData = {
+        labels: [0, 1, 2],
+        datasets: [{
+            label: 'Team A',
+            borderColor: '#FF0000',
+            backgroundColor: '#DDD',
+            fill: false,
+            data: [
+                {
+                    x: 0,
+                    y: 0,
+                },
+                {
+                    x: 1,
+                    y: 1
+                },
+                {
+                    x: 2,
+                    y: 1
+                }
+            ],
+            yAxisID: 'y-axis-1',
+        }, {
+            label: 'Team B',
+            borderColor: '#000',
+            backgroundColor: '#DDD',
+            fill: false,
+            data: [
+                {
+                    x: 0,
+                    y: 0,
+                },
+                {
+                    x: 1,
+                    y: 0
+                },
+                {
+                    x: 2,
+                    y: 1
+                }
+            ],
+            yAxisID: 'y-axis-2'
+        }]
+    };
+    window.myLine = Chart.Line(ctx, {
+        data: lineChartData,
+        options: {
+            responsive: true,
+            hoverMode: 'index',
+            stacked: false,
+            title: {
+                display: true,
+                text: 'Chart.js Line Chart - Multi Axis'
+            },
+            scales: {
+                yAxes: [{
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'left',
+                    id: 'y-axis-1',
+                }, {
+                    type: 'linear', // only linear but allow scale type registration. This allows extensions to exist solely for log scale for instance
+                    display: true,
+                    position: 'right',
+                    id: 'y-axis-2',
+
+                    // grid line settings
+                    gridLines: {
+                        drawOnChartArea: false, // only want the grid lines for one axis to show up
+                    },
+                }],
+            }
+        }
+    });
+</script>
+
 <h2 class="heading my-4">Game history</h2>
 <p>number of rallies : {{ $game->count_points() }}</p>
 <p>rallies average duration : {{ $game->average_duration() }}</p>
@@ -51,7 +131,7 @@
         <tr>
             <td>
                 {{ $point->action_type->name }}
-                <span class="badge 
+                <span class="badge
                 @if ($point->action_type->action_type === 'positive')
                     {{ 'badge-success' }}
                 @endif

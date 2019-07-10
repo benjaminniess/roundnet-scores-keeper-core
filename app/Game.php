@@ -136,6 +136,21 @@ class Game extends Model
     }
 
     /**
+     * Get the winning team
+     *
+     * @return string
+     */
+    public function get_winning_team()
+    {
+        if ($this->score_team_1 > $this->score_team_2) {
+            return 'team 1';
+        }
+        if ($this->score_team_2 > $this->score_team_1) {
+            return 'team 2';
+        }
+    }
+
+    /**
      * Get the 4 players \App\User objects
      *
      */

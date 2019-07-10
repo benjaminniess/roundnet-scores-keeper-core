@@ -13,6 +13,11 @@
             <div class="card-body">
                 <div class="row">
                     <div class="col-sm-6 col-6">
+                        @if ($game->get_winning_team() === 'team 1')
+                            <div class="badge badge-success">Winner</div>
+                        @else
+                            <div class="badge badge-danger">Loser</div>
+                        @endif
                         <h2 class="card-title">Team A</h2>
                         <ul class="list-group list-group-flush">
                             <li class="list-group-item">{{ $players[1]->name }}</li>
@@ -21,6 +26,11 @@
                         <h2 class="heading">{{ $game->score_team_1 }}</h2>
                     </div>
                     <div class="col-sm-6 col-6">
+                        @if ($game->get_winning_team() === 'team 2')
+                            <div class="badge badge-success">Winner</div>
+                        @else
+                            <div class="badge badge-danger">Loser</div>
+                        @endif
                         <h2 class="card-title">Team B</h2>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">{{ $players[3]->name }}</li>

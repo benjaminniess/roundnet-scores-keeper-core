@@ -76,7 +76,7 @@ class Game extends Model
 
         $duration = ($end_date - $start_date) / 1000;
 
-        return gmdate('H:i:s',$duration);
+        return $duration;
     }
 
     /**

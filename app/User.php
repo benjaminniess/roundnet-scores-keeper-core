@@ -92,6 +92,11 @@ class User extends Authenticatable
         );
     }
 
+    public function games_as_referee()
+    {
+        return $this->hasMany('App\Game', 'referee');
+    }
+
     /**
      * Checks if the given user is in a live game and returns it
      *

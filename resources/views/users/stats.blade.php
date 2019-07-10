@@ -9,5 +9,6 @@
     <p>Number of negative points : {{ $negative_points }}</p>
     <p>Number of neutral points : {{ $neutral_points }}</p>
     <p>Time spent playing : {{ $time_spent_playing }}</p>
+    <p>Time spent refereing : {{ $time_spent_refereing }}</p>
 
 @endsection

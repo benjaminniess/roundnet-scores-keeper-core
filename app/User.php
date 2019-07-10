@@ -227,8 +227,7 @@ class User extends Authenticatable
     {
         $query = $this->hasMany('\App\Game_Point', 'player_id')
         ->join('actions_types', 'game_points.action_type_id', '=', 'actions_types.id')
-        ->where('actions_types.action_type', '=', $type)
-        ->count();
+        ->where('actions_types.action_type', '=', $type);
 
         return $query;
     }

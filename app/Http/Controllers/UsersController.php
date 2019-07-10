@@ -15,13 +15,17 @@ class UsersController extends Controller
      */
     public function stats()
     {
+        // The logged user
     	$user_obj = User::find(auth()->id());
 
-    	$positive_points = $user_obj->points_by_type(Action_Type::POSITIVE_POINTS);
-    	$negative_points = $user_obj->points_by_type(Action_Type::NEGATIVE_POINTS);
-    	$neutral_points = $user_obj->points_by_type(Action_Type::NEUTRAL_POINTS);
+        // Get logged user points by type and count each
+    	$positive_points = $user_obj->points_by_type(Action_Type::POSITIVE_POINTS)->count();
+    	$negative_points = $user_obj->points_by_type(Action_Type::NEGATIVE_POINTS)->count();
+    	$neutral_points = $user_obj->points_by_type(Action_Type::NEUTRAL_POINTS)->count();
 
-    	
+        $games = $user_obj->games;
+
+            	
 
         return view('users.stats',compact('positive_points','negative_points','neutral_points'));
     }

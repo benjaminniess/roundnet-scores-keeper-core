@@ -35,8 +35,9 @@
 </div>
 
 <h2 class="heading my-4">Game history</h2>
+<p>Game duration : {{ $game->duration() }}</p>
 <p>number of rallies : {{ $game->count_points() }}</p>
-<p>rallies average duration : {{ $game->average_duration() }}</p>
+<p>rallies average duration : {{ $game->points_average_duration() }}</p>
 <table class="table">
     <thead class="thead-dark">
     <tr>

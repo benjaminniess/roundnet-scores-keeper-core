@@ -32,7 +32,7 @@ class Game extends Model
      * Get game rallies average duration
      *
      */
-    public function average_duration()
+    public function points_average_duration()
     {
         $points = $this->points;
 
@@ -63,6 +63,20 @@ class Game extends Model
         $duration_average = array_sum($duration_array) / count($duration_array);
 
         return round($duration_average,1) . 's';
+    }
+
+    /**
+     * Get game duration in seconds
+     *
+     */
+    public function duration()
+    {
+        $start_date = (int) $this->start_date;
+        $end_date = (int) $this->end_date;
+
+        $duration = ($end_date - $start_date) / 1000;
+
+        return gmdate('H:i:s',$duration);
     }
 
     /**

@@ -8,5 +8,6 @@
     <p>Number of positive points : {{ $positive_points }}</p>
     <p>Number of negative points : {{ $negative_points }}</p>
     <p>Number of neutral points : {{ $neutral_points }}</p>
+    <p>Time spent playing : {{ $time_spent_playing }}</p>
 
 @endsection

@@ -23,10 +23,15 @@ class UsersController extends Controller
     	$negative_points = $user_obj->points_by_type(Action_Type::NEGATIVE_POINTS)->count();
     	$neutral_points = $user_obj->points_by_type(Action_Type::NEUTRAL_POINTS)->count();
 
+        // get user total time spent playing
         $games = $user_obj->games;
+        $games_duration = [];
+        foreach ($games as $game) {
+            $game->duration = $game->duration();
+            array_push($games_duration,$game->duration());
+        }
+        $time_spent_playing = gmdate('H:i:s', array_sum($games_duration));
 
-            	
-
-        return view('users.stats',compact('positive_points','negative_points','neutral_points'));
+        return view('users.stats',compact('positive_points','negative_points','neutral_points', 'time_spent_playing'));
     }
 }

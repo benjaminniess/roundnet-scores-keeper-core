@@ -328,7 +328,8 @@ class Game extends Model
         $current_server = (int) $this->current_server;
         $serve_order = [ 1 => $positions[1], 2=> $positions[3], 3 => $positions[2], 4 => $positions[4] ];
         $current_server_position = array_search( $current_server, $serve_order );
-	    $next_server = 3 < $current_server_position ? $serve_order[1] : $serve_order[ $current_server_position + 1 ];
+        $next_key = 3 < $current_server_position ? 1 : $current_server_position + 1;
+	    $next_server = $serve_order[ $next_key ];
 
         // Player is in team 1 ?
         if (
@@ -337,24 +338,24 @@ class Game extends Model
         ) {
             if ('positive' === $action_type->action_type) {
                 $score_team_1++;
-                if ( $current_server_position === 3 || $current_server_position === 4 ) {
+                if ( $current_server_position === 2 || $current_server_position === 4 ) {
                 	$current_server = $next_server;
                 }
             } elseif ('negative' === $action_type->action_type) {
                 $score_team_2++;
-	            if ( $current_server_position === 1 || $current_server_position === 2 ) {
+	            if ( $current_server_position === 1 || $current_server_position === 3 ) {
 		            $current_server = $next_server;
 	            }
             }
         } else {
             if ('positive' === $action_type->action_type) {
                 $score_team_2++;
-	            if ( $current_server_position === 3 || $current_server_position === 4 ) {
+	            if ( $current_server_position === 1 || $current_server_position === 3 ) {
 		            $current_server = $next_server;
 	            }
             } elseif ('negative' === $action_type->action_type) {
                 $score_team_1++;
-	            if ( $current_server_position === 1 || $current_server_position === 2 ) {
+	            if ( $current_server_position === 2 || $current_server_position === 4 ) {
 		            $current_server = $next_server;
 	            }
             }

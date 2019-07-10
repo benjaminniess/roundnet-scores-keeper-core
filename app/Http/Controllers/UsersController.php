@@ -41,6 +41,17 @@ class UsersController extends Controller
         }
         $time_spent_refereing = gmdate('H:i:s', array_sum($referee_games_duration));
 
-        return view('users.stats',compact('positive_points','negative_points','neutral_points', 'time_spent_playing', 'time_spent_refereing'));
+        // TODO Get user total winning games
+        // TODO Get user total losing games
+        // TODO Get user % of victory
+        
+
+        return view('users.stats',compact(
+            'positive_points',
+            'negative_points',
+            'neutral_points',
+            'time_spent_playing',
+            'time_spent_refereing'
+        ));
     }
 }

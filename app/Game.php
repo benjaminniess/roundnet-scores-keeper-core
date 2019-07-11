@@ -32,7 +32,7 @@ class Game extends Model
      * Get game rallies average duration
      *
      */
-    public function average_duration()
+    public function points_average_duration()
     {
         $points = $this->points;
 
@@ -63,6 +63,20 @@ class Game extends Model
         $duration_average = array_sum($duration_array) / count($duration_array);
 
         return round($duration_average,1) . 's';
+    }
+
+    /**
+     * Get game duration in seconds
+     *
+     */
+    public function duration()
+    {
+        $start_date = (int) $this->start_date;
+        $end_date = (int) $this->end_date;
+
+        $duration = ($end_date - $start_date) / 1000;
+
+        return $duration;
     }
 
     /**
@@ -119,6 +133,21 @@ class Game extends Model
             'team1' => $this->score_team_1,
             'team2' => $this->score_team_2
         ];
+    }
+
+    /**
+     * Get the winning team
+     *
+     * @return string
+     */
+    public function get_winning_team()
+    {
+        if ($this->score_team_1 > $this->score_team_2) {
+            return 'team 1';
+        }
+        if ($this->score_team_2 > $this->score_team_1) {
+            return 'team 2';
+        }
     }
 
     /**

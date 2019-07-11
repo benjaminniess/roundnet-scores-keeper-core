@@ -48,7 +48,8 @@
 <canvas id="canvas" width="400" height="400"></canvas>
 <script>
     var ctx = document.getElementById('canvas').getContext('2d');
-    var lineChartData = {
+    var lineChartData = {!! $history_chart !!}
+   {{-- var lineChartData = {
         labels: [0, 1, 2],
         datasets: [{
             label: 'Team A',
@@ -91,7 +92,7 @@
             ],
             yAxisID: 'y-axis-2'
         }]
-    };
+    };--}}
     window.myLine = Chart.Line(ctx, {
         data: lineChartData,
         options: {

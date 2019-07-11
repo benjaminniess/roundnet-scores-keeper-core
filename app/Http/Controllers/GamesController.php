@@ -309,7 +309,8 @@ class GamesController extends Controller
 
         return view('games.show')->with([
             'game' => $game,
-            'players' => $ordered_players
+            'players' => $ordered_players,
+	        'history_chart' => $game->get_chart_js_game_history(),
         ]);
     }
 

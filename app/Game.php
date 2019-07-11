@@ -28,6 +28,51 @@ class Game extends Model
         return $this->hasMany('\App\Game_Point', 'game_id')->count();
     }
 
+    public function get_chart_js_game_history() {
+    	$points = $this->points();
+
+    	$team_a_scores = [];
+    	$team_b_scores = [];
+    	foreach ( $points->get() as $key => $point ) {
+    		/** @var Game_Point $point */
+    		$team_a_scores[] = [
+    			'x' => $key,
+			    'y' => (int) $point->score_team_1,
+		    ];
+
+		    $team_b_scores[] = [
+			    'x' => $key,
+			    'y' => (int) $point->score_team_2,
+		    ];
+	    }
+
+    	$labels = [];
+    	for ( $i = 0; $i < $points->count(); $i++ ) {
+    		$labels[] = $i;
+	    }
+    	return json_encode([
+			'labels'  => $labels,
+		    'dataset' => [
+		    	[
+		    		'label' => 'Team A',
+				    'borderColor' => '#FF0000',
+				    'backgroundColor' => '#FFF',
+				    'fill' => false,
+				    'data' => $team_a_scores,
+				    'yAxisID' => 'y-axis-1',
+			    ],
+			    [
+				    'label' => 'Team B',
+				    'borderColor' => '#00FF00',
+				    'backgroundColor' => '#FFF',
+				    'fill' => false,
+				    'data' => $team_b_scores,
+				    'yAxisID' => 'y-axis-2',
+			    ],
+		    ],
+	    ]);
+    }
+
     /**
      * Get game rallies average duration
      *
@@ -204,7 +249,7 @@ class Game extends Model
                     ]
                 ]
             ],
-            'points' => $this->history,
+            'points' => $this->points,
             'score' => $this->get_scores(),
             'start_date' => (int) $this->start_date,
             'current_server' => (int) $this->current_server,

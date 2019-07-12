@@ -82,6 +82,11 @@ class User extends Authenticatable
         return $access_token;
     }
 
+    /**
+     * Get all user games
+     *
+     * @return \App\Game
+     */
     public function games()
     {
         return $this->belongsToMany(
@@ -235,6 +240,43 @@ class User extends Authenticatable
         ->where('actions_types.action_type', '=', $type);
 
         return $query;
+    }
+
+    /**
+     * Return user winning games
+     *
+     *@return App\Game
+     */
+    public function winning_games()
+    {
+        $games = Game::select()
+        ->join('players', 'players.game_id', '=', 'games.id')
+        ->join('users', 'players.user_id', '=', 'users.id')
+        ->where('users.id', '=', $this->id)
+        ->where(function ($query) {
+            $query
+            ->where('games.score_team_1', '>', 'games.score_team_2');
+                $query
+                ->where(function ($query){
+                    $query
+                    ->where('players.position', '=', 1)
+                    ->orWhere('players.position', '=', 2);
+                });
+            })
+        ->orWhere(function ($query){
+            $query
+            ->where('games.score_team_2', '>', 'games.score_team_1');
+                $query
+                ->where(function ($query){
+                    $query
+                    ->where('players.position', '=', 3)
+                    ->orWhere('players.position', '=', 4);
+                    
+                });
+            })
+            ->groupBy('games.id');
+
+        return $games->get();
     }
 }
 

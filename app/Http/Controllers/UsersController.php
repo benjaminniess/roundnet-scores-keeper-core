@@ -42,6 +42,9 @@ class UsersController extends Controller
         $time_spent_refereing = gmdate('H:i:s', array_sum($referee_games_duration));
 
         // TODO Get user total winning games
+        $winning_games = $user_obj->winning_games();
+        dump($winning_games);
+
         // TODO Get user total losing games
         // TODO Get user % of victory
         
@@ -51,7 +54,8 @@ class UsersController extends Controller
             'negative_points',
             'neutral_points',
             'time_spent_playing',
-            'time_spent_refereing'
+            'time_spent_refereing',
+            'winning_games'
         ));
     }
 }

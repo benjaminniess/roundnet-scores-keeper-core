@@ -21,6 +21,19 @@ class GamesController extends Controller
 
         $games = $user_obj->games()->paginate(10);
 
+        // For each game, get logged user team
+        foreach ( $games as $game ) {
+            $game->user_team = $user_obj->get_team( $game->id );
+            $game->winning_team = $game->get_winning_team();
+
+            // Compare user team and game winning team
+            if ($game->user_team === $game->winning_team) {
+                $game->winning_game = 'Won';
+            } else{
+                $game->winning_game = 'Lost';
+            }
+        }
+
         return view('games.index', compact('games'));
     }
 

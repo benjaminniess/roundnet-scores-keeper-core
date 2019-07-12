@@ -18,16 +18,25 @@
                     <div class="card text-center">
                         <div class="card-header">
                             <span class="badge
-                                @if ($game->status == 'pending')
+                                @if ( $game->status === 'pending' )
                                     {{ 'badge-dark' }}
                                 @endif
-                                @if ($game->status == 'live')
+                                @if ( $game->status === 'live' )
                                     {{ 'badge-success' }}
                                 @endif
-                                @if ($game->status == 'closed')
+                                @if ( $game->status === 'closed' && $game->winning_game === 'Lost' )
                                     {{ 'badge-danger' }}
                                 @endif
-                            ">{{ $game->status }}</span>
+                                @if ( $game->status === 'closed' && $game->winning_game === 'Won' )
+                                    {{ 'badge-success' }}
+                                @endif
+                            ">
+                            @if ($game->status !== 'closed')
+                            {{ $game->status }}
+                            @else
+                            {{ $game->winning_game }}
+                            @endif
+                        </span>
                         </div>
 
                         <div class="card-body">

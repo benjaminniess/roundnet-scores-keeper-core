@@ -10,6 +10,9 @@ class Game extends Model
 {
     protected $guarded = ['id'];
 
+    const TEAM_1 = 'team 1';
+    const TEAM_2 = 'team 2';
+
     /**
      * Get all points associated to the given game
      *
@@ -204,10 +207,10 @@ class Game extends Model
     public function get_winning_team()
     {
         if ($this->score_team_1 > $this->score_team_2) {
-            return 'team 1';
+            return Game::TEAM_1;
         }
         if ($this->score_team_2 > $this->score_team_1) {
-            return 'team 2';
+            return Game::TEAM_2;
         }
     }
 

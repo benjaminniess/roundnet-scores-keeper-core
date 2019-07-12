@@ -277,6 +277,27 @@ class User extends Authenticatable
 
         return $games->get();
     }
+
+    /**
+     * Return user winning games
+     *
+     *@return string
+     */
+    public function get_team( $game_id )
+    {
+        $position = Player::select('position')
+        ->join('games', 'games.id', '=', 'players.game_id')
+        ->where('games.id', '=', $game_id)
+        ->where('players.user_id', '=', $this->id)
+        ->first();
+        
+        // Get user team with user position in game
+        if( (int) $position->position === 1 || (int) $position->position === 2 ){
+            return Game::TEAM_1;
+        } else {
+            return Game::TEAM_2;
+        }
+    }
 }
 
 

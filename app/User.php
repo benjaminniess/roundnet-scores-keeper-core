@@ -249,13 +249,12 @@ class User extends Authenticatable
      */
     public function winning_games()
     {
-        $games = Game::select()
-        ->join('players', 'players.game_id', '=', 'games.id')
+        $games = Game::join('players', 'players.game_id', '=', 'games.id')
         ->join('users', 'players.user_id', '=', 'users.id')
         ->where('users.id', '=', $this->id)
         ->where(function ($query) {
             $query
-            ->where('games.score_team_1', '>', 'games.score_team_2');
+            ->whereColumn('games.score_team_1', '>', 'games.score_team_2');
                 $query
                 ->where(function ($query){
                     $query
@@ -265,7 +264,7 @@ class User extends Authenticatable
             })
         ->orWhere(function ($query){
             $query
-            ->where('games.score_team_2', '>', 'games.score_team_1');
+            ->whereColumn('games.score_team_2', '>', 'games.score_team_1');
                 $query
                 ->where(function ($query){
                     $query

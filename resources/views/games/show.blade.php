@@ -3,6 +3,12 @@
 @section('content')
 
 <h1 class="heading mb-4">Game recap</h1>
+
+<h2 class="heading my-4">Game history</h2>
+<p>Game duration : {{ gmdate('H:i:s',$game->duration()) }}</p>
+<p>number of rallies : {{ $game->count_points() }}</p>
+<p>rallies average duration : {{ $game->points_average_duration() }}</p>
+
 <div class="row my-2">
     <div class="col-sm-12 my-2">
         <div class="card text-center">
@@ -49,50 +55,7 @@
 <script>
     var ctx = document.getElementById('canvas').getContext('2d');
     var lineChartData = {!! $history_chart !!}
-   {{-- var lineChartData = {
-        labels: [0, 1, 2],
-        datasets: [{
-            label: 'Team A',
-            borderColor: '#FF0000',
-            backgroundColor: '#DDD',
-            fill: false,
-            data: [
-                {
-                    x: 0,
-                    y: 0,
-                },
-                {
-                    x: 1,
-                    y: 1
-                },
-                {
-                    x: 2,
-                    y: 1
-                }
-            ],
-            yAxisID: 'y-axis-1',
-        }, {
-            label: 'Team B',
-            borderColor: '#000',
-            backgroundColor: '#DDD',
-            fill: false,
-            data: [
-                {
-                    x: 0,
-                    y: 0,
-                },
-                {
-                    x: 1,
-                    y: 0
-                },
-                {
-                    x: 2,
-                    y: 1
-                }
-            ],
-            yAxisID: 'y-axis-2'
-        }]
-    };--}}
+
     window.myLine = Chart.Line(ctx, {
         data: lineChartData,
         options: {
@@ -125,10 +88,7 @@
     });
 </script>
 
-<h2 class="heading my-4">Game history</h2>
-<p>Game duration : {{ gmdate('H:i:s',$game->duration()) }}</p>
-<p>number of rallies : {{ $game->count_points() }}</p>
-<p>rallies average duration : {{ $game->points_average_duration() }}</p>
+
 <table class="table">
     <thead class="thead-dark">
     <tr>

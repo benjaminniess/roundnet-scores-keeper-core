@@ -28,9 +28,17 @@ class Game extends Model
         return $this->hasMany('\App\Game_Point', 'game_id')->count();
     }
 
+	/**
+	 * Generates the json for chart js
+	 *
+	 * @return false|string
+	 */
     public function get_chart_js_game_history() {
     	$points = $this->points();
 
+    	$scores = $this->get_scores();
+    	$color_team_1 = $scores['team1'] < $scores['team2'] ? '#e3342f' : '#38c172';
+    	$color_team_2 = $scores['team1'] > $scores['team2'] ? '#e3342f' : '#38c172';
     	$team_a_scores = [];
     	$team_b_scores = [];
     	foreach ( $points->get() as $key => $point ) {
@@ -38,6 +46,7 @@ class Game extends Model
     		$team_a_scores[] = [
     			'x' => $key,
 			    'y' => (int) $point->score_team_1,
+			    'label' => 'test',
 		    ];
 
 		    $team_b_scores[] = [
@@ -52,10 +61,10 @@ class Game extends Model
 	    }
     	return json_encode([
 			'labels'  => $labels,
-		    'dataset' => [
+		    'datasets' => [
 		    	[
 		    		'label' => 'Team A',
-				    'borderColor' => '#FF0000',
+				    'borderColor' => $color_team_1,
 				    'backgroundColor' => '#FFF',
 				    'fill' => false,
 				    'data' => $team_a_scores,
@@ -63,12 +72,19 @@ class Game extends Model
 			    ],
 			    [
 				    'label' => 'Team B',
-				    'borderColor' => '#00FF00',
+				    'borderColor' => $color_team_2,
 				    'backgroundColor' => '#FFF',
 				    'fill' => false,
 				    'data' => $team_b_scores,
 				    'yAxisID' => 'y-axis-2',
 			    ],
+		    ],
+		    'options' => [
+		    	'tooltips' => [
+		    		'callbacks' => [
+		    			'footer' => 'return "test";',
+				    ],
+			    ]
 		    ],
 	    ]);
     }

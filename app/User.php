@@ -279,6 +279,43 @@ class User extends Authenticatable
     }
 
     /**
+     * Generates the json for chart js
+     *
+     * @return false|string
+     */
+    
+    public function get_chart_js_victory_stats() {
+
+        // Get user total winning games
+        $total_winning_games = $this->winning_games()->count();
+        
+        // Get user total games
+        $total_games = $this->games->count();
+        
+        // Calculate % of victory
+        // $percentage_victory = round(( $total_winning_games / $total_games ) * 100, 1 );
+
+        // Calculate user total losing games
+        $total_losing_games = $total_games - $total_winning_games;
+
+        $labels = ['Lost games', 'Won games'];
+        $background_color = ['#c45850', '#3cba9f'];
+        $victory_stats = [$total_losing_games, $total_winning_games];
+
+        $victory_stats_chart = json_encode([
+                'labels'   => $labels,
+                'datasets' => [
+                    [
+                        'backgroundColor' => $background_color,
+                        'data'            => $victory_stats
+                    ]
+                ],
+            ]);
+
+        return $victory_stats_chart;
+    }
+
+    /**
      * Return user winning games
      *
      *@return string

@@ -31,65 +31,58 @@ class Game extends Model
         return $this->hasMany('\App\Game_Point', 'game_id')->count();
     }
 
-	/**
-	 * Generates the json for chart js
-	 *
-	 * @return false|string
-	 */
-    public function get_chart_js_game_history() {
-    	$points = $this->points();
+    /**
+     * Generates the json for chart js
+     *
+     * @return false|string
+     */
+    public function get_chart_js_game_history()
+    {
+        $points = $this->points();
 
-    	$scores = $this->get_scores();
-    	$color_team_1 = $scores['team1'] < $scores['team2'] ? '#e3342f' : '#38c172';
-    	$color_team_2 = $scores['team1'] > $scores['team2'] ? '#e3342f' : '#38c172';
-    	$team_a_scores = [];
-    	$team_b_scores = [];
-    	foreach ( $points->get() as $key => $point ) {
-    		/** @var Game_Point $point */
-    		$team_a_scores[] = [
-    			'x' => $key,
-			    'y' => (int) $point->score_team_1,
-			    'label' => 'test',
-		    ];
+        $scores = $this->get_scores();
+        $color_team_1 =
+            $scores['team1'] < $scores['team2'] ? '#e3342f' : '#38c172';
+        $color_team_2 =
+            $scores['team1'] > $scores['team2'] ? '#e3342f' : '#38c172';
+        $team_a_scores = [];
+        $team_b_scores = [];
+        foreach ($points->get() as $key => $point) {
+            /** @var Game_Point $point */
+            $team_a_scores[] = [
+                'x' => $key,
+                'y' => (int) $point->score_team_1
+            ];
 
-		    $team_b_scores[] = [
-			    'x' => $key,
-			    'y' => (int) $point->score_team_2,
-		    ];
-	    }
+            $team_b_scores[] = [
+                'x' => $key,
+                'y' => (int) $point->score_team_2
+            ];
+        }
 
-    	$labels = [];
-    	for ( $i = 0; $i < $points->count(); $i++ ) {
-    		$labels[] = $i;
-	    }
-    	return json_encode([
-			'labels'  => $labels,
-		    'datasets' => [
-		    	[
-		    		'label' => 'Team A',
-				    'borderColor' => $color_team_1,
-				    'backgroundColor' => '#FFF',
-				    'fill' => false,
-				    'data' => $team_a_scores,
-				    'yAxisID' => 'y-axis-1',
-			    ],
-			    [
-				    'label' => 'Team B',
-				    'borderColor' => $color_team_2,
-				    'backgroundColor' => '#FFF',
-				    'fill' => false,
-				    'data' => $team_b_scores,
-				    'yAxisID' => 'y-axis-2',
-			    ],
-		    ],
-		    'options' => [
-		    	'tooltips' => [
-		    		'callbacks' => [
-		    			'footer' => 'return "test";',
-				    ],
-			    ]
-		    ],
-	    ]);
+        $labels = [];
+        for ($i = 0; $i < $points->count(); $i++) {
+            $labels[] = $i;
+        }
+        return json_encode([
+            'labels' => $labels,
+            'datasets' => [
+                [
+                    'label' => 'Team A',
+                    'borderColor' => $color_team_1,
+                    'backgroundColor' => '#FFF',
+                    'fill' => false,
+                    'data' => $team_a_scores
+                ],
+                [
+                    'label' => 'Team B',
+                    'borderColor' => $color_team_2,
+                    'backgroundColor' => '#FFF',
+                    'fill' => false,
+                    'data' => $team_b_scores
+                ]
+            ]
+        ]);
     }
 
     /**
@@ -103,7 +96,6 @@ class Game extends Model
         $duration_array = [];
 
         foreach ($points as $point) {
-
             $previous_point_obj = Game_Point::where(
                 'created_at',
                 '<',
@@ -120,13 +112,15 @@ class Game extends Model
                 $previous_point = $this->created_at;
             }
 
-            $duration_in_seconds = $current_point->diffInSeconds($previous_point);
+            $duration_in_seconds = $current_point->diffInSeconds(
+                $previous_point
+            );
             array_push($duration_array, $duration_in_seconds);
         }
 
         $duration_average = array_sum($duration_array) / count($duration_array);
 
-        return round($duration_average,1) . 's';
+        return round($duration_average, 1) . 's';
     }
 
     /**
@@ -331,17 +325,20 @@ class Game extends Model
      * @param int $score_team_1
      * @param int $score_team_2
      */
-    public function set_score($score_team_1 = 0, $score_team_2 = 0, $next_server = false )
-    {
-    	$to_update = [
-		    'score_team_1' => $score_team_1,
-		    'score_team_2' => $score_team_2
-	    ];
+    public function set_score(
+        $score_team_1 = 0,
+        $score_team_2 = 0,
+        $next_server = false
+    ) {
+        $to_update = [
+            'score_team_1' => $score_team_1,
+            'score_team_2' => $score_team_2
+        ];
 
-	    if ( 0 < (int) $next_server ) {
-	    	$to_update['current_server'] = $next_server;
-		    $this->current_server = $next_server;
-	    }
+        if (0 < (int) $next_server) {
+            $to_update['current_server'] = $next_server;
+            $this->current_server = $next_server;
+        }
 
         if (
             !DB::table('games')
@@ -419,10 +416,16 @@ class Game extends Model
         $positions = $this->get_players_position();
 
         $current_server = (int) $this->current_server;
-        $serve_order = [ 1 => $positions[1], 2=> $positions[3], 3 => $positions[2], 4 => $positions[4] ];
-        $current_server_position = array_search( $current_server, $serve_order );
-        $next_key = 3 < $current_server_position ? 1 : $current_server_position + 1;
-	    $next_server = $serve_order[ $next_key ];
+        $serve_order = [
+            1 => $positions[1],
+            2 => $positions[3],
+            3 => $positions[2],
+            4 => $positions[4]
+        ];
+        $current_server_position = array_search($current_server, $serve_order);
+        $next_key =
+            3 < $current_server_position ? 1 : $current_server_position + 1;
+        $next_server = $serve_order[$next_key];
 
         // Player is in team 1 ?
         if (
@@ -431,30 +434,42 @@ class Game extends Model
         ) {
             if ('positive' === $action_type->action_type) {
                 $score_team_1++;
-                if ( $current_server_position === 2 || $current_server_position === 4 ) {
-                	$current_server = $next_server;
+                if (
+                    $current_server_position === 2 ||
+                    $current_server_position === 4
+                ) {
+                    $current_server = $next_server;
                 }
             } elseif ('negative' === $action_type->action_type) {
                 $score_team_2++;
-	            if ( $current_server_position === 1 || $current_server_position === 3 ) {
-		            $current_server = $next_server;
-	            }
+                if (
+                    $current_server_position === 1 ||
+                    $current_server_position === 3
+                ) {
+                    $current_server = $next_server;
+                }
             }
         } else {
             if ('positive' === $action_type->action_type) {
                 $score_team_2++;
-	            if ( $current_server_position === 1 || $current_server_position === 3 ) {
-		            $current_server = $next_server;
-	            }
+                if (
+                    $current_server_position === 1 ||
+                    $current_server_position === 3
+                ) {
+                    $current_server = $next_server;
+                }
             } elseif ('negative' === $action_type->action_type) {
                 $score_team_1++;
-	            if ( $current_server_position === 2 || $current_server_position === 4 ) {
-		            $current_server = $next_server;
-	            }
+                if (
+                    $current_server_position === 2 ||
+                    $current_server_position === 4
+                ) {
+                    $current_server = $next_server;
+                }
             }
         }
 
-        $this->set_score($score_team_1, $score_team_2, $current_server );
+        $this->set_score($score_team_1, $score_team_2, $current_server);
 
         DB::table('game_points')->insert([
             'player_id' => $player_id,
@@ -462,7 +477,7 @@ class Game extends Model
             'score_team_1' => $score_team_1,
             'score_team_2' => $score_team_2,
             'game_id' => $this->id,
-            'created_at' => Carbon::now(),
+            'created_at' => Carbon::now()
         ]);
 
         if (

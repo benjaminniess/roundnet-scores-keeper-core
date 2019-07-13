@@ -283,7 +283,6 @@ class User extends Authenticatable
      *
      * @return false|string
      */
-    
     public function get_chart_js_victory_stats() {
 
         // Get user total winning games
@@ -313,6 +312,48 @@ class User extends Authenticatable
             ]);
 
         return $victory_stats_chart;
+    }
+
+    /**
+     * Generates the json for chart js
+     *
+     * @return false|string
+     */
+    public function get_chart_js_points_types() {
+
+        // Get logged user points by type and count each
+        $positive_points = $this->points_by_type(Action_Type::POSITIVE_POINTS)->count();
+        $negative_points = $this->points_by_type(Action_Type::NEGATIVE_POINTS)->count();
+        $neutral_points = $this->points_by_type(Action_Type::NEUTRAL_POINTS)->count();
+
+        $labels = [
+            'Positive points',
+            'Negative points',
+            'Neutral points'
+        ];
+        $points_types = [
+            $positive_points,
+            $negative_points,
+            $neutral_points
+        ];
+        $background_color = [
+            '#3cba9f',
+            '#c45850',
+            '#e8c3b9'
+
+        ];
+
+        $points_types_chart = json_encode([
+                'labels'   => $labels,
+                'datasets' => [
+                    [
+                        'backgroundColor' => $background_color,
+                        'data'            => $points_types
+                    ]
+                ],
+            ]);
+
+        return $points_types_chart;
     }
 
     /**

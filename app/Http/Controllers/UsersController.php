@@ -18,11 +18,6 @@ class UsersController extends Controller
         // The logged user
     	$user_obj = User::find(auth()->id());
 
-        // Get logged user points by type and count each
-    	$positive_points = $user_obj->points_by_type(Action_Type::POSITIVE_POINTS)->count();
-    	$negative_points = $user_obj->points_by_type(Action_Type::NEGATIVE_POINTS)->count();
-    	$neutral_points = $user_obj->points_by_type(Action_Type::NEUTRAL_POINTS)->count();
-
         // get user total time spent playing
         $games_as_player = $user_obj->games;
         $player_games_duration = [];
@@ -41,15 +36,14 @@ class UsersController extends Controller
         }
         $time_spent_refereing = gmdate('H:i:s', array_sum($referee_games_duration));
 
+        $points_types_chart = $user_obj->get_chart_js_points_types();
         $victory_stats_chart = $user_obj->get_chart_js_victory_stats();
 
         return view('users.stats',compact(
-            'positive_points',
-            'negative_points',
-            'neutral_points',
             'time_spent_playing',
             'time_spent_refereing',
-            'victory_stats_chart'
+            'victory_stats_chart',
+            'points_types_chart'
         ));
     }
 }

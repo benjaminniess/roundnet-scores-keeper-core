@@ -6,17 +6,20 @@
     <h2>Stats</h2>
     
     <div class="row">
-    	<div class="col-md-6">
+    	<div class="col-md-12">
     		<ul>
-    			<li><p>Number of positive points : {{ $positive_points }}</p></li>
-    			<li><p>Number of negative points : {{ $negative_points }}</p></li>
-    			<li><p>Number of neutral points : {{ $neutral_points }}</p></li>
     			<li><p>Time spent playing : {{ $time_spent_playing }}</p></li>
     			<li><p>Time spent refereing : {{ $time_spent_refereing }}</p></li>
     		</ul>		    
     	</div>
+    </div>
+
+    <div class="row">
     	<div class="col-md-6">
-    		<canvas id="victory-chart" width="400" height="400"></canvas>	
+    		<canvas id="points-types-chart"></canvas>
+    	</div>
+    	<div class="col-md-6">
+    		<canvas id="victory-chart"></canvas>
     	</div>
     </div>
     	
@@ -32,8 +35,22 @@
 				title: {
 		        display: true,
 		        responsive: true,
-		        text: 'Victory versus defeats'
-		      }
+		        text: 'Victory versus defeats'		      }
+			}
+		});
+
+
+		var ctx = document.getElementById('points-types-chart').getContext('2d');
+		var doughnutChartData = {!! $points_types_chart !!}
+		console.log(doughnutChartData)
+		var myDoughnutChart = new Chart(ctx, {
+		    type: 'doughnut',
+		    data: doughnutChartData,
+			options: {
+				title: {
+		        display: true,
+		        responsive: true,
+		        text: 'Points types repartition'		      }
 			}
 		});
     </script>

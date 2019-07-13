@@ -140,6 +140,9 @@
                     display: true,
                     position: 'left',
                     id: 'y-axis-1',
+					ticks: {
+						beginAtZero: true
+					}
                 }],
             },
 			tooltips: {

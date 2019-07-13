@@ -45,25 +45,36 @@ class Game extends Model
             $scores['team1'] < $scores['team2'] ? '#e3342f' : '#38c172';
         $color_team_2 =
             $scores['team1'] > $scores['team2'] ? '#e3342f' : '#38c172';
-        $team_a_scores = [];
-        $team_b_scores = [];
+        $team_a_scores = [
+            [
+                'x' => 0,
+                'y' => 0
+            ]
+        ];
+        $team_b_scores = [
+            [
+                'x' => 0,
+                'y' => 0
+            ]
+        ];
         foreach ($points->get() as $key => $point) {
             /** @var Game_Point $point */
             $team_a_scores[] = [
-                'x' => $key,
+                'x' => $key + 1,
                 'y' => (int) $point->score_team_1
             ];
 
             $team_b_scores[] = [
-                'x' => $key,
+                'x' => $key + 1,
                 'y' => (int) $point->score_team_2
             ];
         }
 
         $labels = [];
-        for ($i = 0; $i < $points->count(); $i++) {
+        for ($i = 0; $i <= $points->count(); $i++) {
             $labels[] = $i;
         }
+
         return json_encode([
             'labels' => $labels,
             'datasets' => [

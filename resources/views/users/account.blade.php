@@ -6,6 +6,12 @@
             {{ session()->get('info-message-success') }}
         </div>
     @endif
+    @if(session()->has('password-message-success'))
+        <div class="alert alert-success">
+            {{ session()->get('password-message-success') }}
+        </div>
+    @endif
+    @include('components.errors')
     <div class="row">
     	<div class="col-sm-6">
     		<div class="card">
@@ -33,20 +39,20 @@
 		    				Your password
 		    			</div>
 		    			<div class="card-body">
-		    				<form action="/user" method="POST">
+		    				<form action="/user/edit-password/{{ $user->id }}" method="POST">
 							@csrf
 							@method('PATCH')
 							<div class="form-group">
 								<label for='name'>Old password</label>
-								<input type="text" name="old_password" class="form-control">
+								<input type="password" name="old_password" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for='name'>New password</label>
-								<input type="text" name="new_password" class="form-control">
+								<input type="password" name="new_password" class="form-control">
 							</div>
 							<div class="form-group">
 								<label for='name'>New password confirmation</label>
-								<input type="text" name="new_password_confirmation" class="form-control">
+								<input type="password" name="new_password_confirmation" class="form-control">
 							</div>
 							<div class="form-group">
 								<button type="submit" class="btn btn-success">Update info</button>

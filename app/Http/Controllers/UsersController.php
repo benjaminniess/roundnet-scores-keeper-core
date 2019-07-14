@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Action_Type;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Hash;
 
 class UsersController extends Controller
 {
@@ -74,6 +76,43 @@ class UsersController extends Controller
         return back()->with(
             'info-message-success',
             'Your information has been updated.'
+        );
+    }
+    /**
+     * Update the specified user password in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update_password( Request $request, User $user )
+    {
+        $attributes = request()->validate([
+            'old_password' => ['required', 'string', 'min:8'],
+            'new_password' => ['required', 'string', 'min:8', 'confirmed']
+        ]);
+
+        $validator = Validator::make( $request->all(), [] );
+
+        $old_password = $user->password;
+
+        // Check if the current user password match with the old password typed in by the user
+        if ( !Hash::check( $request->old_password, $old_password ) ) {
+            $validator
+                ->errors()
+                ->add(
+                    'different-old-password',
+                    'Your old password is incorrect.'
+                );
+                return back()->withErrors( $validator );
+        }
+
+        // Update user hashed password
+        $user->update( ['password' => Hash::make( $attributes['new_password'] )] );
+
+        return back()->with(
+            'password-message-success',
+            'Your password has been updated.'
         );
     }
 }

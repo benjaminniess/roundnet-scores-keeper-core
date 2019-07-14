@@ -46,4 +46,34 @@ class UsersController extends Controller
             'points_types_chart'
         ));
     }
+    /**
+     * Show the form to edit the authentificated user
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit()
+    {
+        $user = User::find(auth()->id());
+        return view('users.account', compact('user'));
+    }
+    /**
+     * Update the specified user in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, User $user)
+    {
+        $attributes = request()->validate([
+            'name' => ['required', 'string', 'max:255']
+        ]);
+
+        $user->update($attributes);
+
+        return back()->with(
+            'info-message-success',
+            'Your information has been updated.'
+        );
+    }
 }

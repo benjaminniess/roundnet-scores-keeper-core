@@ -70,13 +70,7 @@
             <h2 id="guest-friends" class="heading mt-5">Your guests friends</h2>
             <p>Now that you have gest friends, you can send them an invitation to create their own account and keep their games history with you.</p>
 
-            @if ($errors->any())
-
-                @foreach ($errors->all() as $error)
-                    <div class="alert alert-danger my-3" role="alert">{{ $error }}</div>
-                @endforeach
-
-            @endif
+            @include('components.errors')
 
             @if(session()->has('message'))
                 <div class="alert alert-success">

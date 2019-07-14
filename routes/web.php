@@ -46,13 +46,19 @@ Route::post('/friends/search', 'FriendsController@search')->middleware('auth');
 |--------------------------------------------------------------------------
 */
 
-Route::get('/account', function () {
-	return view('account');
-})->middleware('auth');
-
+/*
+|--------------------------------------------------------------------------
+| Start Users routes
+|--------------------------------------------------------------------------
+*/
+Route::get('/user/account', 'UsersController@edit')->middleware('auth');
+Route::patch('/user/{user}', 'UsersController@update')->middleware('auth');
 Route::get('/user/stats', 'UsersController@stats')->middleware('auth');
-
-Auth::routes();
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
-
+/*
+|--------------------------------------------------------------------------
+| End Users routes
+|--------------------------------------------------------------------------
+*/
+Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');

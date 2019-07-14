@@ -97,6 +97,85 @@ class Game extends Model
     }
 
     /**
+     * The chart JS individual players scores json
+     *
+     * @return false|string
+     */
+    public function get_chart_js_players_scores()
+    {
+        $players = $this->get_players_position();
+
+        $player_1 = \App\User::find($players[1]);
+        $player_2 = \App\User::find($players[2]);
+        $player_3 = \App\User::find($players[3]);
+        $player_4 = \App\User::find($players[4]);
+
+        $individual_scores = [];
+        foreach ($players as $player_id) {
+            $individual_scores[$player_id] = 0;
+        }
+
+        foreach ($this->points()->get() as $point) {
+            /** @var Game_Point $point */
+            $type = $point->get_point_action_type();
+
+            if ('positive' === $type->action_type) {
+                $individual_scores[(int) $point->player_id]++;
+            } elseif ('negative' === $type->action_type) {
+                $individual_scores[(int) $point->player_id]--;
+            }
+        }
+
+        return json_encode([
+            'labels' => [
+                $player_1->name,
+                $player_2->name,
+                $player_3->name,
+                $player_4->name
+            ],
+            'datasets' => [
+                [
+                    'label' => 'Individual scores',
+                    'borderColor' => '#000',
+                    'backgroundColor' => [
+                        $this->get_winning_team() === self::TEAM_1
+                            ? '#38c172'
+                            : '#e3342f',
+                        $this->get_winning_team() === self::TEAM_1
+                            ? '#38c172'
+                            : '#e3342f',
+                        $this->get_winning_team() === self::TEAM_2
+                            ? '#38c172'
+                            : '#e3342f',
+                        $this->get_winning_team() === self::TEAM_2
+                            ? '#38c172'
+                            : '#e3342f'
+                    ],
+                    'fill' => false,
+                    'data' => [
+                        [
+                            'x' => $player_1->name,
+                            'y' => $individual_scores[$player_1->id]
+                        ],
+                        [
+                            'x' => $player_2->name,
+                            'y' => $individual_scores[$player_2->id]
+                        ],
+                        [
+                            'x' => $player_3->name,
+                            'y' => $individual_scores[$player_3->id]
+                        ],
+                        [
+                            'x' => $player_4->name,
+                            'y' => $individual_scores[$player_4->id]
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+    }
+
+    /**
      * Get game rallies average duration
      *
      */

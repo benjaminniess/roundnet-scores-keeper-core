@@ -4,6 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
+use Illuminate\Notifications\Action;
 
 class Game_Point extends Model
 {
@@ -50,6 +51,11 @@ class Game_Point extends Model
         return $duration;
     }
 
+    /**
+     * Get the attached point player
+     *
+     * @return \App\Models\User
+     */
     public function get_point_owner()
     {
         $player_obj = User::find($this->player_id);
@@ -57,6 +63,11 @@ class Game_Point extends Model
         return $player_obj;
     }
 
+    /**
+     * Get the related action type object
+     *
+     * @return Action_Type
+     */
     public function get_point_action_type()
     {
         $action_type_obj = Action_Type::find($this->action_type_id);

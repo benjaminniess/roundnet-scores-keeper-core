@@ -22,14 +22,14 @@ class GamesController extends Controller
         $games = $user_obj->games()->paginate(10);
 
         // For each game, get logged user team
-        foreach ( $games as $game ) {
-            $game->user_team = $user_obj->get_team( $game->id );
+        foreach ($games as $game) {
+            $game->user_team = $user_obj->get_team($game->id);
             $game->winning_team = $game->get_winning_team();
 
             // Compare user team and game winning team
             if ($game->user_team === $game->winning_team) {
                 $game->winning_game = 'Won';
-            } else{
+            } else {
                 $game->winning_game = 'Lost';
             }
         }
@@ -172,7 +172,7 @@ class GamesController extends Controller
         }
 
         $attributes = request()->validate([
-            'points_to_win'  => 'required'
+            'points_to_win' => 'required'
         ]);
 
         $referee = request('referee');
@@ -250,13 +250,14 @@ class GamesController extends Controller
         }
 
         // First to serve
-	    $first_to_serve = request( 'first_to_serve');
-	    if ( 'rand' === $first_to_serve ) {
-		    $first_to_serve = rand( 1, 4);
-	    }
+        $first_to_serve = request('first_to_serve');
+        if ('rand' === $first_to_serve) {
+            $first_to_serve = rand(1, 4);
+        }
 
-	    $first_to_serve = (int) $first_to_serve;
-	    $attributes['current_server'] = $player_attributes[ 'player' . $first_to_serve ];
+        $first_to_serve = (int) $first_to_serve;
+        $attributes['current_server'] =
+            $player_attributes['player' . $first_to_serve];
 
         $game = Game::create($attributes);
 
@@ -323,7 +324,8 @@ class GamesController extends Controller
         return view('games.show')->with([
             'game' => $game,
             'players' => $ordered_players,
-	        'history_chart' => $game->get_chart_js_game_history(),
+            'history_chart' => $game->get_chart_js_game_history(),
+            'individual_charts' => $game->get_chart_js_players_scores()
         ]);
     }
 

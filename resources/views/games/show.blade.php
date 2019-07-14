@@ -194,6 +194,28 @@
     </tbody>
 </table>
 
+<canvas id="canvas-scores" width="400" height="200"></canvas>
+<script>
+	var ctx = document.getElementById('canvas-scores').getContext('2d');
+	var barChartData = {!! $individual_charts !!}
+
+		window.myBar = new Chart(ctx, {
+		type: 'bar',
+		data: barChartData,
+		options: {
+			responsive: true,
+			legend: {
+				position: 'top',
+			},
+			title: {
+				display: true,
+				text: 'Individual scores'
+			}
+		}
+	});
+</script>
+
+
 <div class="">
     {{-- <a class="btn btn-info btn-lg m-3" href="{{ url('/games') }}/{{ $game->id }}/edit">Edit</a> --}}
     <form onsubmit="return confirm('Do you really want to delete this game?');" class="form" action="/games/{{ $game->id }}" method="POST">

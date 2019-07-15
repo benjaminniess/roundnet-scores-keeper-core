@@ -48,6 +48,7 @@ class UsersController extends Controller
             'points_types_chart'
         ));
     }
+
     /**
      * Show the form to edit the authentificated user
      * @param  \App\User  $user
@@ -58,6 +59,7 @@ class UsersController extends Controller
         $user = User::find(auth()->id());
         return view('users.account', compact('user'));
     }
+
     /**
      * Update the specified user in storage.
      *
@@ -78,6 +80,7 @@ class UsersController extends Controller
             'Your information has been updated.'
         );
     }
+
     /**
      * Update the specified user password in storage.
      *
@@ -114,5 +117,33 @@ class UsersController extends Controller
             'password-message-success',
             'Your password has been updated.'
         );
+    }
+
+    /**
+     * Delete the specified user.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\User  $user
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(User $user){
+        // Delete all user players
+        if(!$user->players->isEmpty()){
+            foreach ($user->players as $player) {
+                $player->delete();
+            }
+        }
+
+        // Delete all user_relationships entries
+        if (!$user->get_all_relationships()->isEmpty()) {
+            foreach ($user->get_all_relationships() as $relationship) {
+                $relationship->delete();
+            }
+        }
+
+        // Delete the user himself
+        $user->delete();
+
+        return redirect('/')->with('account-deleted-message', 'Your account has been successfully deleted.');
     }
 }

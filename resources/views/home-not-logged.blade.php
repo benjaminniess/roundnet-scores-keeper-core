@@ -1,7 +1,11 @@
 @extends('layouts.default')
 
 @section('content')
-
+	@if(session()->has('account-deleted-message'))
+	    <div class="alert alert-success">
+	        {{ session()->get('account-deleted-message') }}
+	    </div>
+	@endif
 <div class="jumbotron mt-5 text-center">
 	<h1 class="display-4">Welcome on Roundnet Scores Keeper!</h1>
 		<p class="lead">RSK (Roundnet Scores Keeper) is a <strong>free</strong> tool you can use to log all your Spikeball® games with your friends.</p>

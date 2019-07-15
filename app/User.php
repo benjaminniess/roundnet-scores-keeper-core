@@ -85,7 +85,7 @@ class User extends Authenticatable
     /**
      * Get all user games
      *
-     * @return \App\Game
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function games()
     {
@@ -97,6 +97,21 @@ class User extends Authenticatable
         );
     }
 
+    /**
+     * Get a collection of user players
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function players()
+    {
+        return $this->hasMany('\App\Player', 'user_id');
+    }
+
+    /**
+     * Return a collection of games where the user is the game referee
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
     public function games_as_referee()
     {
         return $this->hasMany('App\Game', 'referee');
@@ -140,8 +155,8 @@ class User extends Authenticatable
 
     /**
      * Get all user friends
-     *
-     *@return object
+     * 
+     * @return \Illuminate\Database\Eloquent\Collection
      */
     public function friends($status = '')
     {
@@ -181,6 +196,22 @@ class User extends Authenticatable
         )
             ->where('status', '=', 'pending')
             ->get();
+    }
+
+    /**
+     * Get all user relationships
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function get_all_relationships()
+    {
+        return UserRelationships::select()
+        ->where(function ($query){
+            $query
+            ->where('user_id_1', '=', $this->id)
+            ->orWhere('user_id_2', '=', $this->id);
+        })
+        ->get();
     }
 
     /**

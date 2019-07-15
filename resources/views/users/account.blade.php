@@ -29,7 +29,12 @@
 					<div class="form-group">
 						<button type="submit" class="btn btn-success">Update info</button>
 					</div>
-				</form>		
+				</form>	
+				<form onsubmit="return confirm('Are you sure? All your data will be lost forever...');" class="form" action="/user/{{ $user->id }}" method="POST">
+					@csrf
+					@method('DELETE')
+					<button type="submit" class="btn btn-danger my-3">Delete my account</button>
+				</form>	
     			</div>
     		</div>
     	</div>

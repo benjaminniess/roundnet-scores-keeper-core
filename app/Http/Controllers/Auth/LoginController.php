@@ -36,4 +36,14 @@ class LoginController extends Controller
     {
         $this->middleware('guest')->except('logout');
     }
+
+    protected function authenticated(
+        \Illuminate\Http\Request $request,
+        \App\User $user_obj
+    ) {
+        // Flush user token on refresh in case of account switch
+        $user_obj->get_access_token(true);
+
+        return redirect()->intended($this->redirectPath());
+    }
 }

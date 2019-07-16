@@ -130,7 +130,7 @@ class UsersController extends Controller
         // Delete all user games
         if(!$user->games->isEmpty()){
             foreach ($user->games as $game) {
-                
+                $game->destroy_game( $user->id );
             }
         }
 

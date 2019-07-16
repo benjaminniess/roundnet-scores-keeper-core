@@ -372,27 +372,8 @@ class GamesController extends Controller
      */
     public function destroy(Game $game)
     {
-        /** @var User $user_obj */
-        $user_obj = \App\User::find(Auth::id());
-
-        if (!$game->is_player_in_game($user_obj->id)) {
-            abort(403, 'Cheating?');
-        }
-
-        // Remove game history
-        foreach ($game->points()->get() as $game_point) {
-            $game_point->delete();
-        }
-
-        // Remove game players
-        $players = $game->hasMany('\App\Player', 'game_id')->get();
-        foreach ($players as $player) {
-            $player->delete();
-        }
-
-        // Remove game itself
-        $game->delete();
-
+        $user_obj = User::find( auth()->id() );
+        $game->destroy_game( $user_obj->id );
         return redirect()
             ->back()
             ->with('message', 'The game has been deleted.');

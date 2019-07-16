@@ -226,6 +226,31 @@ class Game extends Model
 
         return $duration;
     }
+    /**
+     * Destroy a game from database
+     *
+     * @return
+     */
+    public function destroy_game( $auth_user_id )
+    {
+        if (!$this->is_player_in_game( $auth_user_id )) {
+            abort(403, 'Cheating?');
+        }
+
+        // Remove game history
+        foreach ($this->points()->get() as $game_point) {
+            $game_point->delete();
+        }
+
+        // Remove game players
+        $players = $this->hasMany('\App\Player', 'game_id')->get();
+        foreach ($players as $player) {
+            $player->delete();
+        }
+
+        // Remove game itself
+        $this->delete();
+    }
 
     /**
      * Return the game start date if exists

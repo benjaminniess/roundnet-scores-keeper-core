@@ -38,6 +38,9 @@ class UsersController extends Controller
         }
         $time_spent_refereing = gmdate('H:i:s', array_sum($referee_games_duration));
 
+        // Get number of games played
+        $total_games = count($user_obj->games);
+
         $points_types_chart = $user_obj->get_chart_js_points_types();
         $victory_stats_chart = $user_obj->get_chart_js_victory_stats();
 
@@ -45,7 +48,8 @@ class UsersController extends Controller
             'time_spent_playing',
             'time_spent_refereing',
             'victory_stats_chart',
-            'points_types_chart'
+            'points_types_chart',
+            'total_games'
         ));
     }
 

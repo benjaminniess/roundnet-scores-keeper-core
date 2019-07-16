@@ -34,13 +34,13 @@ class FriendsController extends Controller
             UserRelationships::BLOCKED_STATUS
         );
 
-        $perPage = 2;
+        $perPage = 20;
         $currentPage = LengthAwarePaginator::resolveCurrentPage();
         $currentItems = array_slice($raw_active_auth_user_friends->toArray(), $perPage * ($currentPage - 1), $perPage);
-        
+
         $active_auth_user_friends = new LengthAwarePaginator($currentItems, count($raw_active_auth_user_friends), $perPage, $currentPage);
         $active_auth_user_friends->setPath('/friends');
-        
+
         return view(
             'friends.show',
             compact(

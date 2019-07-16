@@ -10,7 +10,7 @@
     		<ul>
     			<li><p>Time spent playing : {{ $time_spent_playing }}</p></li>
     			<li><p>Time spent refereing : {{ $time_spent_refereing }}</p></li>
-    			<li><p>Total games : {{ $games_played }}</p></li>
+    			<li><p>Total games : {{ $total_games }}</p></li>
     		</ul>		    
     	</div>
     </div>

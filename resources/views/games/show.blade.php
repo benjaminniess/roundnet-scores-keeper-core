@@ -203,6 +203,13 @@
 		type: 'bar',
 		data: barChartData,
 		options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            },
 			responsive: true,
 			legend: {
 				position: 'top',

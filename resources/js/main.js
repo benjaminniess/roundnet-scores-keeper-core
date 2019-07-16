@@ -22,4 +22,45 @@ $( document ).ready(function() {
 		guestField.hide();
 		guestField.removeAttr('required');
     });
+
+    $('.randomize-teams').click((e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let oldValues = {
+            1: {
+                player: $('.friend-selector[data-player=1]').val(),
+                guest: $('.guest-field[data-player=1]').val(),
+            },
+            2: {
+                player: $('.friend-selector[data-player=2]').val(),
+                guest: $('.guest-field[data-player=2]').val(),
+            },
+            3: {
+                player: $('.friend-selector[data-player=3]').val(),
+                guest: $('.guest-field[data-player=3]').val(),
+            },
+            4: {
+                player: $('.friend-selector[data-player=4]').val(),
+                guest: $('.guest-field[data-player=4]').val(),
+            }
+        };
+
+        let order = shuffle( [ 1, 2, 3, 4] );
+        order.map((newPosition, row) => {
+            $('.friend-selector[data-player=' + newPosition + ']').val(oldValues[row+1].player);
+            $('.guest-field[data-player=' + newPosition + ']').val(oldValues[row+1].guest);
+        });
+    });
+
+    function shuffle(a) {
+        var j, x, i;
+        for (i = a.length - 1; i > 0; i--) {
+            j = Math.floor(Math.random() * (i + 1));
+            x = a[i];
+            a[i] = a[j];
+            a[j] = x;
+        }
+        return a;
+    }
 });

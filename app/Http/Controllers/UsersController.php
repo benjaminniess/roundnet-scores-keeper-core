@@ -127,10 +127,10 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user){
-        // Delete all user players
-        if(!$user->players->isEmpty()){
-            foreach ($user->players as $player) {
-                $player->delete();
+        // Delete all user games
+        if(!$user->games->isEmpty()){
+            foreach ($user->games as $game) {
+                
             }
         }
 

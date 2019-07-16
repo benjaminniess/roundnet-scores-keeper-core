@@ -36997,6 +36997,46 @@ $(document).ready(function () {
     guestField.hide();
     guestField.removeAttr('required');
   });
+  $('.randomize-teams').click(function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    var oldValues = {
+      1: {
+        player: $('.friend-selector[data-player=1]').val(),
+        guest: $('.guest-field[data-player=1]').val()
+      },
+      2: {
+        player: $('.friend-selector[data-player=2]').val(),
+        guest: $('.guest-field[data-player=2]').val()
+      },
+      3: {
+        player: $('.friend-selector[data-player=3]').val(),
+        guest: $('.guest-field[data-player=3]').val()
+      },
+      4: {
+        player: $('.friend-selector[data-player=4]').val(),
+        guest: $('.guest-field[data-player=4]').val()
+      }
+    };
+    var order = shuffle([1, 2, 3, 4]);
+    order.map(function (newPosition, row) {
+      $('.friend-selector[data-player=' + newPosition + ']').val(oldValues[row + 1].player);
+      $('.guest-field[data-player=' + newPosition + ']').val(oldValues[row + 1].guest);
+    });
+  });
+
+  function shuffle(a) {
+    var j, x, i;
+
+    for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(Math.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+    }
+
+    return a;
+  }
 });
 
 /***/ }),
@@ -37019,8 +37059,8 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/benjaminniess/projets/roundnet-scores-keeper-core/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/bniess/www/others/roundnet-scores-keeper/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/bniess/www/others/roundnet-scores-keeper/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

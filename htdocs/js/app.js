@@ -36996,6 +36996,12 @@ $(document).ready(function () {
     playerField.attr('required', 'required');
     guestField.hide();
     guestField.removeAttr('required');
+
+    if ($('.friend-selector[data-player=1]').val() > 0 && $('.friend-selector[data-player=2]').val() > 0 && $('.friend-selector[data-player=3]').val() > 0 && $('.friend-selector[data-player=4]').val() > 0) {
+      $('.randomize-teams').show();
+    } else {
+      $('.randomize-teams').hide();
+    }
   });
   $('.randomize-teams').click(function (e) {
     e.preventDefault();

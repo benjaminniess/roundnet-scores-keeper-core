@@ -193,7 +193,6 @@
     @endforeach
     </tbody>
 </table>
-
 <canvas id="canvas-scores" width="400" height="200"></canvas>
 <script>
 	var ctx = document.getElementById('canvas-scores').getContext('2d');
@@ -221,6 +220,86 @@
 		}
 	});
 </script>
+
+<div class="row">
+    <div class="col-md-6">
+      <canvas id="actions_types_repartition_player1" height="400" width="400"></canvas>  
+    </div>
+<script>
+     // Actions types repartition player 1
+    var ctx = document.getElementById('actions_types_repartition_player1').getContext('2d');
+        var doughnutChartData = {!! $players[1]->actions_types_chart_data !!}
+
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: doughnutChartData,
+            options: {
+                title: {
+                display: true,
+                responsive: true,
+                text: '{!! $players[1]->name !!}'              }
+            }
+        });
+</script>
+<div class="col-md-6">
+      <canvas id="actions_types_repartition_player2" height="400" width="400"></canvas>  
+    </div>
+<script>
+     // Actions types repartition player 2
+    var ctx = document.getElementById('actions_types_repartition_player2').getContext('2d');
+        var doughnutChartData = {!! $players[2]->actions_types_chart_data !!}
+
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: doughnutChartData,
+            options: {
+                title: {
+                display: true,
+                responsive: true,
+                text: '{!! $players[2]->name !!}'              }
+            }
+        });
+</script>
+<div class="col-md-6">
+      <canvas id="actions_types_repartition_player3" height="400" width="400"></canvas>  
+    </div>
+<script>
+     // Actions types repartition player 3
+    var ctx = document.getElementById('actions_types_repartition_player3').getContext('2d');
+        var doughnutChartData = {!! $players[3]->actions_types_chart_data !!}
+
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: doughnutChartData,
+            options: {
+                title: {
+                display: true,
+                responsive: true,
+                text: '{!! $players[3]->name !!}'              }
+            }
+        });
+</script>
+<div class="col-md-6">
+      <canvas id="actions_types_repartition_player4" height="400" width="400"></canvas>  
+    </div>
+</div>
+<script>
+     // Actions types repartition player 4
+    var ctx = document.getElementById('actions_types_repartition_player4').getContext('2d');
+        var doughnutChartData = {!! $players[4]->actions_types_chart_data !!}
+
+        var myDoughnutChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: doughnutChartData,
+            options: {
+                title: {
+                display: true,
+                responsive: true,
+                text: '{!! $players[4]->name !!}'            }
+            }
+        });
+</script>
+
 
 
 <div class="">

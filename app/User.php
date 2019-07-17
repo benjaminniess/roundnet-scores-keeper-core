@@ -254,9 +254,33 @@ class User extends Authenticatable
      *
      *@return int
      */
-    public function points()
+    public function points( $game_id = NULL )
     {
-        return $this->hasMany('\App\Game_Point', 'player_id');
+        $query = $this->hasMany('\App\Game_Point', 'player_id');
+        if ($game_id !== NULL) {
+            $query->where('game_points.game_id', '=', $game_id);
+        }
+        return $query;
+    }
+
+    /**
+     * Return all user actions types grouped by actions types for chart JS
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function actions_types( $game_id = NULL )
+    {
+        $query = Action_type::selectRaw('actions_types.*, count(actions_types.id) AS total_action')
+        ->join('game_points', 'game_points.action_type_id', '=', 'actions_types.id')
+        ->where('game_points.player_id', '=', $this->id);
+        if ( $game_id !== NULL ) {
+            $query = $query->where('game_id', '=', $game_id);
+        }
+        $query = $query
+        ->groupBy('actions_types.id')
+        ->get();
+
+        return $query;
     }
 
     /**
@@ -385,6 +409,44 @@ class User extends Authenticatable
             ]);
 
         return $points_types_chart;
+    }
+
+
+    /**
+     * Return all user actions types grouped by actions types for chart JS
+     *
+     * @return false|string
+     */
+    public function get_chart_js_actions_types( $game_id = NULL )
+    {
+        $actions_types = $this->actions_types( $game_id );
+        $data = [];
+        $labels = [];
+        $colors = [];
+        foreach ($actions_types as $action_type) {
+            if ($action_type->action_type === 'positive') {
+                array_push($colors, '#3cba9f');
+            }
+            if ($action_type->action_type === 'negative') {
+                array_push($colors, '#c45850');
+            }
+            if ($action_type->action_type === 'neutral') {
+                array_push($colors, '#e8c3b9');
+            }
+
+            array_push($data,$action_type->total_action);
+            array_push($labels,$action_type->name);
+        }
+        // dump($data,$labels);
+        return json_encode([
+            'datasets' => [
+                [
+                    'data' => $data,
+                    'backgroundColor' => $colors
+                ]
+            ],
+            'labels' => $labels
+        ]);
     }
 
     /**

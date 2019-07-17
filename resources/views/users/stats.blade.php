@@ -28,7 +28,7 @@
     <script>
 		var ctx = document.getElementById('victory-chart').getContext('2d');
 		var doughnutChartData = {!! $victory_stats_chart !!}
-		console.log(doughnutChartData)
+
 		var myDoughnutChart = new Chart(ctx, {
 		    type: 'doughnut',
 		    data: doughnutChartData,

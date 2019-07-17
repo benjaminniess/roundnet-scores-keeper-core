@@ -124,7 +124,7 @@
                     <label for="start_now" class="form-check-label">Start now?</label>
                 </div>
 
-            <a href="#" class="btn btn-info randomize-teams">Randomize teams</a>
+            <a href="#" class="btn btn-info randomize-teams" style="display:none;">Shuffle teams</a>
             <button type="submit" class="btn btn-success">Create game</button>
             </div>
         </div>

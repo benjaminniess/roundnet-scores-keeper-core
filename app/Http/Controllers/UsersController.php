@@ -13,7 +13,7 @@ class UsersController extends Controller
     /**
      * Display a listing of stats.
      *
-     * @return 
+     * @return
      */
     public function stats()
     {
@@ -76,6 +76,18 @@ class UsersController extends Controller
         $attributes = request()->validate([
             'name' => ['required', 'string', 'max:255']
         ]);
+
+	    $validator = Validator::make( $request->all(), [] );
+
+	    if ( ! empty( $existing_nickname = User::where('name', $attributes['name'] ) -> first() ) ) {
+		    $validator
+			    ->errors()
+			    ->add(
+				    'existing-nickname',
+				    'This nickname is already taken'
+			    );
+		    return back()->withErrors( $validator );
+	    }
 
         $user->update($attributes);
 

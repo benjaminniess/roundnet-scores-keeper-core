@@ -222,6 +222,9 @@
 </script>
 
 <div class="row">
+    <div class="col-md-12">
+        <h2 class="heading my-4"> Team A</h2>
+    </div>
     <div class="col-md-6">
       <canvas id="actions_types_repartition_player1" height="400" width="400"></canvas>  
     </div>
@@ -241,9 +244,10 @@
             }
         });
 </script>
-<div class="col-md-6">
-      <canvas id="actions_types_repartition_player2" height="400" width="400"></canvas>  
+    <div class="col-md-6">
+        <canvas id="actions_types_repartition_player2" height="400" width="400"></canvas>  
     </div>
+</div>
 <script>
      // Actions types repartition player 2
     var ctx = document.getElementById('actions_types_repartition_player2').getContext('2d');
@@ -260,8 +264,12 @@
             }
         });
 </script>
-<div class="col-md-6">
-      <canvas id="actions_types_repartition_player3" height="400" width="400"></canvas>  
+<div class="row">
+    <div class="col-md-12">
+        <h2 class="heading my-4"> Team B</h2>
+    </div>
+    <div class="col-md-6">
+        <canvas id="actions_types_repartition_player3" height="400" width="400"></canvas>  
     </div>
 <script>
      // Actions types repartition player 3
@@ -279,8 +287,8 @@
             }
         });
 </script>
-<div class="col-md-6">
-      <canvas id="actions_types_repartition_player4" height="400" width="400"></canvas>  
+    <div class="col-md-6">
+        <canvas id="actions_types_repartition_player4" height="400" width="400"></canvas>  
     </div>
 </div>
 <script>
@@ -299,10 +307,6 @@
             }
         });
 </script>
-
-
-
-<div class="">
     {{-- <a class="btn btn-info btn-lg m-3" href="{{ url('/games') }}/{{ $game->id }}/edit">Edit</a> --}}
     <form onsubmit="return confirm('Do you really want to delete this game?');" class="form" action="/games/{{ $game->id }}" method="POST">
         @csrf
@@ -310,5 +314,4 @@
         <button type="submit" class="btn btn-danger my-3">Delete game</button>
     </form>
 </div>
-
 @endsection

@@ -104,7 +104,8 @@ class User extends Authenticatable
 	 */
     public function get_games_including_referee() {
 	    return $this->games()
-            ->orWhere( 'referee', '=', $this->id);
+            ->orWhere( 'referee', '=', $this->id)
+            ->groupBy('games.id');
     }
 
     /**

@@ -126,6 +126,7 @@ class User extends Authenticatable
     {
         return $this->games()
             ->where('status', '=', 'live')
+	        ->orWhere( 'referee', '=', $this->id )
             ->first();
     }
 

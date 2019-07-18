@@ -273,8 +273,12 @@ class Game extends Model
      * @param $player_id
      * @return bool
      */
-    public function is_player_in_game($player_id)
+    public function is_player_in_game($player_id, $including_referee = false )
     {
+    	if ( true === $including_referee && (int) $this->referee === (int) $player_id ) {
+    		return true;
+	    }
+
         $players = $this->players()->get();
         foreach ($players as $player) {
             if ((int) $player->id === (int) $player_id) {
@@ -508,7 +512,7 @@ class Game extends Model
             ];
         }
 
-        if (!$this->is_player_in_game($player_id)) {
+        if (!$this->is_player_in_game($player_id, true)) {
             return [
                 'success' => false,
                 'code' => 'not-in-game'

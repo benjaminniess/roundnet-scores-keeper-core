@@ -62,7 +62,7 @@ Route::post('/games/{game_id}/points', function (Request $request, $id) {
     /** @var \App\Game $game_obj */
     $game_obj = \App\Game::find( (int) $id);
 
-    if ( ! $game_obj->is_player_in_game( $request->user()->id ) ) {
+    if ( ! $game_obj->is_player_in_game( $request->user()->id, true ) ) {
         return response()->json( [
             'success' => false,
             'code' => 'not-allowed',

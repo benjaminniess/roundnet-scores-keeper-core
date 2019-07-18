@@ -99,7 +99,7 @@ class User extends Authenticatable
 
     /**
      * Get a collection of user players
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function players()
@@ -155,7 +155,7 @@ class User extends Authenticatable
 
     /**
      * Get all user friends
-     * 
+     *
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function friends($status = '')
@@ -270,7 +270,7 @@ class User extends Authenticatable
      */
     public function actions_types( $game_id = NULL )
     {
-        $query = Action_type::selectRaw('actions_types.*, count(actions_types.id) AS total_action')
+        $query = Action_Type::selectRaw('actions_types.*, count(actions_types.id) AS total_action')
         ->join('game_points', 'game_points.action_type_id', '=', 'actions_types.id')
         ->where('game_points.player_id', '=', $this->id);
         if ( $game_id !== NULL ) {
@@ -325,7 +325,7 @@ class User extends Authenticatable
                     $query
                     ->where('players.position', '=', 3)
                     ->orWhere('players.position', '=', 4);
-                    
+
                 });
             })
             ->groupBy('games.id');
@@ -342,10 +342,10 @@ class User extends Authenticatable
 
         // Get user total winning games
         $total_winning_games = $this->winning_games()->count();
-        
+
         // Get user total games
         $total_games = $this->games->count();
-        
+
         // Calculate % of victory
         // $percentage_victory = round(( $total_winning_games / $total_games ) * 100, 1 );
 
@@ -461,7 +461,7 @@ class User extends Authenticatable
         ->where('games.id', '=', $game_id)
         ->where('players.user_id', '=', $this->id)
         ->first();
-        
+
         // Get user team with user position in game
         if( (int) $position->position === 1 || (int) $position->position === 2 ){
             return Game::TEAM_1;

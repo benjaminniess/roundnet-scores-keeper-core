@@ -97,6 +97,16 @@ class User extends Authenticatable
         );
     }
 
+	/**
+	 * Get all games of the current user including the referee games
+	 *
+	 * @return mixed
+	 */
+    public function get_games_including_referee() {
+	    return $this->games()
+            ->orWhere( 'referee', '=', $this->id);
+    }
+
     /**
      * Get a collection of user players
      *
@@ -126,7 +136,10 @@ class User extends Authenticatable
     {
         return $this->games()
             ->where('status', '=', 'live')
-	        ->orWhere( 'referee', '=', $this->id )
+	        ->orWhere( function ($query) {
+		        $query->where( 'referee', '=', $this->id)
+		              ->where('status', '=', 'live');
+	        } )
             ->first();
     }
 
@@ -453,7 +466,7 @@ class User extends Authenticatable
     /**
      * Return user winning games
      *
-     *@return string
+     *@return string | false
      */
     public function get_team( $game_id )
     {
@@ -463,6 +476,9 @@ class User extends Authenticatable
         ->where('players.user_id', '=', $this->id)
         ->first();
 
+        if ( empty($position) ) {
+        	return false;
+        }
         // Get user team with user position in game
         if( (int) $position->position === 1 || (int) $position->position === 2 ){
             return Game::TEAM_1;

@@ -19,7 +19,7 @@ class GamesController extends Controller
     {
         $user_obj = \App\User::find(Auth::id());
 
-        $games = $user_obj->games()->orderBy('id', 'desc')->paginate(10);
+        $games = $user_obj->get_games_including_referee()->orderBy('id', 'desc')->paginate(10);
 
         // For each game, get logged user team
         foreach ($games as $game) {

@@ -23,8 +23,16 @@ class GamesController extends Controller
 
         // For each game, get logged user team
         foreach ($games as $game) {
+            $game->referee = ($game->referee()) ? $game->referee() : NULL;
             $game->user_team = $user_obj->get_team($game->id);
             $game->winning_team = $game->get_winning_team();
+
+            // Return true is the auth user is the game referee
+            if ( isset($game->referee) && $game->referee->id === $user_obj->id ) {
+                $game->is_referee = true;
+            }else{
+                $game->is_referee = false;
+            }
 
             // Compare user team and game winning team
             if ($game->user_team === $game->winning_team) {
@@ -33,7 +41,7 @@ class GamesController extends Controller
                 $game->winning_game = 'Lost';
             }
         }
-
+        
         return view('games.index', compact('games'));
     }
 

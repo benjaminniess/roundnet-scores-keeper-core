@@ -24,17 +24,22 @@
                                 @if ( $game->status === 'live' )
                                     {{ 'badge-success' }}
                                 @endif
-                                @if ( $game->status === 'closed' && $game->winning_game === 'Lost' )
+                                @if ( $game->status === 'closed' && $game->winning_game === 'Lost' && !$game->is_referee )
                                     {{ 'badge-danger' }}
                                 @endif
                                 @if ( $game->status === 'closed' && $game->winning_game === 'Won' )
                                     {{ 'badge-success' }}
                                 @endif
+                                @if ( $game->is_referee )
+                                    {{ 'badge-primary' }}
+                                @endif
                             ">
                             @if ($game->status !== 'closed')
-                            {{ $game->status }}
+                                {{ $game->status }}
+                            @elseif ( $game->is_referee )
+                                {{ 'Referee' }}
                             @else
-                            {{ $game->winning_game }}
+                                {{ $game->winning_game }}
                             @endif
                         </span>
                         </div>
@@ -65,7 +70,7 @@
                                         @if ( $game->status == 'pending' )
                                             <a href="{{ url('/games/' . $game->id . '/start') }}" class="btn btn-success"> Start </a>
                                         @else
-                                            <a href="{{ url('/games') }}/{{ $game->id }}" class="btn btn-info"> View </a>
+                                            <a href="{{ url('/games') }}/{{ $game->id }}" class="btn btn-primary"> View </a>
                                         @endif
 
                                         <form onsubmit="return confirm('Do you really want to delete this game?');" class="form" action="/games/{{ $game->id }}" method="POST">

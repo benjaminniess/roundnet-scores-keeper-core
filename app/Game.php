@@ -23,6 +23,20 @@ class Game extends Model
     }
 
     /**
+     * Get the referee of the game
+     *
+     * return App\User / false
+     */
+    public function referee()
+    {
+        if ( (int) $this->referee !== 0 ) {
+            return User::find($this->referee);
+        }else{
+            return false;
+        }
+    }
+
+    /**
      * Get amount of points in a game
      *
      */

@@ -44,6 +44,14 @@
                             </ul>
                             <h2 class="heading">{{ $game->score_team_2 }}</h2>
                     </div>
+                    @if ($game->referee)
+                         <div class="col-sm-12 col-12 mt-3">
+                            <ul class="list-group list-group-flush">
+                                <h2>Referee</h2>
+                                <li class="list-group-item">{{ $game->referee->name }}</li>
+                            </ul>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>

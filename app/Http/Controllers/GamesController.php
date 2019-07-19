@@ -41,7 +41,7 @@ class GamesController extends Controller
                 $game->winning_game = 'Lost';
             }
         }
-        
+
         return view('games.index', compact('games'));
     }
 
@@ -330,6 +330,13 @@ class GamesController extends Controller
         // Get action type object foreach point
         foreach ($game->points as $point) {
             $point->action_type = $point->get_point_action_type();
+        }
+
+        // Get game's referee
+        if ( isset($game->referee) ) {
+            $game->referee = $game->referee();
+        }else{
+            $game->referee = NULL;
         }
 
         return view('games.show')->with([

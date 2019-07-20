@@ -23,9 +23,23 @@ class Game extends Model
     }
 
     /**
+     * Check if a game has points
+     *
+     * @return true|false
+     */
+    public function has_points()
+    {
+        if ($this->hasMany('\App\Game_Point', 'game_id')->count() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Get the referee of the game
      *
-     * return App\User / false
+     * return App\User|false
      */
     public function referee()
     {

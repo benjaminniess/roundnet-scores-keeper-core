@@ -4,10 +4,12 @@
 
 <h1 class="heading mb-4">Game recap</h1>
 
-<h2 class="heading my-4">Game history</h2>
-<p>Game duration : {{ gmdate('H:i:s',$game->duration()) }}</p>
-<p>number of rallies : {{ $game->count_points() }}</p>
+@if ($game->has_points())
+    <h2 class="heading my-4">Game history</h2>
+    <p>Game duration : {{ gmdate('H:i:s',$game->duration()) }}</p>
+    <p>number of rallies : {{ $game->count_points() }}</p>
 <p>rallies average duration : {{ $game->points_average_duration() }}</p>
+@endif
 
 <div class="row my-2">
     <div class="col-sm-12 my-2">
@@ -58,7 +60,7 @@
     </div>
 </div>
 
-
+@if ($game->has_points())
 <canvas id="canvas" width="400" height="400"></canvas>
 <script>
     var ctx = document.getElementById('canvas').getContext('2d');
@@ -315,6 +317,7 @@
             }
         });
 </script>
+@endif
     {{-- <a class="btn btn-info btn-lg m-3" href="{{ url('/games') }}/{{ $game->id }}/edit">Edit</a> --}}
     <form onsubmit="return confirm('Do you really want to delete this game?');" class="form" action="/games/{{ $game->id }}" method="POST">
         @csrf

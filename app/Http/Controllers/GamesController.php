@@ -347,14 +347,17 @@ class GamesController extends Controller
         foreach ($ordered_players as $player) {
             $player->actions_types_chart_data = $player->get_chart_js_actions_types( $game->id );
         }
-        // Get player object foreach point
-        foreach ($game->points as $point) {
-            $point->player = $point->get_point_owner();
-        }
 
-        // Get action type object foreach point
-        foreach ($game->points as $point) {
-            $point->action_type = $point->get_point_action_type();
+        if ($game->has_points()){
+            // Get player object foreach point
+            foreach ($game->points as $point) {
+                $point->player = $point->get_point_owner();
+            }
+
+            // Get action type object foreach point
+            foreach ($game->points as $point) {
+                $point->action_type = $point->get_point_action_type();
+            }
         }
 
         // Get game's referee

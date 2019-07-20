@@ -118,6 +118,7 @@ class GamesController extends Controller
      */
     public function store(Request $request)
     {
+        // dd($request);
         /** @var User $user_obj */
         $user_obj = \App\User::find(Auth::id());
 
@@ -183,10 +184,12 @@ class GamesController extends Controller
             'points_to_win' => 'required'
         ]);
 
+        // Store referee id if defined
         $referee = request('referee');
         if (0 < (int) $referee) {
             $attributes['referee'] = $referee;
 
+            // Check if referee is not among players
             foreach ($all_players as $player) {
                 if ((int) $player === (int) $referee) {
                     $validator
@@ -202,6 +205,7 @@ class GamesController extends Controller
             }
         }
 
+        // Check if all players are friends
         foreach ($all_players as $player) {
             /** @var User $player_obj */
             $player_obj = User::find($player);
@@ -213,7 +217,7 @@ class GamesController extends Controller
 
             // Check that nobody is already in a live game
             if (
-                'on' === request('start_now') &&
+                'start_now' === request('start_game_options') &&
                 $player_obj->is_in_a_live_game()
             ) {
                 $validator
@@ -228,12 +232,32 @@ class GamesController extends Controller
             }
         }
 
-        // Starts now?
-        if ('on' === request('start_now')) {
+        // Check is scores have been set when add scores is checked
+            if ('add_score' === request('start_game_options') && (null === request('score_team_a') || null === request('score_team_b'))) {
+                $validator
+                    ->errors()
+                    ->add(
+                        'set_scores',
+                        'You must fill the score for both teams'
+                    );
+                return redirect('games/create')
+                    ->withErrors($validator)
+                    ->withInput();
+            }
+
+        // Set game status depending on start game options
+        if ('start_now' === request('start_game_options')) {
             $attributes['status'] = 'live';
             $attributes['start_date'] = time() * 1000;
-        } else {
+        }
+        if ('for_later' === request('start_game_options')) {
             $attributes['status'] = 'pending';
+        }
+        if ('add_score' === request('start_game_options')) {
+            $attributes['status'] = 'closed';
+            $attributes['start_date'] = time() * 1000;
+            $attributes['score_team_1'] = request('score_team_a');
+            $attributes['score_team_2'] = request('score_team_b');
         }
 
         $attributes['enable_turns'] =
@@ -290,13 +314,14 @@ class GamesController extends Controller
                 'position' => 4
             ]);
 
-        if ('on' === request('start_now')) {
+        $confirmation_message = ('add_score' === request('start_game_options')) ? 'The game has been created and the scores set.' : 'The game has been created. You can start it whenever you like.' ;
+        if ('start_now' === request('start_game_options')) {
             return redirect('/games/live');
         }
 
         return redirect('/games')->with(
             'message',
-            'The game has been created. You can start it whenever you like.'
+            $confirmation_message
         );
     }
 

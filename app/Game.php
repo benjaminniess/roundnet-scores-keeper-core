@@ -247,7 +247,7 @@ class Game extends Model
      */
     public function destroy_game( $auth_user_id )
     {
-        if (!$this->is_player_in_game( $auth_user_id )) {
+        if (!$this->is_player_in_game( $auth_user_id, true )) {
             abort(403, 'Cheating?');
         }
 

@@ -37043,6 +37043,17 @@ $(document).ready(function () {
 
     return a;
   }
+
+  $("input[name='start_game_options']").change(function () {
+    var inputValue = $(this).val();
+    var gameScoresDiv = $('.create-game-score');
+
+    if (inputValue == 'add_score') {
+      gameScoresDiv.show();
+    } else {
+      gameScoresDiv.hide();
+    }
+  });
 });
 
 /***/ }),

@@ -104,11 +104,11 @@
                 @method('PATCH')
                 <div class="form-group mt-3">
                     <label for="score_team_1">Score team A ({{ $game->players[0]->name . ' - ' . $game->players[1]->name}})</label>
-                    <input type="number" name="score_team_1" id="score_team_a" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
+                    <input type="number" min="0" name="score_team_1" id="score_team_a" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
                 </div>
                 <div class="form-group">
                     <label for="score_team_2">Score team B ({{ $game->players[2]->name . ' - ' . $game->players[3]->name}})</label>
-                    <input type="number" name="score_team_2" id="score_team_b" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
+                    <input type="number" min="0" name="score_team_2" id="score_team_b" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
                 </div>
                 <button type="submit" class="btn btn-primary">Set score</button>
             </form>

@@ -69,4 +69,15 @@ $( document ).ready(function() {
         }
         return a;
     }
+
+    $("input[name='start_game_options']").change(function(){
+        let inputValue = $(this).val();
+        let gameScoresDiv = $('.create-game-score');
+
+        if (inputValue == 'add_score') {
+            gameScoresDiv.show();
+        } else {
+            gameScoresDiv.hide();
+        }
+    });
 });

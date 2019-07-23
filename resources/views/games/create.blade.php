@@ -125,34 +125,37 @@
                     <label for="start_now" class="form-check-label">Start now?</label>
                 </div> --}}
 
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="start_game_options" value="start_now" id="start_now" checked>
-                <label class="form-check-label" for="exampleRadios1">
-                Start now
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="start_game_options" value="for_later" id="for_later">
-                <label class="form-check-label" for="exampleRadios2">
-                Save for later
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="start_game_options" value="add_score" id="add_score">
-                <label class="form-check-label" for="exampleRadios3">
-                Add game score
-                </label>
-            </div>
-            <div class="form-group mt-3">
-                <label for="score_team_a">Score team A</label>
-                <input type="number" name="score_team_a" id="score_team_a" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
-            </div>
-            <div class="form-group">
-                <label for="score_team_b">Score team B</label>
-                <input type="number" name="score_team_b" id="score_team_b" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
-            </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="start_game_options" value="start_now" id="start_now" {{ $errors->has('set_scores') ? '' : 'checked' }}>
+                    <label class="form-check-label" for="start_now">
+                    Start now
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="start_game_options" value="for_later" id="for_later">
+                    <label class="form-check-label" for="for_later">
+                    Save for later
+                    </label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="start_game_options" value="add_score" id="add_score" {{ $errors->has('set_scores') ? 'checked' : '' }}>
+                    <label class="form-check-label" for="add_score">
+                    Add game score
+                    </label>
+                </div>
 
-            <button type="submit" class="btn btn-success">Create game</button>
+                <div class="create-game-score mt-3" style="display: {{ $errors->has('set_scores') ? 'block' : 'none' }};">
+                    <div class="form-group" >
+                        <label for="score_team_a">Score team A</label>
+                        <input type="number" min="0" name="score_team_a" id="score_team_a" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
+                    </div>
+                    <div class="form-group">
+                        <label for="score_team_b">Score team B</label>
+                        <input type="number" min="0" name="score_team_b" id="score_team_b" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success mt-3">Create game</button>
             </div>
         </div>
     </div>

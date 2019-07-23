@@ -3,6 +3,7 @@
 @section('content')
 
     <h1 class="heading mb-4">Games list</h1>
+    @include('components.errors')
 
     @if(session()->has('message'))
         <div class="alert alert-success">
@@ -69,6 +70,9 @@
                                     <div class="col-md-6 offset-md-3">
                                         @if ( $game->status == 'pending' )
                                             <a href="{{ url('/games/' . $game->id . '/start') }}" class="btn btn-success"> Start </a>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#set-score-modal-{{ $game->id }}">
+                                              Set score
+                                            </button>
                                         @else
                                             <a href="{{ url('/games') }}/{{ $game->id }}" class="btn btn-primary"> View </a>
                                         @endif
@@ -88,10 +92,31 @@
 
                     </div>
                 </div>
+
+    {{-- Set score modal --}}
+    @component('components.modal')
+        @slot('modal_id', 'set-score-modal-'.$game->id)
+        @slot('title', 'Set score')
+
+        @slot('modal_content')
+            <form action="/games/set-score/{{ $game->id }}" method="POST">
+                @csrf
+                @method('PATCH')
+                <div class="form-group mt-3">
+                    <label for="score_team_1">Score team A ({{ $game->players[0]->name . ' - ' . $game->players[1]->name}})</label>
+                    <input type="number" name="score_team_1" id="score_team_a" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
+                </div>
+                <div class="form-group">
+                    <label for="score_team_2">Score team B ({{ $game->players[2]->name . ' - ' . $game->players[3]->name}})</label>
+                    <input type="number" name="score_team_2" id="score_team_b" class="form-control {{ $errors->has('set_scores') ? 'is-invalid' : '' }}" placeholder="Leave empty if you want to track points">
+                </div>
+                <button type="submit" class="btn btn-primary">Set score</button>
+            </form>
+        @endslot
+    @endcomponent
             @endforeach
         </div>
     @endforeach
-    
     {{ $games->links() }}
 
     @else

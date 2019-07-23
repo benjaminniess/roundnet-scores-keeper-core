@@ -412,6 +412,30 @@ class GamesController extends Controller
     }
 
     /**
+     * Update the score of the specified game.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Game  $game
+     * @return \Illuminate\Http\Response
+     */
+    public function set_score(Request $request, Game $game)
+    {
+        $attributes = request()->validate([
+            'score_team_1' => 'required',
+            'score_team_2' => 'required'
+        ]);
+        $attributes['start_date'] = time() * 1000;
+        $attributes['status'] = 'closed';
+
+        $game->update($attributes);
+
+        return redirect()->route('games.index')->with(
+            'message',
+            'The score has been set'
+        );
+    }
+
+    /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Game  $game

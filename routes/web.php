@@ -21,6 +21,7 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/games/live', 'GamesController@live')->middleware('auth');
 Route::get('/games/{game}/start', 'GamesController@start')->middleware('auth');
+Route::patch('/games/set-score/{game}', 'GamesController@set_score')->middleware('auth');
 
 Route::resource('games','GamesController')->middleware('auth');
 

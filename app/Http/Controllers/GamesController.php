@@ -189,6 +189,17 @@ class GamesController extends Controller
         if (0 < (int) $referee) {
             $attributes['referee'] = $referee;
 
+            /** @var \App\User $referee_obj */
+            $referee_obj = User::find($referee);
+            if ( $referee_obj->is_in_a_live_game() ) {
+                $validator
+                    ->errors()
+                    ->add(
+                        'referee',
+                        'The referee is already in a live game.'
+                    );
+            }
+
             // Check if referee is not among players
             foreach ($all_players as $player) {
                 if ((int) $player === (int) $referee) {

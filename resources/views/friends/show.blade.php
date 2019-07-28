@@ -82,14 +82,34 @@
                 <div class="col-sm-12">
                     <ul class="list-group list-group-flush">
                         @foreach ($guest_auth_user_friends as $guest_auth_user_friend)
-                            <li class="list-group-item py-3">{{ $guest_auth_user_friend->name }}
-                            <form class="form-inline" action="/friends/send-invitation#guest-friends" method="post">
-                                @csrf
-                                <input type="text" class="form-control {{ $errors->has('guest_email_' . $guest_auth_user_friend->id ) ? 'is-invalid' : '' }}" name="guest_email" placeholder="Your friend's email">
-                                <input type="hidden" name="guest_id" value="{{ $guest_auth_user_friend->id }}">
-                                <input type="submit" class="btn btn-primary" value="Send invitation">
-                            </form>
+                            <li class="list-group-item py-3">
+                                <div class="row">
+                                    <div class="col-8">
+                                      {{ $guest_auth_user_friend->name }}  
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#friend-invitation-modal-{{ $guest_auth_user_friend->id }}">
+                                      Invite
+                                    </button>
+                                    </div>
+                                </div>
                             </li>
+                            {{-- Send guest invitation modal --}}
+                            @component('components.modal')
+                                @slot('modal_id', 'friend-invitation-modal-'.$guest_auth_user_friend->id)
+                                @slot('title', 'Invite '.$guest_auth_user_friend->name.' to create an account')
+                                @slot('modal_content')
+                                    <form action="/friends/send-invitation#guest-friends" method="post">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="guest-email">{{ $guest_auth_user_friend->name . ' \'s email'}}</label>
+                                            <input type="text" class="form-control {{ $errors->has('guest_email_' . $guest_auth_user_friend->id ) ? 'is-invalid' : '' }}" name="guest_email" placeholder="Your friend's email">
+                                            <input type="hidden" name="guest_id" value="{{ $guest_auth_user_friend->id }}">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary">Send invitation </button>
+                                    </form>
+                                @endslot
+                            @endcomponent
                         @endforeach
                     </ul>
                 </div>

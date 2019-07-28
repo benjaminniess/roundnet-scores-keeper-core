@@ -440,6 +440,7 @@ class GamesController extends Controller
             'score_team_2' => 'required'
         ]);
         $attributes['start_date'] = time() * 1000;
+        $attributes['end_date'] = time() * 1000;
         $attributes['status'] = 'closed';
 
         $game->update($attributes);

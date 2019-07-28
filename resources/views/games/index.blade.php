@@ -15,82 +15,81 @@
     @foreach ($games->chunk(2) as $gamesRow)
         <div class="row my-2">
             @foreach($gamesRow as $game)
-                <div class="col-sm-6 my-2">
-                    @component('components.game-card')
-                        @slot('header')
-                            <span class="badge
-                                    @if ( $game->status === 'pending' )
-                                        {{ 'badge-dark' }}
-                                    @endif
-                                    @if ( $game->status === 'live' )
-                                        {{ 'badge-success' }}
-                                    @endif
-                                    @if ( $game->status === 'closed' && $game->winning_game === 'Lost' && !$game->is_referee )
-                                        {{ 'badge-danger' }}
-                                    @endif
-                                    @if ( $game->status === 'closed' && $game->winning_game === 'Won' )
-                                        {{ 'badge-success' }}
-                                    @endif
-                                    @if ( $game->is_referee )
-                                        {{ 'badge-primary' }}
-                                    @endif
-                                ">
-                                @if ($game->status !== 'closed')
-                                    {{ $game->status }}
-                                @elseif ( $game->is_referee )
-                                    {{ 'Referee' }}
-                                @else
-                                    {{ $game->winning_game }}
+                @component('components.game-card')
+                    @slot('col_settings','col-sm-6')
+                    @slot('header')
+                        <span class="badge
+                                @if ( $game->status === 'pending' )
+                                    {{ 'badge-dark' }}
                                 @endif
-                            </span>
-                        @endslot
-                        @slot('body')
-                            <div class="row">
-                                <div class="col-sm-6 col-6">
-                                    <h2 class="card-title">Team A</h2>
+                                @if ( $game->status === 'live' )
+                                    {{ 'badge-success' }}
+                                @endif
+                                @if ( $game->status === 'closed' && $game->winning_game === 'Lost' && !$game->is_referee )
+                                    {{ 'badge-danger' }}
+                                @endif
+                                @if ( $game->status === 'closed' && $game->winning_game === 'Won' )
+                                    {{ 'badge-success' }}
+                                @endif
+                                @if ( $game->is_referee )
+                                    {{ 'badge-primary' }}
+                                @endif
+                            ">
+                            @if ($game->status !== 'closed')
+                                {{ $game->status }}
+                            @elseif ( $game->is_referee )
+                                {{ 'Referee' }}
+                            @else
+                                {{ $game->winning_game }}
+                            @endif
+                        </span>
+                    @endslot
+                    @slot('body')
+                        <div class="row">
+                            <div class="col-sm-6 col-6">
+                                <h2 class="card-title">Team A</h2>
+                                <ul class="list-group list-group-flush">
+                                    @foreach($game->players->chunk(2)[0] as $player)
+                                    <li class="list-group-item">{{ $player->name }}</li>
+                                    @endforeach
+                                </ul>
+                                <h2 class="heading">{{ $game->score_team_1 }}</h2>
+                            </div>
+                            <div class="col-sm-6 col-6">
+                                <h2 class="card-title">Team B</h2>
                                     <ul class="list-group list-group-flush">
-                                        @foreach($game->players->chunk(2)[0] as $player)
+                                        @foreach($game->players->chunk(2)[1] as $player)
                                         <li class="list-group-item">{{ $player->name }}</li>
                                         @endforeach
                                     </ul>
-                                    <h2 class="heading">{{ $game->score_team_1 }}</h2>
-                                </div>
-                                <div class="col-sm-6 col-6">
-                                    <h2 class="card-title">Team B</h2>
-                                        <ul class="list-group list-group-flush">
-                                            @foreach($game->players->chunk(2)[1] as $player)
-                                            <li class="list-group-item">{{ $player->name }}</li>
-                                            @endforeach
-                                        </ul>
-                                        <h2 class="heading">{{ $game->score_team_2 }}</h2>
-                                </div>
+                                    <h2 class="heading">{{ $game->score_team_2 }}</h2>
                             </div>
-                                <div class="row mt-3">
-                                    <div class="col-md-6 offset-md-3">
-                                        @if ( $game->status == 'pending' )
-                                            <a href="{{ url('/games/' . $game->id . '/start') }}" class="btn btn-success"> Start </a>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#set-score-modal-{{ $game->id }}">
-                                              Set score
-                                            </button>
-                                        @else
-                                            <a href="{{ url('/games') }}/{{ $game->id }}" class="btn btn-primary"> View </a>
-                                        @endif
+                        </div>
+                        <div class="row mt-3">
+                            <div class="col-md-6 offset-md-3">
+                                @if ( $game->status == 'pending' )
+                                    <a href="{{ url('/games/' . $game->id . '/start') }}" class="btn btn-success"> Start </a>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#set-score-modal-{{ $game->id }}">
+                                      Set score
+                                    </button>
+                                @else
+                                    <a href="{{ url('/games') }}/{{ $game->id }}" class="btn btn-primary"> View </a>
+                                @endif
 
-                                        <form onsubmit="return confirm('Do you really want to delete this game?');" class="form" action="/games/{{ $game->id }}" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <button type="submit" class="btn btn-danger my-3">Delete game</button>
-                                        </form>
+                                <form onsubmit="return confirm('Do you really want to delete this game?');" class="form" action="/games/{{ $game->id }}" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-danger my-3">Delete game</button>
+                                </form>
 
-                                        <!--<a href="{{ url('/games') }}/{{ $game->id }}/edit" class="btn btn-primary"> Edit </a>-->
-                                    </div>
-                                </div>
-                            @endslot
-                            @slot('footer')
-                                {{ $game->created_at }}
-                            @endslot
-                    @endcomponent
-                </div>
+                                <!--<a href="{{ url('/games') }}/{{ $game->id }}/edit" class="btn btn-primary"> Edit </a>-->
+                            </div>
+                        </div>
+                        @endslot
+                        @slot('footer')
+                            {{ $game->formated_end_date }}
+                        @endslot
+                @endcomponent
 
     {{-- Set score modal --}}
     @component('components.modal')

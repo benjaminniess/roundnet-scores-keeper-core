@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Game;
 use App\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -19,7 +20,7 @@ class GamesController extends Controller
     {
         $user_obj = \App\User::find(Auth::id());
 
-        $games = $user_obj->get_games_including_referee()->orderBy('created_at', 'desc')->paginate(10);
+        $games = $user_obj->get_games_including_referee()->orderBy('end_date', 'desc')->paginate(10);
 
         // For each game, get logged user team
         foreach ($games as $game) {
@@ -39,6 +40,18 @@ class GamesController extends Controller
                 $game->winning_game = 'Won';
             } else {
                 $game->winning_game = 'Lost';
+            }
+        }
+
+        // Setting the ending game date
+        foreach ($games as $game) {
+            if ($game->end_date === NULL && $game->start_date === NULL) {
+                $game->formated_end_date = "the game has not started yet";
+            } elseif($game->end_date === NULL && $game->start_date !== NULL) {
+                $game->formated_end_date = "the game is not finished yet";
+            } else {
+                $end_date = Carbon::createFromTimestamp($game->end_date / 1000);
+                $game->formated_end_date = $end_date->toDayDateTimeString();
             }
         }
 
@@ -267,6 +280,7 @@ class GamesController extends Controller
         if ('add_score' === request('start_game_options')) {
             $attributes['status'] = 'closed';
             $attributes['start_date'] = time() * 1000;
+            $attributes['end_date'] = time() * 1000;
             $attributes['score_team_1'] = request('score_team_a');
             $attributes['score_team_2'] = request('score_team_b');
         }

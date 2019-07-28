@@ -488,10 +488,3 @@ class User extends Authenticatable
         }
     }
 }
-
-
-
-
-
-
-

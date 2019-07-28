@@ -143,22 +143,7 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user){
-        // Delete all user games
-        if(!$user->games->isEmpty()){
-            foreach ($user->games as $game) {
-                $game->destroy_game( $user->id );
-            }
-        }
-
-        // Delete all user_relationships entries
-        if (!$user->get_all_relationships()->isEmpty()) {
-            foreach ($user->get_all_relationships() as $relationship) {
-                $relationship->delete();
-            }
-        }
-
-        // Delete the user himself
-        $user->delete();
+        $user->destroy_user();
 
         return redirect('/')->with('account-deleted-message', 'Your account has been successfully deleted.');
     }

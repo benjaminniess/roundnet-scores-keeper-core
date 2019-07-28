@@ -487,4 +487,29 @@ class User extends Authenticatable
             return Game::TEAM_2;
         }
     }
+
+    /**
+     * Destroy a user from database
+     *
+     * @return
+     */
+    public function destroy_user()
+    {
+        // Delete all user games
+        if(!$this->games->isEmpty()){
+            foreach ($this->games as $game) {
+                $game->destroy_game( $this->id );
+            }
+        }
+
+        // Delete all user_relationships entries
+        if (!$this->get_all_relationships()->isEmpty()) {
+            foreach ($this->get_all_relationships() as $relationship) {
+                $relationship->delete();
+            }
+        }
+
+        // Delete the user himself
+        $this->delete();
+    }
 }

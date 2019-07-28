@@ -29,6 +29,7 @@ class FriendsController extends Controller
         $guest_auth_user_friends = $user_obj->friends(
             UserRelationships::GUEST_STATUS
         );
+
         $pending_auth_user_friends = $user_obj->get_friend_requests();
         $blocked_auth_user_friends = $user_obj->friends(
             UserRelationships::BLOCKED_STATUS
@@ -204,5 +205,32 @@ class FriendsController extends Controller
         return redirect()
             ->back()
             ->with('message', 'Invitation sent successfully');
+    }
+
+     /**
+     * Remove the specified relationship from storage.
+     *
+     * @param App\User $user
+     */
+    public function destroy(User $user)
+    {
+        $user_obj = User::find( auth()->id() );
+        $relationship = $user_obj->get_relationship( $user->id );
+        
+        // Check if the auth user and his friend he wants to delete are really friends
+        if( !$user_obj->is_friend($user->id) ){
+            abort(403, 'Cheating?');
+        }
+
+        // Check if the user is a guest user
+        if ($user->password !== 'guestpassword') {
+            abort(403, 'Cheating?');
+        }
+
+        $user->destroy_user();
+        $relationship->destroy_relationship();
+
+        return redirect('/friends')
+            ->with('message', 'Your friend has been deleted');
     }
 }

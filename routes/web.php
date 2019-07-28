@@ -41,6 +41,7 @@ Route::get('/friends/request/{user}', 'FriendsController@request')->middleware('
 Route::patch('/friends/{user}', 'FriendsController@update')->middleware('auth');
 Route::post('/friends/send-invitation/', 'FriendsController@invite')->middleware('auth');
 Route::post('/friends/search', 'FriendsController@search')->middleware('auth');
+Route::delete('/friends/{user}', '\App\Http\Controllers\FriendsController@destroy')->middleware('auth');
 /*
 |--------------------------------------------------------------------------
 | End friends routes

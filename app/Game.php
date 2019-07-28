@@ -254,6 +254,7 @@ class Game extends Model
 
         return $duration;
     }
+    
     /**
      * Destroy a game from database
      *

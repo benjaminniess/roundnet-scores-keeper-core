@@ -23,4 +23,9 @@ class UserRelationships extends Model
     {
         return $this->update($status);
     }
+
+    public function destroy_relationship()
+    {
+        $this->delete();
+    }
 }

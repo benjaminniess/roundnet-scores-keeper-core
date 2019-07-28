@@ -24,6 +24,13 @@
                 </div>
             </div>
         </div>
+        @include('components.errors')
+
+        @if(session()->has('message'))
+            <div class="alert alert-success">
+                {{ session()->get('message') }}
+            </div>
+        @endif
 
     @if ( ! $pending_auth_user_friends->isEmpty() )
         <h2 class="heading mt-5">Your friend requests</h2>
@@ -70,14 +77,6 @@
             <h2 id="guest-friends" class="heading mt-5">Your guests friends</h2>
             <p>Now that you have gest friends, you can send them an invitation to create their own account and keep their games history with you.</p>
 
-            @include('components.errors')
-
-            @if(session()->has('message'))
-                <div class="alert alert-success">
-                    {{ session()->get('message') }}
-                </div>
-            @endif
-
             <div class="row my-3">
                 <div class="col-sm-12">
                     <ul class="list-group list-group-flush">
@@ -88,9 +87,20 @@
                                       {{ $guest_auth_user_friend->name }}  
                                     </div>
                                     <div class="col-md-4">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#friend-invitation-modal-{{ $guest_auth_user_friend->id }}">
-                                      Invite
-                                    </button>
+                                        <div class="row">
+                                            <div class="col-md-6 text-right">
+                                              <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#friend-invitation-modal-{{ $guest_auth_user_friend->id }}">
+                                              Invite
+                                            </button>  
+                                            </div>
+                                            <div class="col-md-6 text-left">
+                                              <form onsubmit="return confirm('Do you really want to delete this guest friend?');" class="form" action="/friends/{{ $guest_auth_user_friend->id }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-danger">Delete</button>
+                                                </form>  
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </li>

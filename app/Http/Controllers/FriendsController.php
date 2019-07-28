@@ -146,7 +146,7 @@ class FriendsController extends Controller
         $user_obj = User::find(Auth::id());
 
         $guest_id = (int) request('guest_id');
-        $guest_email = (int) request('guest_email');
+        $guest_email = request('guest_email');
 
         if (!$user_obj->is_friend($guest_id)) {
             abort(403, 'Cheating?');

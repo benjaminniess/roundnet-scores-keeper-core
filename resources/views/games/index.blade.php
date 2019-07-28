@@ -16,36 +16,35 @@
         <div class="row my-2">
             @foreach($gamesRow as $game)
                 <div class="col-sm-6 my-2">
-                    <div class="card text-center">
-                        <div class="card-header">
+                    @component('components.game-card')
+                        @slot('header')
                             <span class="badge
-                                @if ( $game->status === 'pending' )
-                                    {{ 'badge-dark' }}
+                                    @if ( $game->status === 'pending' )
+                                        {{ 'badge-dark' }}
+                                    @endif
+                                    @if ( $game->status === 'live' )
+                                        {{ 'badge-success' }}
+                                    @endif
+                                    @if ( $game->status === 'closed' && $game->winning_game === 'Lost' && !$game->is_referee )
+                                        {{ 'badge-danger' }}
+                                    @endif
+                                    @if ( $game->status === 'closed' && $game->winning_game === 'Won' )
+                                        {{ 'badge-success' }}
+                                    @endif
+                                    @if ( $game->is_referee )
+                                        {{ 'badge-primary' }}
+                                    @endif
+                                ">
+                                @if ($game->status !== 'closed')
+                                    {{ $game->status }}
+                                @elseif ( $game->is_referee )
+                                    {{ 'Referee' }}
+                                @else
+                                    {{ $game->winning_game }}
                                 @endif
-                                @if ( $game->status === 'live' )
-                                    {{ 'badge-success' }}
-                                @endif
-                                @if ( $game->status === 'closed' && $game->winning_game === 'Lost' && !$game->is_referee )
-                                    {{ 'badge-danger' }}
-                                @endif
-                                @if ( $game->status === 'closed' && $game->winning_game === 'Won' )
-                                    {{ 'badge-success' }}
-                                @endif
-                                @if ( $game->is_referee )
-                                    {{ 'badge-primary' }}
-                                @endif
-                            ">
-                            @if ($game->status !== 'closed')
-                                {{ $game->status }}
-                            @elseif ( $game->is_referee )
-                                {{ 'Referee' }}
-                            @else
-                                {{ $game->winning_game }}
-                            @endif
-                        </span>
-                        </div>
-
-                        <div class="card-body">
+                            </span>
+                        @endslot
+                        @slot('body')
                             <div class="row">
                                 <div class="col-sm-6 col-6">
                                     <h2 class="card-title">Team A</h2>
@@ -86,11 +85,11 @@
                                         <!--<a href="{{ url('/games') }}/{{ $game->id }}/edit" class="btn btn-primary"> Edit </a>-->
                                     </div>
                                 </div>
-                        </div>
-
-                        <div class="card-footer text-muted"> {{ $game->get_date() }} </div>
-
-                    </div>
+                            @endslot
+                            @slot('footer')
+                                {{ $game->created_at }}
+                            @endslot
+                    @endcomponent
                 </div>
 
     {{-- Set score modal --}}

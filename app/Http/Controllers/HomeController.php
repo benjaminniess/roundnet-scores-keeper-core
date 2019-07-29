@@ -42,41 +42,17 @@ class HomeController extends Controller
             return redirect(url('/games/live'));
         }
 
+        
         $games = $user_obj->get_games_including_referee()->orderBy('end_date', 'desc')->take(3)->get();
-
-        // Setting the ending game date
-        foreach ($games as $game) {
-            if ($game->end_date === NULL && $game->start_date === NULL) {
-                $game->formated_end_date = "the game has not started yet";
-            } elseif($game->end_date === NULL && $game->start_date !== NULL) {
-                $game->formated_end_date = "the game is not finished yet";
-            } else {
-                $end_date = Carbon::createFromTimestamp($game->end_date / 1000);
-                $game->formated_end_date = $end_date->toDayDateTimeString();
-            }
-        }
 
          // For each game, get logged user team
         foreach ($games as $game) {
-            $game->referee = ($game->referee()) ? $game->referee() : NULL;
-            $game->user_team = $user_obj->get_team($game->id);
-            $game->winning_team = $game->get_winning_team();
+            $game->formated_end_date = $game->set_end_date();
+            $game->is_referee = $game->is_referee();
+            $game->winning_game = $game->set_winning_game();
 
-            // Return true is the auth user is the game referee
-            if ( isset($game->referee) && $game->referee->id === $user_obj->id ) {
-                $game->is_referee = true;
-            }else{
-                $game->is_referee = false;
-            }
-
-            // Compare user team and game winning team
-            if ($game->user_team === $game->winning_team) {
-                $game->winning_game = 'Won';
-            } else {
-                $game->winning_game = 'Lost';
-            }
         }
-
+        // dd($games);
         return view('home', compact(
             'games'
         ));

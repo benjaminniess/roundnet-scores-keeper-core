@@ -39,7 +39,7 @@ class Game extends Model
     /**
      * Get the referee of the game
      *
-     * return App\User|false
+     * @return App\User|false
      */
     public function referee()
     {
@@ -47,6 +47,39 @@ class Game extends Model
             return User::find($this->referee);
         }else{
             return false;
+        }
+    }
+
+    /**
+     * Get the referee of the game
+     *
+     * @return true|false
+     */
+    public function is_referee()
+    {
+        $this->referee = ($this->referee()) ? $this->referee() : NULL;
+        $user_obj = User::find(auth()->id());
+        if ( isset($this->referee) && $this->referee->id === $user_obj->id ) {
+           return $this->is_referee = true;
+        } else {
+           return $this->is_referee = false;
+        }
+    }
+
+    /**
+     * Set winning game
+     *
+     * @return string
+     */
+    public function set_winning_game() {
+        $user_obj = User::find(auth()->id());
+        $this->user_team = $user_obj->get_team($this->id);
+        $this->winning_team = $this->get_winning_team();
+        // Compare user team and game winning team
+        if ($this->user_team === $this->winning_team) {
+            return $this->winning_game = 'Won';
+        } else {
+            return $this->winning_game = 'Lost';
         }
     }
 
@@ -294,6 +327,24 @@ class Game extends Model
         }
 
         return date('Y-m-d H:i', $start_date / 1000);
+    }
+
+    /**
+     * Return the game start date if exists
+     *
+     * @return date|string
+     */
+    public function set_end_date()
+    {
+        if ($this->end_date === NULL && $this->start_date === NULL) {
+            $this->formated_end_date = "the game has not started yet";
+        } elseif($this->end_date === NULL && $this->start_date !== NULL) {
+            $this->formated_end_date = "the game is not finished yet";
+        } else {
+            $end_date = Carbon::createFromTimestamp($this->end_date / 1000);
+            $this->formated_end_date = $end_date->toDayDateTimeString();
+        }
+        return $this->formated_end_date;   
     }
 
     /**

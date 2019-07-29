@@ -100,12 +100,22 @@ class User extends Authenticatable
 	/**
 	 * Get all games of the current user including the referee games
 	 *
-	 * @return mixed
+	 * @return \Illuminate\Database\Eloquent\Collection
 	 */
-    public function get_games_including_referee() {
-	    return $this->games()
-            ->orWhere( 'referee', '=', $this->id)
-            ->groupBy('games.id');
+    public function get_games_including_referee( $status = null ) {
+	    $query = Game::select('games.*')
+        ->join('players', 'games.id', '=', 'players.game_id')
+        ->where( function ( $query ) {
+            $query
+            ->where('players.user_id', '=', $this->id)
+            ->orWhere('games.referee', '=', $this->id);
+        });
+        if ( !is_null($status) ) {
+            $query
+            ->where( 'games.status', '=', $status );
+        }
+        $query->groupBy('games.id');
+        return $query;
     }
 
     /**

@@ -42,19 +42,27 @@ class HomeController extends Controller
             return redirect(url('/games/live'));
         }
 
-        
-        $games = $user_obj->get_games_including_referee()->orderBy('end_date', 'desc')->take(3)->get();
+
+        $closed_games = $user_obj->get_games_including_referee( $status=['closed'] )->orderBy('end_date', 'desc')->take(3)->get();
+        $pending_games = $user_obj->get_games_including_referee( $status=['pending'] )->orderBy('id', 'desc')->take(3)->get();
 
          // For each game, get logged user team
-        foreach ($games as $game) {
+        foreach ($closed_games as $game) {
             $game->formated_end_date = $game->set_end_date();
             $game->is_referee = $game->is_referee();
             $game->winning_game = $game->set_winning_game();
-
         }
-        // dd($games);
+
+        // For each game, get logged user team
+        foreach ($pending_games as $game) {
+            $game->formated_end_date = $game->set_end_date();
+            $game->is_referee = $game->is_referee();
+            $game->winning_game = $game->set_winning_game();
+        }
+
         return view('home', compact(
-            'games'
+            'closed_games',
+            'pending_games'
         ));
     }
 }

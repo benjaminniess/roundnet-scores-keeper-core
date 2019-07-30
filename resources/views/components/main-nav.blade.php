@@ -1,18 +1,3 @@
-{{-- <div class="links">
-    <a href="/">Home</a>
-    @guest
-    <a href="{{ route('login') }}">{{ __('Login') }}</a>
-    @if (Route::has('register'))
-        <a href="{{ route('register') }}">{{ __('Register') }}</a>
-    @endif
-    @else
-        <a href="/games">Games</a>
-        <a href="/friends">Friends</a>
-        <a href="/user/stats">Your stats</a>
-        <a href="/user/account">Account</a>
-        <a href="/logout">Logout</a>
-    @endguest
-</div> --}}
 <ul class="nav justify-content-center">
     <li class="nav-item">
         <a class="nav-link" href="/">Home</a>
@@ -36,8 +21,8 @@
     <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">{{ Auth::user()->name }}</a>
         <div class="dropdown-menu">
-            <a class="dropdown-item" href="/user/stats">My stats</a>
-            <a class="dropdown-item" href="/user/account">My profil</a>
+            <a class="dropdown-item" href="/user/{{ auth()->id() }}">My profil</a>
+            <a class="dropdown-item" href="/user/account">My account</a>
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="/logout">Logout</a>
         </div>

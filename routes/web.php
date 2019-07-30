@@ -56,7 +56,7 @@ Route::delete('/friends/{user}', '\App\Http\Controllers\FriendsController@destro
 Route::get('/user/account', 'UsersController@edit')->middleware('auth');
 Route::patch('/user/{user}', 'UsersController@update')->middleware('auth');
 Route::patch('/user/edit-password/{user}', 'UsersController@update_password')->middleware('auth');
-Route::get('/user/stats', 'UsersController@stats')->middleware('auth');
+Route::get('/user/{user}', 'UsersController@show')->middleware('auth');
 Route::get('/logout', '\App\Http\Controllers\Auth\LoginController@logout');
 Route::delete('/user/{user}', '\App\Http\Controllers\UsersController@destroy');
 /*

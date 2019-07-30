@@ -275,6 +275,45 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the total time spent playing by a user
+     *
+     * @return string
+     */
+    public function time_spent_playing() {
+        $games_as_player = $this->games;
+        $player_games_duration = [];
+        foreach ($games_as_player as $game) {
+            $game->duration = $game->duration();
+            array_push($player_games_duration,$game->duration());
+        }
+        return gmdate('H:i:s', array_sum($player_games_duration));
+    }
+
+    /**
+     * Get the total time spent refereing by a user
+     *
+     * @return string
+     */
+    public function time_spent_refereing() {
+        $games_as_referee = $this->games_as_referee()->get();
+        $referee_games_duration = [];
+        foreach ($games_as_referee as $game) {
+            $game->duration = $game->duration();
+            array_push($referee_games_duration,$game->duration());
+        }
+        return gmdate('H:i:s', array_sum($referee_games_duration));
+    }
+
+    /**
+     * Get number of user total played games
+     *
+     * @return int
+     */
+    public function total_games() {
+        return count($this->games);
+    }
+
+    /**
      * Return all user points
      *
      *@return int

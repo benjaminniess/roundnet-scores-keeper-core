@@ -25,32 +25,16 @@ class UsersController extends Controller
         }
 
         // get user total time spent playing
-        $games_as_player = $user->games;
-        $player_games_duration = [];
-        foreach ($games_as_player as $game) {
-            $game->duration = $game->duration();
-            array_push($player_games_duration,$game->duration());
-        }
-        $time_spent_playing = gmdate('H:i:s', array_sum($player_games_duration));
-
+        $user->time_spent_playing = $user->time_spent_playing();
         // get user total time spent refereing
-        $games_as_referee = $user->games_as_referee()->get();
-        $referee_games_duration = [];
-        foreach ($games_as_referee as $game) {
-            $game->duration = $game->duration();
-            array_push($referee_games_duration,$game->duration());
-        }
-        $time_spent_refereing = gmdate('H:i:s', array_sum($referee_games_duration));
-
-        // Get number of games played
-        $total_games = count($user->games);
+        $user->time_spent_refereing = $user->time_spent_refereing();
+        // Get number of user games played
+        $user->total_games = $user->total_games();
 
         $points_types_chart = $user->get_chart_js_points_types();
         $victory_stats_chart = $user->get_chart_js_victory_stats();
         return view('users.show',compact(
             'user',
-            'time_spent_playing',
-            'time_spent_refereing',
             'victory_stats_chart',
             'points_types_chart',
             'total_games'

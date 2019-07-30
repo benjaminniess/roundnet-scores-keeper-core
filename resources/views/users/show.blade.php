@@ -8,9 +8,9 @@
     <div class="row">
     	<div class="col-md-12">
     		<ul>
-    			<li><p>Time spent playing : {{ $time_spent_playing }}</p></li>
-    			<li><p>Time spent refereing : {{ $time_spent_refereing }}</p></li>
-    			<li><p>Total games : {{ $total_games }}</p></li>
+    			<li><p>Time spent playing : {{ $user->time_spent_playing }}</p></li>
+    			<li><p>Time spent refereing : {{ $user->time_spent_refereing }}</p></li>
+    			<li><p>Total games : {{ $user->total_games }}</p></li>
     		</ul>		    
     	</div>
     </div>

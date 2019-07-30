@@ -2,16 +2,32 @@
 
 
 @section('content')
-
-    <h2>Stats</h2>
+	<h1 class="heading">{{ $user->name }}</h1>
     
-    <div class="row">
-    	<div class="col-md-12">
-    		<ul>
-    			<li><p>Time spent playing : {{ $user->time_spent_playing }}</p></li>
-    			<li><p>Time spent refereing : {{ $user->time_spent_refereing }}</p></li>
-    			<li><p>Total games : {{ $user->total_games }}</p></li>
-    		</ul>		    
+    <div class="row my-5">
+    	<div class="col-md-6">
+    		<div class="card">
+			  <div class="card-header">
+			    Info
+			  </div>
+			  <ul class="list-group list-group-flush">
+			    <li class="list-group-item">Email : <strong>{{ $user->email }}</strong></li>
+			    <li class="list-group-item">Member since : <strong>{{ $user->created_at->toFormattedDateString() }}</strong></li>
+			    <li class="list-group-item">Friend since : <strong>{{ (!is_null($user->get_relationship(auth()->id()))) ? $user->get_relationship(auth()->id())->created_at->toFormattedDateString() : '-'  }}</strong></li>
+			  </ul>
+			</div>	    
+    	</div>
+    	<div class="col-md-6">
+    		<div class="card">
+			  <div class="card-header">
+			    Stats
+			  </div>
+			  <ul class="list-group list-group-flush">
+			    <li class="list-group-item">Time spent playing : <strong>{{ $user->time_spent_playing() }} hours</strong></li>
+			    <li class="list-group-item">Time spent refereing : <strong>{{ $user->time_spent_refereing() }} hours</strong></li>
+			    <li class="list-group-item">Total games : <strong>{{ $user->total_games() }}</strong></li>
+			  </ul>
+			</div>	    
     	</div>
     </div>
 

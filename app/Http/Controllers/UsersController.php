@@ -24,20 +24,12 @@ class UsersController extends Controller
             abort('403', 'This user is not a friend of yours so you are not allowed to visit his profil page');
         }
 
-        // get user total time spent playing
-        $user->time_spent_playing = $user->time_spent_playing();
-        // get user total time spent refereing
-        $user->time_spent_refereing = $user->time_spent_refereing();
-        // Get number of user games played
-        $user->total_games = $user->total_games();
-
         $points_types_chart = $user->get_chart_js_points_types();
         $victory_stats_chart = $user->get_chart_js_victory_stats();
         return view('users.show',compact(
             'user',
             'victory_stats_chart',
-            'points_types_chart',
-            'total_games'
+            'points_types_chart'
         ));
     }
 

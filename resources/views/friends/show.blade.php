@@ -60,7 +60,11 @@
             <div class="col-sm-12">
                 <ul class="list-group list-group-flush">
                     @foreach ($active_auth_user_friends as $active_auth_user_friend)
-                                <li class="list-group-item py-3">{{ $active_auth_user_friend['name'] . ' (' . $active_auth_user_friend['email'] . ')' }}</li>
+                                <li class="list-group-item py-3">
+                                    <a href="/user/{{ $active_auth_user_friend['id'] }}">
+                                        {{ $active_auth_user_friend['name'] . ' (' . $active_auth_user_friend['email'] . ')' }}
+                                    </a>
+                                </li>
                     @endforeach
                 </ul>
             </div>

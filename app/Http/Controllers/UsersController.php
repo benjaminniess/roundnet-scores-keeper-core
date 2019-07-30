@@ -17,6 +17,13 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
+        $auth_user_object = User::find(auth()->id());
+
+        // If the profil I am visiting is not a friend or myself, I am not allowed to visit it
+        if ( !$auth_user_object->is_friend($user->id) && $auth_user_object->id !== $user->id ) {
+            abort('403', 'This user is not a friend of yours so you are not allowed to visit his profil page');
+        }
+
         // get user total time spent playing
         $games_as_player = $user->games;
         $player_games_duration = [];

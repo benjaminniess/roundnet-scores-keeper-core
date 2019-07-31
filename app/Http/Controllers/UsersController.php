@@ -26,8 +26,12 @@ class UsersController extends Controller
 
         $points_types_chart = $user->get_chart_js_points_types();
         $victory_stats_chart = $user->get_chart_js_victory_stats();
+
+        $badges = $user->badges;
+
         return view('users.show',compact(
             'user',
+            'badges',
             'victory_stats_chart',
             'points_types_chart'
         ));

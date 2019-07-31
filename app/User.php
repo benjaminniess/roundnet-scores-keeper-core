@@ -97,6 +97,21 @@ class User extends Authenticatable
         );
     }
 
+    /**
+     * Get all user badges
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function badges()
+    {
+        return $this->belongsToMany(
+            'App\Badge',
+            'users_badges',
+            'user_id',
+            'badge_id'
+        );
+    }
+
 	/**
 	 * Get all games of the current user including the referee games
 	 *

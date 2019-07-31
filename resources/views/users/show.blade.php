@@ -5,7 +5,7 @@
 	<h1 class="heading">{{ $user->name }}</h1>
     
     <div class="row my-5">
-    	<div class="col-md-6">
+    	<div class="col-md-4">
     		<div class="card">
 			  <div class="card-header">
 			    Info
@@ -17,7 +17,7 @@
 			  </ul>
 			</div>	    
     	</div>
-    	<div class="col-md-6">
+    	<div class="col-md-4">
     		<div class="card">
 			  <div class="card-header">
 			    Stats
@@ -26,6 +26,18 @@
 			    <li class="list-group-item">Time spent playing : <strong>{{ $user->time_spent_playing() }} hours</strong></li>
 			    <li class="list-group-item">Time spent refereing : <strong>{{ $user->time_spent_refereing() }} hours</strong></li>
 			    <li class="list-group-item">Total games : <strong>{{ $user->total_games() }}</strong></li>
+			  </ul>
+			</div>	    
+    	</div>
+    	<div class="col-md-4">
+    		<div class="card">
+			  <div class="card-header">
+			    badges
+			  </div>
+			  <ul class="list-group list-group-flush">
+			  	@foreach ($badges as $badge)
+			  		<li class="list-group-item"><strong> {{ $badge->name }} </strong></li>
+			  	@endforeach
 			  </ul>
 			</div>	    
     	</div>

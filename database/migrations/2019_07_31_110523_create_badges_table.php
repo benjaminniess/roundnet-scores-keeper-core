@@ -18,7 +18,7 @@ class CreateBadgesTable extends Migration
             $table->timestamps();
             $table->char('name', 100);
             $table->longText('description');
-            $table->integer('badge_type_id');
+            $table->integer('badges_types_id');
         });
     }
 

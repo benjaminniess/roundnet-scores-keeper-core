@@ -332,8 +332,6 @@ class GamesController extends Controller
      */
     public function show(Game $game)
     {
-        // Check is the user is authorized to view the game
-        $this->authorize('view', $game);
         $user_obj = User::find(auth()->id());
 
         if ($game->is_game_live()) {

@@ -17,12 +17,10 @@ class UsersController extends Controller
      */
     public function show(User $user)
     {
-        $auth_user_object = User::find(auth()->id());
+        // Check is the user is authorized to view the user profile
+        $this->authorize('view', $user);
 
-        // If the profil I am visiting is not a friend or myself, I am not allowed to visit it
-        if ( !$auth_user_object->is_friend($user->id) && $auth_user_object->id !== $user->id ) {
-            abort('403', 'This user is not a friend of yours so you are not allowed to visit his profil page');
-        }
+        $auth_user_object = User::find(auth()->id());
 
         $points_types_chart = $user->get_chart_js_points_types();
         $victory_stats_chart = $user->get_chart_js_victory_stats();
@@ -57,6 +55,9 @@ class UsersController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        // Check if the user is authorized to update the user profile
+        $this->authorize('update', $user);
+
         $attributes = request()->validate([
             'name' => ['required', 'string', 'max:255']
         ]);
@@ -90,6 +91,9 @@ class UsersController extends Controller
      */
     public function update_password( Request $request, User $user )
     {
+        // Check if the user is authorized to update the user profile
+        $this->authorize('update', $user);
+
         $attributes = request()->validate([
             'old_password' => ['required', 'string', 'min:8'],
             'new_password' => ['required', 'string', 'min:8', 'confirmed']
@@ -127,6 +131,9 @@ class UsersController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy(User $user){
+        // Check if the user is authorized to delete the user profile
+        $this->authorize('delete', $user);
+
         $user->destroy_user();
 
         return redirect('/')->with('account-deleted-message', 'Your account has been successfully deleted.');

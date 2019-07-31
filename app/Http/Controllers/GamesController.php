@@ -421,10 +421,10 @@ class GamesController extends Controller
      */
     public function set_score(Request $request, Game $game)
     {
+        // Check is the user is authorized to update the game
+        $this->authorize('update', $game);
+
         $user_obj = User::find(auth()->id());
-        if (!$game->is_player_in_game( $user_obj->id, true )) {
-            abort(403, 'Cheating?');
-        }
         $attributes = request()->validate([
             'score_team_1' => 'required',
             'score_team_2' => 'required'

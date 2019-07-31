@@ -53,7 +53,7 @@ class GamePolicy
      */
     public function update(User $user, Game $game)
     {
-        //
+        return $game->is_player_in_game( $user->id, true );
     }
 
     /**

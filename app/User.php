@@ -324,9 +324,9 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function total_games() {
-        $closed_games = $this->games()->where('games.status', '=', 'closed')->get();
-        return count($closed_games);
+    public function total_games( $status ) {
+        $games = $this->games()->where('games.status', '=', $status)->get();
+        return count($games);
     }
 
     /**

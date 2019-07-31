@@ -25,7 +25,7 @@
 			  <ul class="list-group list-group-flush">
 			    <li class="list-group-item">Time spent playing : <strong>{{ $user->time_spent_playing() }} hours</strong></li>
 			    <li class="list-group-item">Time spent refereing : <strong>{{ $user->time_spent_refereing() }} hours</strong></li>
-			    <li class="list-group-item">Total games : <strong>{{ $user->total_games() }}</strong></li>
+			    <li class="list-group-item">Total games : <strong>{{ $user->total_games( $status = 'closed' ) }}</strong></li>
 			  </ul>
 			</div>	    
     	</div>

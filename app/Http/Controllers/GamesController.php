@@ -252,9 +252,7 @@ class GamesController extends Controller
             $attributes['status'] = 'pending';
         }
         if ('add_score' === request('start_game_options')) {
-            $attributes['status'] = 'closed';
             $attributes['start_date'] = time() * 1000;
-            $attributes['end_date'] = time() * 1000;
             $attributes['score_team_1'] = request('score_team_a');
             $attributes['score_team_2'] = request('score_team_b');
         }
@@ -313,9 +311,12 @@ class GamesController extends Controller
                 'position' => 4
             ]);
 
-        $confirmation_message = ('add_score' === request('start_game_options')) ? 'The game has been created and the scores set.' : 'The game has been created. You can start it whenever you like.' ;
+        $confirmation_message = ('add_score' === request('start_game_options')) ? 'The game has been created and the score set.' : 'The game has been created. You can start it whenever you like.' ;
         if ('start_now' === request('start_game_options')) {
             return redirect('/games/live');
+        }
+        if ('add_score' === request('start_game_options')) {
+            $game->close_game();
         }
 
         return redirect('/games')->with(
@@ -430,10 +431,9 @@ class GamesController extends Controller
             'score_team_2' => 'required'
         ]);
         $attributes['start_date'] = time() * 1000;
-        $attributes['end_date'] = time() * 1000;
-        $attributes['status'] = 'closed';
 
         $game->update($attributes);
+        $game->close_game();
 
         return redirect()->route('games.index')->with(
             'message',

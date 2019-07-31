@@ -680,8 +680,7 @@ class Game extends Model
             $score_team_2 >= $this->points_to_win
         ) {
             if (abs($score_team_1 - $score_team_2) >= 2) {
-                $this->update(['end_date' => time() * 1000]);
-                $this->set_status('closed');
+                $this->close_game();
             }
         }
 
@@ -689,5 +688,17 @@ class Game extends Model
             'success' => true,
             'data' => $this->get_game_data()
         ];
+    }
+
+    /**
+     * Close a game
+     *
+     */
+    public function close_game()
+    {
+        $this->update([
+            'end_date' => time() * 1000,
+            'status' => 'closed'
+        ]);
     }
 }

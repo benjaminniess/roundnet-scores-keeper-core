@@ -448,6 +448,9 @@ class GamesController extends Controller
      */
     public function destroy(Game $game)
     {
+        // Check is the user is authorized to delete the game
+        $this->authorize('delete', $game);
+
         $user_obj = User::find( auth()->id() );
         $game->destroy_game( $user_obj->id );
         return redirect()

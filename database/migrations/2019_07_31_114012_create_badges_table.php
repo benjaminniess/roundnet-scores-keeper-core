@@ -16,10 +16,11 @@ class CreateBadgesTable extends Migration
         Schema::create('badges', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->timestamps();
-            $table->char('name', 100);
-            $table->longText('description');
             $table->unsignedBigInteger('badges_types_id');
             $table->foreign('badges_types_id')->references('id')->on('badges_types');
+            $table->char('name', 100);
+            $table->longText('description');
+            $table->unsignedBigInteger('action_count');
         });
     }
 

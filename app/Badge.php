@@ -7,6 +7,8 @@ use App\User;
 
 class Badge extends Model
 {
+	protected $table = 'badges';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -36,7 +38,7 @@ class Badge extends Model
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function users_badges () {
-    	return $this->belongsToMany('App\User', 'users_badges', 'badge_id', 'user_id');
+    	return $this->belongsToMany('App\User', 'users_badges', 'badge_id', 'user_id')->withTimestamps();
     }
 
     /**

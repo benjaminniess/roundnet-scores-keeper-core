@@ -150,7 +150,7 @@ class User extends Authenticatable
      * @return \Illuminate\Database\Eloquent\Collection
      */
     public function users_badges () {
-        return $this->belongsToMany('Badge', 'users_badges', 'user_id', 'badge_id');
+        return $this->belongsToMany('Badge', 'users_badges', 'user_id', 'badge_id')->withTimestamps();
     }
 
     /**

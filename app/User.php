@@ -154,6 +154,34 @@ class User extends Authenticatable
     }
 
     /**
+     * Get a single badge
+     *
+     * @param $badge_id
+     * @return App\Badge
+     */
+    public function get_badge ( $badge_id ) {
+        $badge = UsersBadges::select()
+        ->where('user_id', '=', $this->id)
+        ->where('badge_id', '=', $badge_id);
+
+        return $badge->first();
+    }
+
+    /**
+     * Check if the user has the badge
+     *
+     * @param $badge_id
+     * @return true|false
+     */
+    public function has_badge ( $badge_id ) {
+        if ( !is_null($this->get_badge( $badge_id )) ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
      * Return a collection of games where the user is the game referee
      *
      * @return \Illuminate\Database\Eloquent\Collection

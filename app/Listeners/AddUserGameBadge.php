@@ -36,11 +36,12 @@ class AddUserGameBadge
         /**
          * Foreach App\User check if the total of closed played games match with a badge objective (action_count)
          * If it does, register a connexion between the badge and the user in the database
+         * If the user already has the badge, don't register it
          */
         foreach ($players as $player) {
             $player->total_games = $player->total_games( $status = 'closed' );
             foreach ( $badges as $badge ) {
-                if ( (int) $badge->action_count === (int) $player->total_games ) {
+                if ( (int) $badge->action_count === (int) $player->total_games && !$player->has_badge( $badge->id ) ) {
                     $badge->add_user_badge( $player->id );
                 }
             }

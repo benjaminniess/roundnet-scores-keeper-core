@@ -363,8 +363,16 @@ class User extends Authenticatable
      * @return int
      */
     public function total_games( $status ) {
-        $games = $this->games()->where('games.status', '=', $status)->get();
-        return count($games);
+        return $this->games()->where('games.status', '=', $status)->count();
+    }
+
+    /**
+     * Get number of user total friends
+     *
+     * @return int
+     */
+    public function total_friends( $status = '' ) {
+        return $this->friends( $status )->count();
     }
 
     /**

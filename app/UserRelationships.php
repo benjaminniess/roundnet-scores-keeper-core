@@ -28,4 +28,16 @@ class UserRelationships extends Model
     {
         $this->delete();
     }
+
+    /**
+     * Get both users in a relationship
+     * 
+     * @return a collection of App\User
+     */
+    public function friends () {
+        return User::select()
+        ->where('id', '=', $this->user_id_1)
+        ->orWhere('id', '=', $this->user_id_2)
+        ->get();
+    }
 }

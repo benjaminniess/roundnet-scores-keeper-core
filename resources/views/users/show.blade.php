@@ -34,11 +34,21 @@
 			  <div class="card-header">
 			    badges
 			  </div>
-			  <ul class="list-group list-group-flush">
+				  <div class="list-group">
+				  	@foreach ($badges as $badge)
+						<div class="list-group-item list-group-item-action flex-column align-items-start">
+							<div class="d-flex w-100 justify-content-between">
+								<h5 class="mb-1">{{ $badge->name }}</h5>
+							</div>
+								<p class="mb-1">{{ $badge->description }}</p>
+							</div>
+						</div>
+				  	@endforeach
+			  {{-- <ul class="list-group list-group-flush">
 			  	@foreach ($badges as $badge)
 			  		<li class="list-group-item"><strong> {{ $badge->name }} </strong></li>
 			  	@endforeach
-			  </ul>
+			  </ul> --}}
 			</div>	    
     	</div>
     </div>

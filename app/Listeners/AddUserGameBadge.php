@@ -28,7 +28,6 @@ class AddUserGameBadge
      */
     public function handle(GameHasEnded $event)
     {
-        $user_obj = auth()->user();
         $badges = Badge::badges( BadgeType::GAME_BADGE_TYPE );
         $game = $event->game;
         $players = $game->players;

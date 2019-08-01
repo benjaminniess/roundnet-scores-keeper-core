@@ -110,7 +110,7 @@ class User extends Authenticatable
             'users_badges',
             'user_id',
             'badge_id'
-        );
+        )->withTimestamps();
     }
 
 	/**

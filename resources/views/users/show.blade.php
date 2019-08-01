@@ -39,6 +39,7 @@
 						<div class="list-group-item list-group-item-action flex-column align-items-start">
 							<div class="d-flex w-100 justify-content-between">
 								<h5 class="mb-1">{{ $badge->name }}</h5>
+								<small class="text-muted">{{ $badge->pivot->created_at->diffForHumans() }}</small>
 							</div>
 								<p class="mb-1">{{ $badge->description }}</p>
 							</div>

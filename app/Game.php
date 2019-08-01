@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use App\Events\GameHasEnded;
 
 class Game extends Model
 {
@@ -700,5 +701,6 @@ class Game extends Model
             'end_date' => time() * 1000,
             'status' => 'closed'
         ]);
+        event(new GameHasEnded($this));
     }
 }

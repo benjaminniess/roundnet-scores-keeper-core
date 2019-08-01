@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
+use App\Events\GameHasEnded;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
+use App\Listeners\AddUserGameBadge;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -17,6 +19,10 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+
+        GameHasEnded::class => [
+            AddUserGameBadge::class,
         ],
     ];
 

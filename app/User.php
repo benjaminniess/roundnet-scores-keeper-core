@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use App\UsersBadges;
 
 class User extends Authenticatable
 {
@@ -141,6 +142,15 @@ class User extends Authenticatable
     public function players()
     {
         return $this->hasMany('\App\Player', 'user_id');
+    }
+
+    /**
+     * Get a collection of badges
+     *
+     * @return \Illuminate\Database\Eloquent\Collection
+     */
+    public function users_badges () {
+        return $this->belongsToMany('Badge', 'users_badges', 'user_id', 'badge_id');
     }
 
     /**

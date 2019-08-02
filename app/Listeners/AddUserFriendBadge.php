@@ -8,6 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Badge;
 use App\BadgeType;
 use App\UserRelationships;
+use App\Notifications\BadgeUnlocked;
 
 class AddUserFriendBadge
 {
@@ -43,6 +44,7 @@ class AddUserFriendBadge
             foreach ( $badges as $badge ) {
                 if ( (int) $badge->action_count === (int) $friend->total_friends && !$friend->has_badge( $badge->id ) ) {
                     $badge->add_user_badge( $friend->id );
+                    $friend->notify( new BadgeUnlocked( $badge ) );
                 }
             }
         }

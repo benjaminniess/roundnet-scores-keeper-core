@@ -27,6 +27,10 @@ class UsersController extends Controller
 
         $badges = $user->badges;
 
+        foreach ($user->unreadNotifications as $notification) {
+            $notification->markAsRead();
+        }
+
         return view('users.show',compact(
             'user',
             'badges',

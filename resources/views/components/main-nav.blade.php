@@ -27,5 +27,22 @@
             <a class="dropdown-item" href="/logout">Logout</a>
         </div>
     </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                @if ( auth()->user()->unreadNotifications->count() > 0 )
+                    <span class="badge badge-dark">{{ auth()->user()->unreadNotifications->count() }}</span>
+                @endif
+                Notifications
+        </a>
+        <div class="dropdown-menu">
+            @if ( auth()->user()->unreadNotifications->count() > 0 )
+                    @foreach (auth()->user()->unreadNotifications as $notification)
+                        <a class="dropdown-item" href="/user/{{ auth()->id() }}">{{ $notification->data['badge_name'] }}</a>
+                    @endforeach
+            @else
+                        <p class="dropdown-item">You don't have any unread notification</p>
+            @endif
+        </div>
+    </li>
     @endguest
 </ul>

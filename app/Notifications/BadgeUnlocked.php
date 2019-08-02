@@ -7,18 +7,20 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class BadgeAcquired extends Notification
+class BadgeUnlocked extends Notification
 {
     use Queueable;
+
+    protected $badge;
 
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct( $badge )
     {
-        //
+        $this->badge = $badge;
     }
 
     /**
@@ -40,7 +42,7 @@ class BadgeAcquired extends Notification
      */
     public function toMail($notifiable)
     {
-        
+
     }
 
     /**
@@ -52,7 +54,7 @@ class BadgeAcquired extends Notification
     public function toArray($notifiable)
     {
         return [
-            //
+            'badge_name' => 'You unlocked the "' . $this->badge->name . '" badge!',
         ];
     }
 }

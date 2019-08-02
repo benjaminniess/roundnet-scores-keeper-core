@@ -7,6 +7,7 @@ use App\Badge;
 use App\BadgeType;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
+use App\Notifications\BadgeUnlocked;
 
 class AddUserGameBadge
 {
@@ -42,6 +43,7 @@ class AddUserGameBadge
             foreach ( $badges as $badge ) {
                 if ( (int) $badge->action_count === (int) $player->total_games && !$player->has_badge( $badge->id ) ) {
                     $badge->add_user_badge( $player->id );
+                    $player->notify( new BadgeUnlocked( $badge ) );
                 }
             }
         }

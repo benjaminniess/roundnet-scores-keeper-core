@@ -442,19 +442,19 @@ class User extends Authenticatable
                     ->where('players.position', '=', 1)
                     ->orWhere('players.position', '=', 2);
                 });
-            })
-        ->orWhere(function ($query){
             $query
-            ->whereColumn('games.score_team_2', '>', 'games.score_team_1');
+            ->orWhere(function ($query){
+                $query
+                ->whereColumn('games.score_team_2', '>', 'games.score_team_1');
                 $query
                 ->where(function ($query){
                     $query
                     ->where('players.position', '=', 3)
                     ->orWhere('players.position', '=', 4);
-
                 });
-            })
-            ->groupBy('games.id');
+            });
+        })
+        ->groupBy('games.id');
 
         return $games->get();
     }

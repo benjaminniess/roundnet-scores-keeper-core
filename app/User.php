@@ -460,6 +460,17 @@ class User extends Authenticatable
     }
 
     /**
+     * Get user percentage of victory
+     *
+     * @return int
+     */
+    public function percentage_victory() {
+        $total_games = $this->games->count();
+        $winning_games = $this->winning_games()->count();
+        return $percentage_victory = round(( $winning_games / $total_games ) * 100, 1 );
+    }
+
+    /**
      * Generates the json for chart js
      *
      * @return false|string
@@ -471,9 +482,6 @@ class User extends Authenticatable
 
         // Get user total games
         $total_games = $this->games->count();
-
-        // Calculate % of victory
-        // $percentage_victory = round(( $total_winning_games / $total_games ) * 100, 1 );
 
         // Calculate user total losing games
         $total_losing_games = $total_games - $total_winning_games;

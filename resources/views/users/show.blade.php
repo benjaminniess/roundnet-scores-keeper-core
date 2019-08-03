@@ -11,9 +11,9 @@
 			    Info
 			  </div>
 			  <ul class="list-group list-group-flush">
-			    <li class="list-group-item">Email : <strong>{{ $user->email }}</strong></li>
-			    <li class="list-group-item">Member since : <strong>{{ $user->created_at->toFormattedDateString() }}</strong></li>
-			    <li class="list-group-item">Friend since : <strong>{{ (!is_null($user->get_relationship(auth()->id()))) ? $user->get_relationship(auth()->id())->created_at->toFormattedDateString() : '-'  }}</strong></li>
+			    <li class="list-group-item">Email: <strong>{{ $user->email }}</strong></li>
+			    <li class="list-group-item">Member since: <strong>{{ $user->created_at->toFormattedDateString() }}</strong></li>
+			    <li class="list-group-item">Friend since: <strong>{{ (!is_null($user->get_relationship(auth()->id()))) ? $user->get_relationship(auth()->id())->created_at->toFormattedDateString() : '-'  }}</strong></li>
 			  </ul>
 			</div>	    
     	</div>
@@ -23,9 +23,10 @@
 			    Stats
 			  </div>
 			  <ul class="list-group list-group-flush">
-			    <li class="list-group-item">Time spent playing : <strong>{{ $user->time_spent_playing() }} hours</strong></li>
-			    <li class="list-group-item">Time spent refereing : <strong>{{ $user->time_spent_refereing() }} hours</strong></li>
-			    <li class="list-group-item">Total games : <strong>{{ $user->total_games( $status = 'closed' ) }}</strong></li>
+			    <li class="list-group-item">Time spent playing: <strong>{{ $user->time_spent_playing() }} hours</strong></li>
+			    <li class="list-group-item">Time spent refereing: <strong>{{ $user->time_spent_refereing() }} hours</strong></li>
+			    <li class="list-group-item">Total games: <strong>{{ $user->total_games( $status = 'closed' ) }}</strong></li>
+			    <li class="list-group-item">Percentage victory: <strong>{{ $user->percentage_victory() }}%</strong></li>
 			  </ul>
 			</div>	    
     	</div>

@@ -52,4 +52,16 @@ class Badge extends Model
         ->users_badges()
         ->attach( $user_id );
     }
+
+    /**
+     * Remove the badge to a user
+     *
+     * @param $user_id
+     * 
+     */
+    public function remove_user_badge ( $user_id ) {
+        $this
+        ->users_badges()
+        ->detach( $user_id );
+    }
 }

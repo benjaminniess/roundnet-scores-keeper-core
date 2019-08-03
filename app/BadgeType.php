@@ -8,4 +8,5 @@ class BadgeType extends Model
 {
     const GAME_BADGE_TYPE = "game_badge";
     const FRIEND_BADGE_TYPE = "friend_badge";
+    const VICTORY_BADGE_TYPE = "victory_badge";
 }

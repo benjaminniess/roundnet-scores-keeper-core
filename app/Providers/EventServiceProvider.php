@@ -9,6 +9,7 @@ use App\Events\AFriendRequestHasBeenAccepted;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use App\Listeners\AddUserGameBadge;
 use App\Listeners\AddUserFriendBadge;
+use App\Listeners\AddUserVictoryBadge;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -25,6 +26,7 @@ class EventServiceProvider extends ServiceProvider
 
         GameHasEnded::class => [
             AddUserGameBadge::class,
+            AddUserVictoryBadge::class,
         ],
 
         AFriendRequestHasBeenAccepted::class => [

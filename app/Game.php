@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use App\Events\GameHasEnded;
+use App\Events\GameWasDeleted;
 
 class Game extends Model
 {
@@ -303,12 +304,17 @@ class Game extends Model
 
         // Remove game players
         $players = $this->hasMany('\App\Player', 'game_id')->get();
+
+        // Get the App\User object of the game players
+        $players_user_obj = $this->players;
+
         foreach ($players as $player) {
             $player->delete();
         }
 
         // Remove game itself
         $this->delete();
+        event(new GameWasDeleted($this, $players_user_obj));
     }
 
     /**

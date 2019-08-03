@@ -6,11 +6,13 @@ use Illuminate\Support\Facades\Event;
 use Illuminate\Auth\Events\Registered;
 use App\Events\GameHasEnded;
 use App\Events\AFriendRequestHasBeenAccepted;
+use App\Events\GameWasDeleted;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use App\Listeners\AddUserGameBadge;
 use App\Listeners\AddUserFriendBadge;
 use App\Listeners\AddUserVictoryBadge;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
+use Illuminate\Contracts\Events\Dispatcher as DispatcherContract;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -26,12 +28,20 @@ class EventServiceProvider extends ServiceProvider
 
         GameHasEnded::class => [
             AddUserGameBadge::class,
-            AddUserVictoryBadge::class,
         ],
 
         AFriendRequestHasBeenAccepted::class => [
             AddUserFriendBadge::class,
         ],
+    ];
+
+    /**
+     * The subscriber classes to register.
+     *
+     * @var array
+     */
+    protected $subscribe = [
+        'App\Listeners\AddUserVictoryBadge',
     ];
 
     /**

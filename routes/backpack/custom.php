@@ -21,5 +21,6 @@ Route::group(
         CRUD::resource('game', 'GameCrudController');
         CRUD::resource('user', 'UserCrudController');
         CRUD::resource('badge', 'BadgeCrudController');
+        CRUD::resource('badge-type', 'Badge_typeCrudController');
     }
 ); // this should be the absolute last line of this file

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use Backpack\CRUD\app\Http\Controllers\CrudController;
+use App\BadgeType;
 
 // VALIDATION: change the requests to match your own file names if you need form validation
 use App\Http\Requests\BadgeRequest as StoreRequest;
@@ -33,8 +34,50 @@ class BadgeCrudController extends CrudController
         |--------------------------------------------------------------------------
         */
 
-        // TODO: remove setFromDb() and manually define Fields and Columns
-        $this->crud->setFromDb();
+        // Fields shown when creating or updating a badge
+        $this->crud->addField([ 
+            'name' => 'name',
+            'label' => 'Name',
+            'type' => 'text'
+        ]);
+        $this->crud->addField([ 
+            'name' => 'description',
+            'label' => 'Description',
+            'type' => 'textarea'
+        ]);
+        $this->crud->addField([ 
+            'name' => 'action_count',
+            'label' => 'Number of actions before unlocking the badge',
+            'type' => 'number'
+        ]);
+        $this->crud->addField([
+           'label' => "Badge type",
+           'type' => 'select',
+           'name' => 'badges_types_id', // the db column for the foreign key
+           'entity' => 'badge_type', // the method that defines the relationship in your Model
+           'attribute' => 'name', // foreign key attribute that is shown to user
+           'model' => "App\Models\Badge_type"
+        ]);
+
+        // Columns shown in badges list
+        $this->crud->addColumn([ 
+            'name' => 'name',
+            'label' => 'Name',
+            'type' => 'text'
+        ]);
+        $this->crud->addColumn([ 
+            'name' => 'description',
+            'label' => 'Description',
+            'type' => 'text'
+        ]);
+        $this->crud->addColumn([
+           'label' => "Badge type",
+           'type' => 'select',
+           'name' => 'badges_types_id', // the db column for the foreign key
+           'entity' => 'badge_type', // the method that defines the relationship in your Model
+           'attribute' => 'name', // foreign key attribute that is shown to user
+           'model' => "App\Models\Badge"
+        ]);
 
         // add asterisk for fields that are required in BadgeRequest
         $this->crud->setRequiredFields(StoreRequest::class, 'create');

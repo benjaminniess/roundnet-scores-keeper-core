@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Backpack\CRUD\CrudTrait;
 
-class Badge extends Model
+class Badge_type extends Model
 {
     use CrudTrait;
 
@@ -15,11 +15,11 @@ class Badge extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'badges';
+    protected $table = 'badges_types';
     // protected $primaryKey = 'id';
-    // public $timestamps = false;
-    protected $guarded = ['id'];
-    protected $fillable = [];
+    public $timestamps = false;
+    // protected $guarded = ['id'];
+    protected $guarded = [];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -34,10 +34,7 @@ class Badge extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-       public function badge_type()
-        {
-            return $this->belongsTo('\App\Models\Badge_type', 'badges_types_id');
-        }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

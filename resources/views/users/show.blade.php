@@ -26,7 +26,11 @@
 			    <li class="list-group-item">Time spent playing: <strong>{{ $user->time_spent_playing() }} hours</strong></li>
 			    <li class="list-group-item">Time spent refereing: <strong>{{ $user->time_spent_refereing() }} hours</strong></li>
 			    <li class="list-group-item">Total games: <strong>{{ $user->total_games( $status = 'closed' ) }}</strong></li>
-			    <li class="list-group-item">Percentage victory: <strong>{{ $user->percentage_victory() }}%</strong></li>
+			    <li class="list-group-item">Percentage victory:
+			    	<strong>
+			    	{{ $user->percentage_victory() }}@if ($user->percentage_victory() != 'no game')%@endif
+			    	</strong>
+			    </li>
 			  </ul>
 			</div>	    
     	</div>
@@ -50,45 +54,47 @@
     	</div>
     </div>
 
-    <div class="row">
-    	<div class="col-md-6">
-    		<canvas id="points-types-chart"></canvas>
-    	</div>
-    	<div class="col-md-6">
-    		<canvas id="victory-chart"></canvas>
-    	</div>
-    </div>
-    	
-    </div>
-    <script>
-		var ctx = document.getElementById('victory-chart').getContext('2d');
-		var doughnutChartData = {!! $victory_stats_chart !!}
+	@if ( $user->total_games() > 0 )
+	    <div class="row">
+	    	<div class="col-md-6">
+	    		<canvas id="points-types-chart"></canvas>
+	    	</div>
+	    	<div class="col-md-6">
+	    		<canvas id="victory-chart"></canvas>
+	    	</div>
+	    </div>
+	    	
+	    </div>
+	    <script>
+			var ctx = document.getElementById('victory-chart').getContext('2d');
+			var doughnutChartData = {!! $victory_stats_chart !!}
 
-		var myDoughnutChart = new Chart(ctx, {
-		    type: 'doughnut',
-		    data: doughnutChartData,
-			options: {
-				title: {
-		        display: true,
-		        responsive: true,
-		        text: 'Victory versus defeats'		      }
-			}
-		});
+			var myDoughnutChart = new Chart(ctx, {
+			    type: 'doughnut',
+			    data: doughnutChartData,
+				options: {
+					title: {
+			        display: true,
+			        responsive: true,
+			        text: 'Victory versus defeats'		      }
+				}
+			});
 
 
-		var ctx = document.getElementById('points-types-chart').getContext('2d');
-		var doughnutChartData = {!! $points_types_chart !!}
-		console.log(doughnutChartData)
-		var myDoughnutChart = new Chart(ctx, {
-		    type: 'doughnut',
-		    data: doughnutChartData,
-			options: {
-				title: {
-		        display: true,
-		        responsive: true,
-		        text: 'Points types repartition'		      }
-			}
-		});
-    </script>
+			var ctx = document.getElementById('points-types-chart').getContext('2d');
+			var doughnutChartData = {!! $points_types_chart !!}
+			console.log(doughnutChartData)
+			var myDoughnutChart = new Chart(ctx, {
+			    type: 'doughnut',
+			    data: doughnutChartData,
+				options: {
+					title: {
+			        display: true,
+			        responsive: true,
+			        text: 'Points types repartition'		      }
+				}
+			});
+	    </script>
+	@endif
 
 @endsection

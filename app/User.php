@@ -362,7 +362,7 @@ class User extends Authenticatable
      *
      * @return int
      */
-    public function total_games( $status ) {
+    public function total_games( $status = null ) {
         return $this->games()->where('games.status', '=', $status)->count();
     }
 
@@ -462,12 +462,16 @@ class User extends Authenticatable
     /**
      * Get user percentage of victory
      *
-     * @return int
+     * @return int | string
      */
     public function percentage_victory() {
         $total_games = $this->games->count();
-        $winning_games = $this->winning_games()->count();
-        return $percentage_victory = round(( $winning_games / $total_games ) * 100, 1 );
+        if ( $total_games > 0 ) {
+            $winning_games = $this->winning_games()->count();
+            return $percentage_victory = round(( $winning_games / $total_games ) * 100, 1 );
+        } else {
+            return 'no game';
+        }
     }
 
     /**

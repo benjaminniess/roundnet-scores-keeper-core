@@ -35,14 +35,14 @@ class AddUserFriendBadge
         $friends = $relationship->friends();
 
         /**
-         * Foreach App\User check if the total of active friends match with a badge objective (action_count)
+         * Foreach App\User check if the total of active friends is higher of equal than the badge objective (action_count)
          * If it does, register a connexion between the badge and the user in the database
          * If the user already has the badge, don't register it
          */
         foreach ($friends as $friend) {
             $friend->total_friends = $friend->total_friends( UserRelationships::ACTIVE_STATUS );
             foreach ( $badges as $badge ) {
-                if ( (int) $badge->action_count === (int) $friend->total_friends && !$friend->has_badge( $badge->id ) ) {
+                if ( (int) $friend->total_friends >= (int) $badge->action_count && !$friend->has_badge( $badge->id ) ) {
                     $badge->add_user_badge( $friend->id );
                     $friend->notify( new BadgeUnlocked( $badge ) );
                 }

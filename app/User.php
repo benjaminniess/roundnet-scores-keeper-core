@@ -376,6 +376,33 @@ class User extends Authenticatable
     }
 
     /**
+     * Get number of consecutive wins record
+     *
+     * @return int
+     */
+    public function get_best_series_of_victories() {
+        $victory_series = [];
+        $victory_serie_count = 0;
+
+        foreach ($this->games as $game) {
+            $game->winning_game = $game->set_winning_game();
+            if ( $game->winning_game === "Won" ) {
+                // If the game is won, we add 1 to the serie of victory
+                $victory_serie_count += 1;
+            } else {
+                // If the game is lost, we store the last serie of victory into the array $victory_series
+                array_push($victory_series,$victory_serie_count);
+                // And we set the count to 0 to restart a new serie
+                $victory_serie_count = 0;
+            }
+        }
+        // Push in the array if the serie of victory has not ended yet
+        array_push($victory_series,$victory_serie_count);
+        
+        return max($victory_series);
+    }
+
+    /**
      * Return all user points
      *
      *@return int

@@ -31,6 +31,7 @@
 			    	{{ $user->percentage_victory() }}@if ($user->percentage_victory() != 'no game')%@endif
 			    	</strong>
 			    </li>
+			    <li class="list-group-item">Best series of victories: <strong>{{ $user->get_best_series_of_victories() }}</strong></li>
 			  </ul>
 			</div>	    
     	</div>

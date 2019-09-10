@@ -26,7 +26,7 @@ class GamesController extends Controller
         foreach ($games as $game) {
             $game->formated_end_date = $game->set_end_date();
             $game->is_referee = $game->is_referee();   
-            $game->winning_game = $game->set_winning_game();
+            $game->winning_game = $game->set_winning_game($user_obj->id);
         }
 
         return view('games.index', compact('games'));

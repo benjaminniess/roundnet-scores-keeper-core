@@ -385,7 +385,7 @@ class User extends Authenticatable
         $victory_serie_count = 0;
 
         foreach ($this->games as $game) {
-            $game->winning_game = $game->set_winning_game();
+            $game->winning_game = $game->set_winning_game($this->id);
             if ( $game->winning_game === "Won" ) {
                 // If the game is won, we add 1 to the serie of victory
                 $victory_serie_count += 1;
@@ -398,7 +398,6 @@ class User extends Authenticatable
         }
         // Push in the array if the serie of victory has not ended yet
         array_push($victory_series,$victory_serie_count);
-        
         return max($victory_series);
     }
 

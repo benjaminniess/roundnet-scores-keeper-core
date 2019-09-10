@@ -73,8 +73,8 @@ class Game extends Model
      *
      * @return string
      */
-    public function set_winning_game() {
-        $user_obj = User::find(auth()->id());
+    public function set_winning_game( $user_id ) {
+        $user_obj = User::find($user_id);
         $this->user_team = $user_obj->get_team($this->id);
         $this->winning_team = $this->get_winning_team();
         // Compare user team and game winning team
